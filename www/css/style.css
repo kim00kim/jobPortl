@@ -1,0 +1,43 @@
+/* Empty. Add your own CSS if you like */
+
+.form {
+	text-align: center;
+}
+
+button#fb{
+	background-image: url('../img/facebook.png');
+	background-repeat: no-repeat;
+	background-position: left;
+	background-color: #3B5998;
+	border-radius: 5px;
+	background-size: contain;
+}
+
+button#google{
+	background-image: url('../img/google.png');
+	background-repeat: no-repeat;
+	background-position: left;
+	background-color: #DD4B39;
+	border-radius:  5px;
+	background-size: contain;
+}
+
+button#fb.button.active, button#fb.button.activated {
+	background-image: url('../img/facebook_pressed.png');
+	background-repeat: no-repeat;
+	background-position: left;
+	background-color: #2B4987;
+	border-radius: 5px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+	background-size: contain;
+}
+
+button#google.button.active, button#google.button.activated {
+	background-image: url('../img/google_pressed.png');
+	background-repeat: no-repeat;
+	background-position: left;
+	background-color: #C93726;
+	border-radius:  5px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+	background-size: contain;
+}
