@@ -88,9 +88,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 			})
 
 			.state('login', {
-			url: "/login",
-			templateUrl: "templates/tab-login.html"
-		})
+				url: "/login",
+				templateUrl: "templates/tab-login.html",
+				controller: 'LoginCtrl'
+
+			})
 
 			.state('sample', {
 				url: "/sample",
