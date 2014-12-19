@@ -1,35 +1,39 @@
 <ion-view title="Login">
 	<ion-content class="padding login">
 		<div class="list ">
-			<form name="loginForm" novalidate>
-				<div class="row">
-					<div class="col">
-						<button class="button btn-social btn-facebook button-small button-block" id="social-button">
-							<i class="fa fa-facebook"></i> Sign in
-						</button>
-					</div>
-					<div class="col">
-						<button class="button btn-social btn-google-plus button-small button-block" id="social-button">
-							<i class="fa fa-google-plus"></i> Sign in
-						</a>
-						</button>
-					</div>
+			<div class="row">
+				<div class="col">
+					<button class="button btn-social btn-facebook button-small button-block" id="social-button">
+						<i class="fa fa-facebook"></i> Sign in
+					</button>
 				</div>
+				<div class="col">
+					<button class="button btn-social btn-google-plus button-small button-block" id="social-button">
+						<i class="fa fa-google-plus"></i> Sign in
+					</a>
+					</button>
+				</div>
+			</div>
+			<form name="loginForm" novalidate>
 				<div class="list">
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Email Address</span>
-						<input type="text" placeholder="Email Address" required />
+						<input name="userEmail" class="form-control" type="email" placeholder="Email Address" ng-model="user.emailAdd" required />
 					</label>
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Password</span>
-						<input type="password" placeholder="Password" required />
+						<input type="password" placeholder="Password" ng-model="user.password" class="form-control" required />
 					</label>
 				</div>
-				<button class="button button-positive button-block">Log In</button>
-				<button class="button button-assertive button-block" ng-click="signUp()">Sign Up</button>
-				<br>
-				<button class="button button-clear button-stable" ng-click="skipLogin()">Skip Login</button>
 			</form>
+			First:{{user[0].email}}
+			Second:{{user[1].email}}
+
+			<button class="button button-positive button-block" ng-disabled="loginForm.$invalid">Log In</button>
+			<button class="button button-assertive button-block" ng-click="signUp()">Sign Up</button>
+			<br>
+			<button class="button button-clear button-stable" ng-click="skipLogin()">Skip Login</button>
+
 		</div>
 	</ion-content>
 </ion-view>

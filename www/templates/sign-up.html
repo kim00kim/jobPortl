@@ -6,7 +6,7 @@
 					<div class="input-label">
 						Choose user type:
 					</div>
-					<select>
+					<select ng-model="newUser.userType" required>
 						<option selected>I'm an Employer</option>
 						<option>I'm a Skilled Laborer</option>
 					</select>
@@ -15,17 +15,17 @@
 			<div class="list">
 				<label class="item item-input item-floating-label">
 					<span class="input-label">First Name</span>
-					<input type="text" placeholder="First Name">
+					<input type="text" placeholder="First Name" class="form-control" ng-model="newUser.firstName" required>
 				</label>
 				<label class="item item-input item-floating-label">
 					<span class="input-label">Last Name</span>
-					<input type="text" placeholder="Last Name">
+					<input type="text" placeholder="Last Name" class="form-control" ng-model="newUser.lastName" required>
 				</label>
 			</div>
 			<div class="list">
 				<label class="item item-input item-floating-label">
 					<span class="input-label">Address</span>
-					<input type="text" placeholder="Address">
+					<input type="text" placeholder="Address" class="form-control" ng-model="newUser.address" required>
 				</label>
 				<label class="item item-input item-select">
 					<div class="input-label">
@@ -38,7 +38,7 @@
 				</label>
 				<label class="item item-input item-floating-label">
 					<span class="input-label">Zip Code</span>
-					<input type="text" placeholder="Zip Code">
+					<input type="text" placeholder="Zip Code" class="form-control" required>
 				</label>
 			</div>
 			<div class="list">
@@ -52,12 +52,10 @@
 					</select>
 				</label>
 			</div>
-			<div class="list">
-				<label class="item item-input">
-					<span class="input-label">Birth date</span>
-					<input type="date">
-				</label>
-			</div>
+			<label class="item item-input">
+				<span class="input-label">Birth date</span>
+				<input type="date" class="form-control" required>
+			</label>
 			<div class="list">
 				<div class="card">
 					<div class="item item-text-wrap">
@@ -73,12 +71,12 @@
 						<div class="row">
 							<div class="col">
 								<button class="button btn-social btn-facebook button-small button-block">
-									<i class="fa fa-facebook"></i> Sign in with Facebook
+									<i class="fa fa-facebook"></i> Sign in
 								</button>
 							</div>
 							<div class="col">
 								<button class="button btn-social btn-google-plus button-small button-block">
-									<i class="fa fa-google-plus"></i> Sign in with Google+
+									<i class="fa fa-google-plus"></i> Sign in
 									</a>
 								</button>
 							</div>
@@ -91,7 +89,7 @@
 					<div class="row responsive-md">
 						<div class="col col-75 number-input">
 							<label class="item item-input">
-								<input type="tel" placeholder="639123456789">
+								<input type="tel" placeholder="639123456789" class="form-control" required>
 							</label>
 						</div>
 						<div class="col">

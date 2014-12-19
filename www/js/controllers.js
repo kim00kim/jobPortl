@@ -15,6 +15,10 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('LoginCtrl', function ($scope, $state) {
+		$scope.user=[
+			{email:"me@domain.com", password: "12345"},
+			{email:"you@domain.com", password: "12345"}];
+
 		$scope.skipLogin=function($scope){
 			$state.go('tab.job-post');
 		}
