@@ -1,43 +1,55 @@
-/* Empty. Add your own CSS if you like */
-
-.form {
+.login {
 	text-align: center;
+	margin: 5%;
+}
+.social-button{
+	margin-bottom: 20px;
 }
 
-button#fb {
-	background-image: url('../img/facebook.png');
-	background-repeat: no-repeat;
-	background-position: left;
-	background-color: #3B5998;
-	border-radius: 5px;
-	background-size: contain;
+span.input-label.has-input{
+	width: 0;
 }
 
-button#google {
-	background-image: url('../img/google.png');
-	background-repeat: no-repeat;
-	background-position: left;
-	background-color: #DD4B39;
-	border-radius: 5px;
-	background-size: contain;
+.line h3 {
+	position: relative;
+	margin-top: 20px;
 }
 
-button#fb.button.active, button#fb.button.activated {
-	background-image: url('../img/facebook_pressed.png');
-	background-repeat: no-repeat;
-	background-position: left;
-	background-color: #2B4987;
-	border-radius: 5px;
-	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-	background-size: contain;
+.line h3.one {
+	margin-top: 0;
 }
 
-button#google.button.active, button#google.button.activated {
-	background-image: url('../img/google_pressed.png');
-	background-repeat: no-repeat;
-	background-position: left;
-	background-color: #C93726;
-	border-radius: 5px;
-	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-	background-size: contain;
+.line h3.one:before {
+	content: "";
+	display: block;
+	border-top: solid 1px black;
+	width: 100%;
+	height: 1px;
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+}
+
+.line h3.one span {
+	background: #fff;
+	padding: 0 20px;
+	position: relative;
+	z-index: 5;
+}
+
+#social-button{
+	text-align: center;
+	padding-left: 0;
+}
+.card p{
+	text-align: center;
+	margin: 15px 0;
+}
+
+.col.col-75.number-input{
+	margin-bottom: 0;
+}
+
+.button.button.button-outline.button-dark.button-block.verify{
+	margin: 0;
 }

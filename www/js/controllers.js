@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('jobPortl.controllers', [])
 
 	.controller('DashCtrl', function ($scope) {
 	})
@@ -16,7 +16,13 @@ angular.module('starter.controllers', [])
 
 	.controller('LoginCtrl', function ($scope, $state) {
 		$scope.skipLogin=function($scope){
-			alert('Clicked!');
 			$state.go('tab.job-post');
 		}
+		$scope.signUp=function($scope){
+			$state.go('signUp');
+		}
+	})
+
+	.controller('SignupCtrl', function ($scope, $state) {
+
 	});
