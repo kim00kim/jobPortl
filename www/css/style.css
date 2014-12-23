@@ -53,3 +53,8 @@ span.input-label.has-input{
 .button.button.button-outline.button-dark.button-block.verify{
 	margin: 0;
 }
+
+/*validation */
+/*.ng-invalid { background-color: lightpink; }
+.ng-valid { background-color: lightgreen; }
+span.error { color: red; font-weight: bold; }*/

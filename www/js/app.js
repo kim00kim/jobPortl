@@ -38,7 +38,8 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 
 			.state('signUp', {
 				url: "/signUp",
-				templateUrl: "templates/sign-up.html"
+				templateUrl: "templates/sign-up.html",
+				controller: 'SignupCtrl'
 			})
 
 			.state('tab', {

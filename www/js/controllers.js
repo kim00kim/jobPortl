@@ -28,5 +28,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('SignupCtrl', function ($scope, $state) {
-
+		$scope.sample=[
+			{email:"me@domain.com", password: "12345"},
+			{email:"you@domain.com", password: "12345"}];
 	});
