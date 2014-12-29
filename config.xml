@@ -29,11 +29,11 @@
 
 	<preference name="prerendered-icon" value="true" />
 
-	<gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
-		<param name="APP_ID" value="569148046553676" />
-		<param name="APP_NAME" value="jobPortl" />
-	</gap:plugin>
-	<gap:plugin name="nl.x-services.plugins.googleplus" version="1.0.7" />
+<gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+    <param name="APP_ID" value="569148046553676" />
+    <param name="APP_NAME" value="jobPortl" />
+</gap:plugin>
+<gap:plugin name="nl.x-services.plugins.googleplus" version="1.0.7" />
 
 	<!-- IOS ONLY -->
 	<gap:plugin name="com.phonegap.plugin.statusbar" />
