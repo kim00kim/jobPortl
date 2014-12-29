@@ -1,49 +1,51 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ph.kim.jobportl" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap = "http://phonegap.com/ns/1.0">
-	<name>jobportl</name>
-	<description>jobportl.</description>
-	<author email="info@jobportl.com" href="http://www.jobportl.com">jobportl</author>
-	<access origin="*" />
+<widget id="ph.kim.jobportl" version="0.5.0" xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>JobPortl</name>
+    <description>A Job Portal Application</description>
+    <author email="info@jobportl.com" href="http://www.jobportl.com">jobportl</author>
+    <access origin="*"/>
 
-	<preference name="phonegap-version" value="3.6.3" />
-	<preference name="orientation" value="portrait" />
-	<preference name="fullscreen" value="false" />
-	<preference name="webviewbounce" value="false" />
-	<!--	
-	<icon src="icon.png" width="57" height="57" />
-	<icon src="img/logos/icon_57x57.png" gap:platform="ios" width="57" height="57" />
-	<icon src="img/logos/icon_72x72.png" gap:platform="ios" width="72" height="72" />
-	<icon src="img/logos/icon_96x96.png" gap:platform="ios" width="96" height="96" />
-	<icon src="img/logos/icon_114x114.png" gap:platform="ios" width="114" height="114" />
-	<icon src="img/logos/icon_120x120.png" gap:platform="ios" width="120" height="120" />
-	<icon src="img/logos/icon_36x36.png" gap:platform="android" gap:density="ldpi" />
-	<icon src="img/logos/icon_48x48.png" gap:platform="android" gap:density="mdpi" />
-	<icon src="img/logos/icon_72x72.png" gap:platform="android" gap:density="hdpi" />
-	<icon src="img/logos/icon_96x96.png" gap:platform="android" gap:density="xhdpi" />
+    <preference name="phonegap-version" value="3.6.3"/>
+    <preference name="orientation" value="portrait"/>
+    <preference name="fullscreen" value="false"/>
+    <preference name="webviewbounce" value="false"/>
+    <!--
+    <icon src="icon.png" width="57" height="57" />
+    <icon src="img/logos/icon_57x57.png" gap:platform="ios" width="57" height="57" />
+    <icon src="img/logos/icon_72x72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="img/logos/icon_96x96.png" gap:platform="ios" width="96" height="96" />
+    <icon src="img/logos/icon_114x114.png" gap:platform="ios" width="114" height="114" />
+    <icon src="img/logos/icon_120x120.png" gap:platform="ios" width="120" height="120" />
+    <icon src="img/logos/icon_36x36.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="img/logos/icon_48x48.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="img/logos/icon_72x72.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="img/logos/icon_96x96.png" gap:platform="android" gap:density="xhdpi" />
 
-	<gap:splash src="splash.png" />
-	<gap:splash src="img/splash/splash_640x960.png" gap:platform="ios" width="640" height="960" />
-	<gap:splash src="img/splash/splash_640x1136.png" gap:platform="ios" width="640" height="1136" />
-	<gap:splash src="img/splash/splash_360x640.jpg" gap:platform="winphone" />
+    <gap:splash src="splash.png" />
+    <gap:splash src="img/splash/splash_640x960.png" gap:platform="ios" width="640" height="960" />
+    <gap:splash src="img/splash/splash_640x1136.png" gap:platform="ios" width="640" height="1136" />
+    <gap:splash src="img/splash/splash_360x640.jpg" gap:platform="winphone" />
 -->
 
-	<preference name="prerendered-icon" value="true" />
+    <preference name="prerendered-icon" value="true"/>
 
-<!--<gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
-    <param name="APP_ID" value="569148046553676" />
-    <param name="APP_NAME" value="jobPortl" />
-</gap:plugin>
-<gap:plugin name="nl.x-services.plugins.googleplus" version="1.0.7" />-->
+    <!-- Phonegap plugins -->
+    <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+        <param name="APP_ID" value="569148046553676"/>
+        <param name="APP_NAME" value="JobPortl"/>
+    </gap:plugin>
 
-	<!-- IOS ONLY -->
-	<gap:plugin name="com.phonegap.plugin.statusbar" />
-	<feature name="StatusBar">
-		<param name="ios-package" value="CDVStatusBar" onload="true" />
-	</feature>
-	<preference name="StatusBarOverlaysWebView" value="false" />
-	<preference name="StatusBarBackgroundColor" value="#000000" />
+    <!-- IOS ONLY -->
+    <gap:plugin name="com.phonegap.plugin.statusbar"/>
+    <feature name="StatusBar">
+        <param name="ios-package" value="CDVStatusBar" onload="true"/>
+    </feature>
+    <preference name="StatusBarOverlaysWebView" value="false"/>
+    <preference name="StatusBarBackgroundColor" value="#000000"/>
 
-	<!-- ANDROID ONLY -->
-	<preference name="android-installLocation" value="auto" /> <!-- Allows installing on the SD card -->
+    <!-- ANDROID ONLY -->
+    <preference name="android-installLocation" value="auto"/>
+    <!-- Allows installing on the SD card -->
 
 </widget>
