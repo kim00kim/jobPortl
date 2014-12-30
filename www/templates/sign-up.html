@@ -11,15 +11,6 @@
 						<option>I'm a Skilled Laborer</option>
 					</select>
 				</label>
-				<label class="item item-input item-select">
-					<div class="input-label">
-						City/Municipality
-					</div>
-					<select>
-						<option selected>Buhi</option>
-						<option>Naga City</option>
-					</select>
-				</label>
 			</div>
 			<div class="list">
 				<label class="item item-input item-floating-label">
@@ -40,9 +31,7 @@
 					<div class="input-label">
 						City/Municipality
 					</div>
-					<select>
-						<option selected>Buhi</option>
-						<option>Naga City</option>
+					<select ng-options="city for city in cities" ng-model="city">
 					</select>
 				</label>
 				<label class="item item-input item-floating-label">
@@ -70,7 +59,7 @@
 					<div class="item item-text-wrap">
 						<label class="item item-input item-floating-label">
 							<span class="input-label">Email Address</span>
-							<input type="text" placeholder="Email Address" ng-value="sample[0].email" required />
+							<input type="email" placeholder="Email Address" ng-value="sample[0].email" required />
 						</label>
 						<label class="item item-input item-floating-label">
 							<span class="input-label">Password</span>

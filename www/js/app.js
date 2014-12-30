@@ -55,7 +55,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				views: {
 					'tab-job-post': {
 						templateUrl: 'templates/tab-job-post.html',
-						controller: 'DashCtrl'
+						controller: 'JobCtrl'
 					}
 				}
 			})
@@ -65,7 +65,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				views: {
 					'tab-skilled-laborer': {
 						templateUrl: 'templates/tab-skilled-laborer.html',
-						controller: 'DashCtrl'
+						controller: 'SkilledLaborerCtrl'
 					}
 				}
 			})

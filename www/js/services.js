@@ -25,6 +25,10 @@ angular.module('jobPortl.services', [])
 		}
 	})
 
-	.factory('Users', function () {
+	.factory('User_Account', function () {
+		var user_account=[
+			{ user_acct_id: 0, email: 'me@domain.com', password: '1234', user_acct_type: 'typical', user_id: 0, user_type: 0},
+			{ user_acct_id: 1, email: 'you@domain.com', password: '1234', user_acct_type: 'typical', user_id: 1, user_type: 1}
+		];
 	})
 

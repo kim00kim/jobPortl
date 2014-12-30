@@ -4,6 +4,7 @@
     <name>JobPortl</name>
     <description>A Job Portal Application</description>
     <author email="info@jobportl.com" href="http://www.jobportl.com">jobportl</author>
+    <content src="index.html"/>
     <access origin="*"/>
 
     <preference name="phonegap-version" value="3.6.3"/>
