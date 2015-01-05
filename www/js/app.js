@@ -7,7 +7,7 @@
 // 'jobPortl.controllers' is found in controllers.js
 angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'])
 
-	.run(function ($ionicPlatform) {
+	.run(function ($ionicPlatform,$rootScope, $state) {
 		$ionicPlatform.ready(function () {
 			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 			// for form inputs)
@@ -19,7 +19,17 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				StatusBar.styleDefault();
 			}
 		});
+
+		// UI Router Authentication Check
+		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+			if (toState.data.authenticate && !Parse.User.current()) {
+				// User isn’t authenticated
+				$state.transitionTo("login");
+				event.preventDefault();
+			}
+		});
 	})
+
 
 	.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -33,7 +43,10 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 			.state('login', {
 				url: "/login",
 				templateUrl: "templates/login.html",
-				controller: 'LoginCtrl'
+				controller: 'LoginCtrl',
+				data: {
+					authenticate: true
+				}
 			})
 
 			.state('signUp', {
