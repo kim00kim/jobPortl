@@ -1,3 +1,4 @@
+
 /**
  * Modals
  * --------------------------------------------------
@@ -48,7 +49,7 @@
   }
 
   // remove ios header padding from inset header
-  .platform-ios.platform-cordova .modal-wrapper .modal {
+  .platform-ios.platform-cordova .modal-wrapper .modal{
     .bar-header:not(.bar-subheader) {
       height: $bar-height;
       > * {

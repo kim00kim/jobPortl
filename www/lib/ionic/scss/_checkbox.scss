@@ -1,3 +1,4 @@
+
 /**
  * Checkbox
  * --------------------------------------------------
@@ -12,40 +13,31 @@
   padding: ($checkbox-height / 4) ($checkbox-width / 4);
   cursor: pointer;
 }
-
-.checkbox-light {
+.checkbox-light  {
   @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light);
 }
-
-.checkbox-stable {
+.checkbox-stable  {
   @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable);
 }
-
-.checkbox-positive {
+.checkbox-positive  {
   @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive);
 }
-
-.checkbox-calm {
+.checkbox-calm  {
   @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm);
 }
-
-.checkbox-assertive {
+.checkbox-assertive  {
   @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive);
 }
-
-.checkbox-balanced {
+.checkbox-balanced  {
   @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced);
 }
-
-.checkbox-energized {
+.checkbox-energized{
   @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized);
 }
-
-.checkbox-royal {
+.checkbox-royal  {
   @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal);
 }
-
-.checkbox-dark {
+.checkbox-dark  {
   @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark);
 }
 
@@ -58,6 +50,7 @@
 .checkbox input:disabled:checked + .checkbox-icon:before {
   background: $checkbox-on-bg-light;
 }
+
 
 .checkbox.checkbox-input-hidden input {
   display: none !important;
@@ -147,6 +140,7 @@ input:checked + .checkbox-icon:after {
   z-index: $z-index-item-checkbox;
   margin-top: (($checkbox-height + ($checkbox-height / 2)) / 2) * -1;
 }
+
 
 .item-checkbox.item-checkbox-right {
   padding-right: ($item-padding * 2) + $checkbox-width;
