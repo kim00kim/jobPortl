@@ -26,6 +26,7 @@ angular.module('jobPortl.controllers', [])
 			$state.go('signUp');
 		}
 
+		//for facebook login
 		var fbLogged = new Parse.Promise();
 
 		var fbLoginSuccess = function(response) {
@@ -51,7 +52,7 @@ angular.module('jobPortl.controllers', [])
 			fbLogged.reject(error);
 		};
 
-		$scope.login = function() {
+		$scope.fblogin = function() {
 			console.log('Login');
 			if (!window.cordova) {
 				facebookConnectPlugin.browserInit('569148046553676');
@@ -84,8 +85,8 @@ angular.module('jobPortl.controllers', [])
 							console.log(error);
 						}
 					);
-					alert("successful")
-					/*$state.go('tab.job-post');*/
+					alert("logged in successfully")
+					$state.go('tab.job-post');
 				}, function(error) {
 					console.log(error);
 				});
