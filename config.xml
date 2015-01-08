@@ -40,9 +40,6 @@
         <string name="fb_app_id">569148046553676</string>
         <string name="fb_app_name">JobPortl</string>
     </resources>
-    <feature name="FacebookConnectPlugin">
-        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
-    </feature>
 
     <!-- IOS ONLY -->
     <gap:plugin name="com.phonegap.plugin.statusbar"/>
