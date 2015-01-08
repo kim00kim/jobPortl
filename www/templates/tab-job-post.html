@@ -1,18 +1,17 @@
 <!--for employers' view-->
 <ion-nav-buttons side="right">
-	<button class="button button-clear icon ion-compose" ng-click="createJobPost.show()">Create Job Post</button>
+	<button class="button button-clear icon ion-compose" ng-click="createJobPost.show()"></button>
 </ion-nav-buttons>
-
-for skilled laborers' view
+<!--for skilled laborers' view-->
 <ion-view title="Job Post">
 	<ion-content class="padding">
 		<!--<h1>Job Posts</h1>-->
 		<div class="list card" ng-repeat="jobPost in jobPosts">
-			<div class="item item-divider">
+			<div class="item bar bar-header bar-positive">
 				{{jobPost.title}}
 				<span class="datetime-posted"><i>Posted on {{jobPost.datetimePosted}}</i></span>
 			</div>
-			<div class="item item-body">
+			<div class="item item-body job-post">
 				<div class="category">
 					<h3>Category: {{jobPost.category}}</h3>
 				</div>
@@ -34,10 +33,6 @@ for skilled laborers' view
 					</div>
 				</div>
 			</div>
-			<!--<a class="item item-icon-left assertive" href="#">
-				<i class="icon ion-music-note"></i>
-				Start listening
-			</a>-->
 			<div class="item apply">
 					<button class="button button-block button-calm"><i class="icon ion-checkmark-round"></i>  Apply Job</button>
 			</div>
