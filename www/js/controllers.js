@@ -107,17 +107,31 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope) {
+	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer) {
+		$scope.skilledLaborerInfo= {}
 
+		SkilledLaborer.getSkilledLaborers().
+			success(function(data, status, headers){
+				console.log("Get Skilled Laborer Info: Success")
+				console.log("Status: " + status);
+				console.log("Length: " + headers("content-length"));
+				console.log(data)
+				$scope.skilledLaborerInfo = data;
+			}).
+			error(function() {
+				alert("An error occurred. Cannot get skilled laborer info")
+			});
 	})
 
 	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost) {
 		$scope.newJobPost={}
 		$scope.createJobPost={}
 
+		//get current date and time
 		var datenow= new Date();
 		datenow = $filter('date')(datenow, "EEE d MMM yyyy hh:mm a ") + "at" + $filter('date')(datenow, " hh:mm a");
 		console.log(datenow)
+
 		$scope.jobPosts=JobPost.all();
 
 		$ionicModal.fromTemplateUrl('../templates/create-job-post-modal.html', {

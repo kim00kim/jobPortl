@@ -67,3 +67,12 @@ angular.module('jobPortl.services', [])
 		}
 	})
 
+	.factory('SkilledLaborer', function ($http) {
+		// Might use a resource here that returns a JSON array
+		// Some fake testing data
+		return{
+				getSkilledLaborers:function(){
+					return $http.get('../skilled_laborer.json')
+				}
+		}
+	})

@@ -59,6 +59,7 @@ span.input-label.has-input{
 .ng-valid { background-color: lightgreen; }
 span.error { color: red; font-weight: bold; }*/
 
+/*Job Post*/
 .datetime-posted{
 	float: right;
 	font-weight: normal;
@@ -74,13 +75,7 @@ span.error { color: red; font-weight: bold; }*/
 	text-indent: 20px;
 }
 
-.item.item-avatar{
-	border:none;
-	padding: 0;
-	margin: 0;
-}
-
-.item.item-body{
+.item.item-body.job-post{
 	padding-top: 0px;
 }
 
@@ -111,4 +106,23 @@ span.error { color: red; font-weight: bold; }*/
 .item.apply button{
 	padding: 0;
 	margin: 0;
+}
+
+/*Skilled Laborer*/
+.item.item-body.skilled-laborer{
+	border-top: none;
+	padding: 16px 2px;
+}
+
+.buttons{
+	float: right;
+}
+
+h2.highlight{
+	font-size: 20px;
+	font-weight: bolder;
+	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+}
+h2.title{
+	font-style: italic;
 }
