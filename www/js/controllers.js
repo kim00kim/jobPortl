@@ -15,15 +15,20 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('LoginCtrl', function ($scope, $state) {
-		$scope.user=[
+		/*$scope.user=[
 			{email:"me@domain.com", password: "12345"},
-			{email:"you@domain.com", password: "12345"}];
+			{email:"you@domain.com", password: "12345"}];*/
 
 		$scope.skipLogin=function($scope){
 			$state.go('tab.job-post');
 		}
 		$scope.signUp=function($scope){
 			$state.go('signUp');
+		}
+
+		$scope.login=function(email,password){
+			var value= authenticate(email,password)
+			console.log(value)
 		}
 
 		//for facebook login
@@ -91,24 +96,6 @@ angular.module('jobPortl.controllers', [])
 					console.log(error);
 				});
 		};
-
-		/*$scope.getLoginStatus = function () {
-			$cordovaFacebook.getLoginStatus().then(function (status) {
-				$scope.status = status;
-			}, function (error) {
-				$scope.status = error;
-			})
-		};
-
-		$scope.login = function () {
-			alert("Clicked!")
-			$cordovaFacebook.login(["public_profile"]).then(function (success) {
-				$scope.loginInfo = success;
-			}, function (error) {
-				$scope.error = error;
-				alert(error);
-			})
-		};*/
 	})
 
 	.controller('SignupCtrl', function ($scope) {
@@ -124,14 +111,30 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('JobCtrl', function ($scope) {
-		$scope.categories=[
-			{ category_id: 0, category_name: 'Furniture Maker'},
-			{ category_id: 1, category_name: 'Plumbing Services'}
-		]
+	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost) {
+		$scope.newJobPost={}
+		$scope.createJobPost={}
 
-		$scope.jobPost=[
-			{ job_id: 0, title: 'Job Title1', description: 'Blah Blah', location: 'Naga City', category: 'Furniture Maker', employer: 'John Doe' },
-			{ job_id: 1, title: 'Job Title2', description: 'Blah Blah', location: 'Nabua', category: 'Plumbing Services', employer: 'Anna Smith' }]
+		var datenow= new Date();
+		datenow = $filter('date')(datenow, "EEE d MMM yyyy hh:mm a ") + "at" + $filter('date')(datenow, " hh:mm a");
+		console.log(datenow)
+		$scope.jobPosts=JobPost.all();
+
+		$ionicModal.fromTemplateUrl('../templates/create-job-post-modal.html', {
+			scope: $scope,
+			animation: 'slide-in-right' //or slide-left-right-ios7
+		}).then(function(modal) {
+			$scope.createJobPost = modal;
+			$scope.categories= JobPost.allCategories();
+			$scope.newJobPost.category=$scope.categories[0];
+			console.log($scope.newJobPost.category)
+		});
+
+		//add job post in service
+		$scope.createNewJobPost = function(newJobPost) {
+			$scope.jobPosts.push({ job_id: 3, title: newJobPost.title, description: newJobPost.description, location: newJobPost.location, category: newJobPost.category.category_name, employer: 'New Employer', datetimePosted: datenow });
+			$scope.createJobPost.hide();
+			alert("New job post successfully created!")
+		};
 	})
 

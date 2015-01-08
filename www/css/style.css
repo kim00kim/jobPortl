@@ -58,3 +58,57 @@ span.input-label.has-input{
 /*.ng-invalid { background-color: lightpink; }
 .ng-valid { background-color: lightgreen; }
 span.error { color: red; font-weight: bold; }*/
+
+.datetime-posted{
+	float: right;
+	font-weight: normal;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.job-info p{
+	text-align: left;
+	margin: 5px 0;
+}
+.description p{
+	text-indent: 20px;
+}
+
+.item.item-avatar{
+	border:none;
+	padding: 0;
+	margin: 0;
+}
+
+.item.item-body{
+	padding-top: 0px;
+}
+
+.category h3{
+	font-weight: bold;
+}
+
+.col.avatar{
+	text-align: right;
+}
+
+.col.avatar h4{
+	margin-top: 5px;
+	font-weight: bold;
+}
+.col.avatar img{
+	position: relative;
+	max-width: 40px;
+	max-height: 40px;
+	width: 100%;
+	border-radius: 4px;
+}
+
+.item.apply{
+	padding: 0;
+}
+
+.item.apply button{
+	padding: 0;
+	margin: 0;
+}

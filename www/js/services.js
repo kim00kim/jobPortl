@@ -32,11 +32,38 @@ angular.module('jobPortl.services', [])
 		];
 
 		return {
-			get: function () {
+			authenticate: function (email,password) {
 				// Simple index lookup
-				return friends[friendId];
+//				return friends[friendId];
+				console.log(email + password)
 			}
 		}
 
+	})
+
+	.factory('JobPost', function () {
+		// Might use a resource here that returns a JSON array
+
+		// Some fake testing data
+		var jobPosts = [
+			{ job_id: 0, title: 'Job Title1', description: 'Description Blah Blah Description Blah Blah Description Blah Blah Description Blah Blah', location: 'Naga City', category: 'Furniture Maker', employer: 'John Doe', datetimePosted: '5 Jan 2015 at 8:00pm' },
+			{ job_id: 1, title: 'Job Title2', description: 'Blah Blah', location: 'Nabua', category: 'Plumbing Services', employer: 'Anna Smith', datetimePosted: '5 Jan 2015 8:00pm' },
+			{ job_id: 2, title: 'Job Title3', description: 'Another Blah Blah', location: 'Iriga City', category: 'Plumbing Services', employer: 'Juan dela Cruz', datetimePosted: '5 Jan 2015 8:00pm' }
+
+		];
+
+		var category= [
+			{ category_id: 0, category_name: 'Furniture Maker'},
+			{ category_id: 1, category_name: 'Plumbing Services'}
+		];
+
+		return {
+			all: function () {
+				return jobPosts;
+			},
+			allCategories: function () {
+				return category;
+			}
+		}
 	})
 
