@@ -45,7 +45,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				templateUrl: "templates/login.html",
 				controller: 'LoginCtrl',
 				data: {
-					authenticate: true
+					authenticate: false
 				}
 			})
 
@@ -68,9 +68,13 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				views: {
 					'tab-job-post': {
 						templateUrl: 'templates/tab-job-post.html',
-						controller: 'JobCtrl'
+						controller: 'JobCtrl',
+						data: {
+							authenticate: true
+						}
 					}
 				}
+
 			})
 
 			.state('tab.skilled-laborer', {
@@ -111,8 +115,6 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 					}
 				}
 			})
-
-
 
 			.state('sample', {
 				url: "/sample",

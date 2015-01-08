@@ -16,25 +16,29 @@
 			</div>
 			<form name="loginForm" novalidate>
 				<div class="list">
-					<div class="emailPart" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+					<!--<div class="emailPart" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">-->
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Email Address</span>
-						<input name="userEmail" class="form-control" type="email" placeholder="Email Address" ng-model="user.emailAdd"  required />
+						<input type="email" placeholder="Email Address" ng-model="emailAdd" class="form-control" required />
 					</label>
-						</div>
+						<!--</div>-->
 					<!--<span class="error" ng-show="loginForm.userEmail.$error.required">
 						Enter a valid email
 					</span>-->
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Password</span>
-						<input type="password" placeholder="Password" ng-model="user.password" class="form-control" required />
+						<input type="password" placeholder="Password" ng-model="password" class="form-control" required />
 					</label>
-				</div>
-			</form>
-			<!--First:{{user[0].email}}
-			Second:{{user[1].email}}-->
 
-			<button class="button button-positive button-block">Log In</button>
+
+				</div>
+				<!--First:{{texts}}
+				email: {{emailAdd}}
+				Second:{{password}}-->
+			</form>
+
+
+			<button class="button button-positive button-block" ng-click="login(userEmail,password)">Log In</button>
 			<button class="button button-assertive button-block" ng-click="signUp()">Sign Up</button>
 			<br>
 			<button class="button button-clear button-stable" ng-click="skipLogin()">Skip Login</button>
