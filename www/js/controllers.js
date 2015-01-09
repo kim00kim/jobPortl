@@ -135,8 +135,8 @@ angular.module('jobPortl.controllers', [])
 		$scope.jobPosts=JobPost.all();
 
 		$ionicModal.fromTemplateUrl('templates/create-job-post-modal.html', {
-			scope: $scope/*,
-			animation: 'slide-in-right' //or slide-left-right-ios7*/
+			scope: $scope,
+			animation: 'slide-in-right' //or slide-left-right-ios7
 		}).then(function(modal) {
 			$scope.createJobPost = modal;
 			$scope.categories= JobPost.allCategories();
