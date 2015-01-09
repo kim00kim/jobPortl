@@ -72,7 +72,7 @@ angular.module('jobPortl.services', [])
 		// Some fake testing data
 		return{
 				getSkilledLaborers:function(){
-					return $http.get('/dummies/skilled_laborer.json')
+					return $http.get('skilled_laborer.json')
 				}
 		}
 	})
