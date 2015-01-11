@@ -107,11 +107,13 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer, CallNumber) {
+	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer) {
 		$scope.skilledLaborerInfo= {}
-		$scope.call=function(){
-			CallNumber.callNumber("+639128236826")
-		}
+        $scope.call=function(number){
+            var call = "tel:" + number;
+            alert('Calling ' + call ); //Alert notification is displayed on mobile, so function is triggered correctly!
+            document.location.href = call;
+        }
 
 		SkilledLaborer.getSkilledLaborers().
 			success(function(data, status, headers){
