@@ -107,8 +107,11 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer) {
+	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer, CallNumber) {
 		$scope.skilledLaborerInfo= {}
+		$scope.call=function(){
+			CallNumber.callNumber("+639128236826")
+		}
 
 		SkilledLaborer.getSkilledLaborers().
 			success(function(data, status, headers){
@@ -129,7 +132,7 @@ angular.module('jobPortl.controllers', [])
 
 		//get current date and time
 		var datenow= new Date();
-		datenow = $filter('date')(datenow, "EEE d MMM yyyy hh:mm a ") + "at" + $filter('date')(datenow, " hh:mm a");
+		datenow = $filter('date')(datenow, "EEE d MMM yyyy ") + "at" + $filter('date')(datenow, " hh:mm a");
 		console.log(datenow)
 
 		$scope.jobPosts=JobPost.all();
