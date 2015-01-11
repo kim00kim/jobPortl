@@ -109,6 +109,8 @@ angular.module('jobPortl.controllers', [])
 
 	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer) {
 		$scope.skilledLaborerInfo= {}
+
+        //call function
         $scope.call=function(number){
             var call = "tel:" + number;
             alert('Calling ' + call ); //Alert notification is displayed on mobile, so function is triggered correctly!
