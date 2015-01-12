@@ -1,24 +1,9 @@
 angular.module('jobPortl.controllers', [])
 
-	.controller('DashCtrl', function ($scope) {
-	})
-
-	.controller('FriendsCtrl', function ($scope, Friends) {
-		$scope.friends = Friends.all();
-	})
-
-	.controller('FriendDetailCtrl', function ($scope, $stateParams, Friends) {
-		$scope.friend = Friends.get($stateParams.friendId);
-	})
-
 	.controller('AccountCtrl', function ($scope) {
 	})
 
 	.controller('LoginCtrl', function ($scope, $state) {
-		/*$scope.user=[
-			{email:"me@domain.com", password: "12345"},
-			{email:"you@domain.com", password: "12345"}];*/
-
 		$scope.skipLogin=function($scope){
 			$state.go('tab.job-post');
 		}
@@ -107,7 +92,7 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, SkilledLaborer) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
 		$scope.skilledLaborerInfo= {}
 
         //call function
@@ -128,11 +113,29 @@ angular.module('jobPortl.controllers', [])
 			error(function() {
 				alert("An error occurred. Cannot get skilled laborer info")
 			});
+
+
+		//view profile function
+		$scope.viewProfile=function(info){
+			$scope.userInfo= info;
+			console.log(info.user_id);
+
+			$ionicModal.fromTemplateUrl('templates/profile-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right' //or slide-left-right-ios7
+			}).then(function(modal) {
+				$scope.profileModal = modal;
+				$scope.profileModal.show();
+				$scope.rate = 4;
+				$scope.max = 5;
+			});
+		}
+
+
 	})
 
 	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost) {
-		$scope.newJobPost={}
-		$scope.createJobPost={}
+		$scope.newJobPost={};
 
 		//get current date and time
 		var datenow= new Date();
@@ -148,7 +151,6 @@ angular.module('jobPortl.controllers', [])
 			$scope.createJobPost = modal;
 			$scope.categories= JobPost.allCategories();
 			$scope.newJobPost.category=$scope.categories[0];
-			console.log($scope.newJobPost.category)
 		});
 
 		//add job post in service

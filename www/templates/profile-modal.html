@@ -1,0 +1,39 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-dark">
+		<h1 class="title">Profile</h1>
+		<button class="button button-clear button-primary icon ion-close-circled" ng-click="profileModal.hide()"></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<div class="list">
+			<div class="item item-thumbnail-left" >
+				<img src="img/SL.jpg">
+				<h2 class="highlight">{{userInfo.first_name + " " + userInfo.last_name}}</h2>
+				<h2 class="title">{{userInfo.title}}</h2>
+			</div>
+			<div class="item reviews">
+				<!--<rating ng-model="rate" max="max"></rating>-->
+				<h4><span class="comments"><a href="#">See Comments/Feedbacks</a></span></h4>
+			</div>
+			<div class="item details">
+				<h2><strong>Overview</strong></h2>
+				<p>{{userInfo.overview}}</p>
+				<div class="item item-divider headers">Language(s)</div>
+				<div class="item language subList" ng-repeat="language in userInfo.language">
+					{{language.desc}}
+				</div>
+
+				<!--<h2>Availability</h2>
+				<div class="item schedule subList" ng-repeat="language in userInfo.language">
+				</div>-->
+				<div class="item item-divider headers">Skill(s)</div>
+				<div class="item skills subList" ng-repeat="skill in userInfo.skill">
+					{{skill.desc}}
+				</div>
+				<div class="item item-divider headers">Certification(s)</div>
+				<div class="item certification subList" ng-repeat="certification in userInfo.certification">
+					{{certification.desc}}
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-modal-view>

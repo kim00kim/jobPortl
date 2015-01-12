@@ -3,21 +3,17 @@
 		<div class="list card" ng-repeat="info in skilledLaborerInfo">
 			<div class="item item-avatar">
 				<img src="img/SL.jpg">
-				<h2 class="highlight">{{info.first_name + " " + info.last_name}}</h2>
+				<h2 class="highlight">{{info.first_name + " " + info.last_name}} </h2>
 				<h2 class="title">{{info.title}}</h2>
 			</div>
 			<div class="item item-body skilled-laborer">
 				<div class="button-bar buttons ">
-					<button class="button button-light icon ion-ios7-eye-outline"> View Profile</button>
+					<!--<rating ng-model="rate" max="max"></rating>-->
+					<button class="button button-light icon ion-ios7-eye-outline" ng-click="viewProfile(info)"> View Profile</button>
 					<button class="button icon ion-ios7-telephone-outline button-balanced" ng-click="call(info.number)"> Call To Hire</button>
 				</div>
 
 			</div>
-<!--
-			<div class="item apply">
-				<button class="button button-block button-calm"><i class="icon ion-checkmark-round"></i>  Apply Job</button>
-			</div>
--->
 		</div>
 	</ion-content>
 </ion-view>

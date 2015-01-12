@@ -1,29 +1,7 @@
 angular.module('jobPortl.services', [])
 
-/**
- * A simple example service that returns some data.
- */
-	.factory('Friends', function () {
-		// Might use a resource here that returns a JSON array
+//	.factory()
 
-		// Some fake testing data
-		var friends = [
-			{ id: 0, name: 'Scruff McGruff' },
-			{ id: 1, name: 'G.I. Joe' },
-			{ id: 2, name: 'Miss Frizzle' },
-			{ id: 3, name: 'Ash Ketchum' }
-		];
-
-		return {
-			all: function () {
-				return friends;
-			},
-			get: function (friendId) {
-				// Simple index lookup
-				return friends[friendId];
-			}
-		}
-	})
 
 	.factory('User_Account', function () {
 		var user_account=[
@@ -34,16 +12,13 @@ angular.module('jobPortl.services', [])
 		return {
 			authenticate: function (email,password) {
 				// Simple index lookup
-//				return friends[friendId];
-				console.log(email + password)
+				console.log("Email & password: " +email + password)
 			}
 		}
 
 	})
 
 	.factory('JobPost', function () {
-		// Might use a resource here that returns a JSON array
-
 		// Some fake testing data
 		var jobPosts = [
 			{ job_id: 0, title: 'Job Title1', description: 'Description Blah Blah Description Blah Blah Description Blah Blah Description Blah Blah', location: 'Naga City', category: 'Furniture Maker', employer: 'John Doe', datetimePosted: '5 Jan 2015 at 8:00pm' },
@@ -68,11 +43,10 @@ angular.module('jobPortl.services', [])
 	})
 
 	.factory('SkilledLaborer', function ($http) {
-		// Might use a resource here that returns a JSON array
-		// Some fake testing data
+
 		return{
-				getSkilledLaborers:function(){
-					return $http.get('skilled_laborer.json')
-				}
+			getSkilledLaborers:function(){
+				return $http.get('skilled_laborer.json')
+			}
 		}
 	})

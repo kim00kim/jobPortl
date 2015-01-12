@@ -126,3 +126,54 @@ h2.highlight{
 h2.title{
 	font-style: italic;
 }
+
+/*star rating */
+ul.rating li {
+	display: inline;
+	border: 0px;
+	background: none;
+	padding: 5px 10px;
+}
+ul.rating li i {
+	font-size: 30px;
+}
+
+/*reviews*/
+span.review{
+	float: right;
+	margin-right: 50px;
+}
+
+.item.reviews{
+	border-top: none;
+	padding-top: 0;
+	padding-left: 0;
+}
+
+span.comments{
+	float: right;
+	font-style: italic;
+}
+
+span.comments a{
+	text-decoration: none;
+}
+
+.item.details{
+	border-top: none;
+}
+
+.item.details p{
+	text-indent: 25px;
+}
+
+.item-divider.headers{
+	font-weight: bold;
+	padding-left: 2px;
+	margin-top: 15px;
+}
+
+
+.subList{
+	padding: 5px 16px;
+}
