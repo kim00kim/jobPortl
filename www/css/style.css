@@ -50,14 +50,26 @@ span.input-label.has-input{
 	margin-bottom: 0;
 }
 
-.button.button.button-outline.button-dark.button-block.verify{
+/*.button.button.button-outline.button-dark.button-block.verify{
 	margin: 0;
-}
+}*/
 
 /*validation */
-/*.ng-invalid { background-color: lightpink; }
-.ng-valid { background-color: lightgreen; }
-span.error { color: red; font-weight: bold; }*/
+span.error-handler,{
+	text-align: right;
+}
+label.has-error{
+	-webkit-box-shadow: 1px 1.5px	3px 1px #ef4e3a;
+	-moz-box-shadow: 1px 1.5px 3px 1px #ef4e3a;
+	box-shadow: 1px 1.5px	3px 1px #ef4e3a;
+}
+
+label.no-error{
+	-webkit-box-shadow: 1px 1.5px 3px 1px #66cc33;
+	-moz-box-shadow: 1px 1.5px 3px 1px #66cc33;
+	box-shadow: 1px 1.5px 3px 1px #66cc33;
+}
+
 
 /*Job Post*/
 .datetime-posted{

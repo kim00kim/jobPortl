@@ -3,7 +3,9 @@ angular.module('jobPortl.controllers', [])
 	.controller('AccountCtrl', function ($scope) {
 	})
 
-	.controller('LoginCtrl', function ($scope, $state) {
+	.controller('LoginCtrl', function ($scope, $state, $ionicLoading, User_Account, UserService) {
+		$scope.userInput= {}
+
 		$scope.skipLogin=function($scope){
 			$state.go('tab.job-post');
 		}
@@ -11,9 +13,13 @@ angular.module('jobPortl.controllers', [])
 			$state.go('signUp');
 		}
 
-		$scope.login=function(email,password){
-			var value= authenticate(email,password)
-			console.log(value)
+		$scope.login=function(user){
+			console.log(user)
+			/*var response = User_Account.checkUser(user)
+			if(response > 1){
+				UserService.getUserInfo(response)
+			}
+			console.log('user_type: ' + UserService.user_info.user_type)*/
 		}
 
 		//for facebook login
@@ -60,7 +66,7 @@ angular.module('jobPortl.controllers', [])
 							console.log(response);
 							userObject.set('name', response.name);
 							userObject.set('email', response.email);
-							userObject.save();
+							userObjectuserObject.save();
 						},
 						function(error) {
 							console.log(error);
@@ -76,6 +82,7 @@ angular.module('jobPortl.controllers', [])
 						}
 					);
 					alert("logged in successfully")
+
 					$state.go('tab.job-post');
 				}, function(error) {
 					console.log(error);
@@ -84,11 +91,19 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('SignupCtrl', function ($scope) {
+		$scope.newUser={}
+
 		$scope.cities=['Baao', 'Balatan', 'Bato', 'Bombon','Buhi','Bula','Cabusao', 'Calabanga', 'Camaligan','Canaman','Caramoan','Del Gallego','Gainza',
 						'Garchitorena', 'Goa','Iriga City', 'Lagonoy', 'Libmanan', 'Lupi', 'Magarao', 'Milaor', 'Minalabac', 'Nabua', 'Naga City', 'Ocampo',
 						'Pamplona', 'Pasacao', 'Pili', 'Presentacion', 'Ragay', 'Sagñay', 'San Fernando', 'San Jose', 'Sipocot', 'Siruma', 'Tigaon', 'Tinambac'];
 
-		$scope.city=$scope.cities[0];
+		$scope.newUser.city=$scope.cities[0];
+		$scope.newUser.user_type = 0
+		$scope.newUser.gender= "m"
+
+		$scope.addUser = function(){
+			console.log($scope.newUser)
+		}
 
 	})
 
@@ -98,7 +113,6 @@ angular.module('jobPortl.controllers', [])
         //call function
         $scope.call=function(number){
             var call = "tel:" + number;
-            alert('Calling ' + call ); //Alert notification is displayed on mobile, so function is triggered correctly!
             document.location.href = call;
         }
 
@@ -157,6 +171,9 @@ angular.module('jobPortl.controllers', [])
 		$scope.createNewJobPost = function(newJobPost) {
 			$scope.jobPosts.push({ job_id: 3, title: newJobPost.title, description: newJobPost.description, location: newJobPost.location, category: newJobPost.category.category_name, employer: 'New Employer', datetimePosted: datenow });
 			$scope.createJobPost.hide();
+			//clean form input
+			$scope.newJobPost= {};
+			$scope.newJobPost.category= $scope.categories[0];
 			alert("New job post successfully created!")
 		};
 	})
