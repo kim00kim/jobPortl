@@ -5,7 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
+angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'ngFacebook'])
+
+	.config( function( $facebookProvider ) {
+		$facebookProvider.setAppId('569148046553676');
+	})
 
 	.run(function ($ionicPlatform,$rootScope, $state) {
 		$ionicPlatform.ready(function () {
@@ -20,14 +24,24 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 			}
 		});
 
-		// UI Router Authentication Check
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+
+
+		/*// UI Router Authentication Check
 		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-			if (toState.data.authenticate && !Parse.User.current()) {
+			if (toState.data.authenticate) {
 				// User isn’t authenticated
 				$state.transitionTo("login");
 				event.preventDefault();
 			}
-		});
+		});*/
 	})
 
 

@@ -1,12 +1,19 @@
 angular.module('jobPortl.controllers', [])
 
-	.controller('AccountCtrl', function ($scope) {
+	.controller('AccountCtrl', function ($scope, UserService) {
+		$scope.name = UserService.user_firstName + " " + UserService.user_lastName
+		$scope.pic = "https://graph.facebook.com/" + UserService.fb_id + "/picture?width=80&height=80"
+		console.log($scope.pic)
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $ionicLoading, User_Account, UserService) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, User_Account, UserService, $facebook) {
 		$scope.userInput= {}
+//		$scope.isLimited = false;
 
 		$scope.skipLogin=function($scope){
+			UserService.isLimited= true;
+//			$scope.isLimited = UserService.isLimited;
+
 			$state.go('tab.job-post');
 		}
 		$scope.signUp=function($scope){
@@ -23,7 +30,53 @@ angular.module('jobPortl.controllers', [])
 		}
 
 		//for facebook login
-		var fbLogged = new Parse.Promise();
+		var userid;
+		$scope.fblogin = function() {
+			/*$facebook.login().then(function() {
+
+				refresh();
+			});*/
+			$facebook.login("email,user_birthday").then(function(){
+				refresh();
+//				getBirthDate();
+			})
+		}
+		function refresh() {
+			$facebook.api("/me", ["user_birthday"]).then(
+				function(profile) {
+					$facebook.api("/me/picture").then(
+						function(pic) {
+							$facebook.getAuthResponse();
+
+							//store user info
+							UserService.isLogged = true;
+							UserService.user_email= profile.email;
+//							UserService.user_id = ''
+							UserService.user_firstName = profile.first_name;
+							UserService.user_lastName = profile.last_name;
+							UserService.gender = profile.gender;
+							UserService.birthdate = profile.birthday;
+							UserService.user_profile = pic.data.url;
+							UserService.fb_id = profile.id;
+							UserService.user_acct_type = 0;
+							UserService.isLimited = false;
+							console.log(UserService)
+							//check if user has account
+
+							//proceed to app
+							$state.go('tab.job-post');
+						},
+						function(err) {
+							console.log(err)
+						});
+//					console.log(response)
+				},
+				function(err) {
+					console.log(err)
+				});
+		}
+		refresh();
+		/*var fbLogged = new Parse.Promise();
 
 		var fbLoginSuccess = function(response) {
 			if (!response.authResponse){
@@ -87,8 +140,9 @@ angular.module('jobPortl.controllers', [])
 				}, function(error) {
 					console.log(error);
 				});
-		};
+		};*/
 	})
+
 
 	.controller('SignupCtrl', function ($scope) {
 		$scope.newUser={}
@@ -148,13 +202,12 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost) {
+	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost, UserService) {
 		$scope.newJobPost={};
 
 		//get current date and time
 		var datenow= new Date();
 		datenow = $filter('date')(datenow, "EEE d MMM yyyy ") + "at" + $filter('date')(datenow, " hh:mm a");
-		console.log(datenow)
 
 		$scope.jobPosts=JobPost.all();
 
