@@ -15,27 +15,24 @@
 				</div>
 			</div>
 			<form name="loginForm" novalidate>
-				<!--<div class="error icon ion-alert-circled assertive"
-					 ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-					<small class="error"
-						   ng-show="loginForm.$error.required">
-						Your name is required.
-					</small>
-					<small class="error"
-						   ng-show="loginForm.$error.minlength">
-						Your name is required to be at least 3 characters
-					</small>
-				</div>-->
 				<div class="list">
-					<label class="item item-input">
+					<!--<div class="emailPart" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">-->
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Email Address</span>
+						<input type="email" placeholder="Email Address" ng-model="emailAdd" class="form-control" required />
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Password</span>
+						<input type="password" placeholder="Password" ng-model="password" class="form-control" required />
+					</label><!--
+					<label class="item item-input item-floating-label">
 						<input type="email" name="email" placeholder="Email Address" ng-model="user.emailAdd" class="form-control" required />
 					</label>
-					<label class="item item-input">
+					<label class="item item-input item-floating-label">
 						<input type="password" placeholder="Password" ng-model="user.passwrd" class="form-control" required />
-					</label>
+					</label>-->
 				</div>
 			</form>
-
 
 			<button class="button button-positive button-block" ng-click="login(user)">Log In</button>
 			<button class="button button-assertive button-block" ng-click="signUp()">Sign Up</button>

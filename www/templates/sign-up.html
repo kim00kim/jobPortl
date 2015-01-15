@@ -1,12 +1,54 @@
 <ion-view title="Sign Up">
 	<ion-content class="signup padding" >
 		<form name="signupform" novalidate>
+				<div class="card">
+					<div class="item item-text-wrap">
+						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.email.$dirty && signupform.email.$invalid, 'no-error' : signupform.email.$dirty && signupform.email.$valid}">
+							<span class="input-label">Email Address</span>
+							<div class="row">
+								<input type="email" name="email" placeholder="Email Address . . ." ng-model="newUser.email" required />
+								<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="signupform.email.$dirty && signupform.email.$invalid"></span>
+								<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="signupform.email.$dirty && signupform.email.$valid"></span>
+							</div>
+						</label>
+						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.password.$dirty && signupform.password.$invalid, 'no-error' : signupform.password.$dirty && signupform.password.$valid}">
+							<span class="input-label">Password</span>
+							<div class="row">
+								<input type="password" name="password" placeholder="Password . . ." ng-model="newUser.password" required />
+								<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="signupform.password.$dirty && signupform.password.$invalid"></span>
+								<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="signupform.password.$dirty && signupform.password.$valid"></span>
+							</div>
+						</label>
+						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.confirm.$dirty && signupform.confirm.$invalid, 'no-error' : signupform.confirm.$dirty && signupform.confirm.$valid}">
+							<span class="input-label">Password</span>
+							<div class="row">
+								<input type="password" name="confirm" placeholder="Confirm Password . . ." ng-model="newUser.confirm" match="newUser.password" required />
+								<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="signupform.confirm.$dirty && signupform.confirm.$invalid"></span>
+								<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="signupform.confirm.$dirty && signupform.confirm.$valid"></span>
+							</div>
+						</label>
+						<p>------------------OR------------------</p>
+						<div class="row">
+							<div class="col">
+								<button class="button btn-social btn-facebook button-small button-block">
+									<i class="fa fa-facebook"></i> Sign in
+								</button>
+							</div>
+							<div class="col">
+								<button class="button btn-social btn-google-plus button-small button-block">
+									<i class="fa fa-google-plus"></i> Sign in
+									</a>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			<div class="list">
-				<label class="item item-input item-select">
+				<label class="item item-input item-select" ng-class="{'no-error' : signupform.user_type.$dirty}">
 					<div class="input-label">
 						Choose user type:
 					</div>
-					<select ng-model="newUser.user_type" required>
+					<select ng-model="newUser.user_type" name="user_type" required>
 						<option value="0" selected>I'm an Employer</option>
 						<option value="1">I'm a Skilled Laborer</option>
 					</select>
@@ -40,11 +82,11 @@
 					</div>
 				</label>
 				<br>
-				<label class="item item-input item-select">
+				<label class="item item-input item-select" ng-class="{'no-error' : signupform.city.$dirty}">
 					<div class="input-label">
 						City/Municipality
 					</div>
-					<select ng-options="city for city in cities" ng-model="newUser.city">
+					<select ng-options="city for city in cities" ng-model="newUser.city" name="city">
 					</select>
 				</label>
 				<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.zipcode.$dirty && signupform.zipcode.$invalid, 'no-error' : signupform.zipcode.$dirty && signupform.zipcode.$valid}">
@@ -57,11 +99,11 @@
 				</label>
 			</div>
 			<div class="list">
-				<label class="item item-input item-select">
+				<label class="item item-input item-select" ng-class="{'no-error' : signupform.gender.$dirty}">
 					<div class="input-label">
 						Gender
 					</div>
-					<select ng-model="newUser.gender">
+					<select ng-model="newUser.gender" name="gender">
 						<option value="m">Male</option>
 						<option value="f">Female</option>
 					</select>
@@ -71,50 +113,6 @@
 				<span class="input-label">Birth date</span>
 					<input type="date" name="birthdate" ng-model="newUser.birthdate" class="form-control" required>
 			</label>
-			<div class="list">
-				<div class="card">
-					<div class="item item-text-wrap">
-						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.email.$dirty && signupform.email.$invalid, 'no-error' : signupform.email.$dirty && signupform.email.$valid}">
-							<span class="input-label">Email Address</span>
-							<div class="row">
-								<input type="email" name="email" placeholder="Email Address . . ." ng-model="newUser.email" required />
-								<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="signupform.email.$dirty && signupform.email.$invalid"></span>
-								<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="signupform.email.$dirty && signupform.email.$valid"></span>
-							</div>
-						</label>
-						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.password.$dirty && signupform.password.$invalid, 'no-error' : signupform.password.$dirty && signupform.password.$valid}">
-						<span class="input-label">Password</span>
-						<div class="row">
-							<input type="password" name="password" placeholder="Password . . ." ng-model="newUser.password" required />
-							<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="signupform.password.$dirty && signupform.password.$invalid"></span>
-							<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="signupform.password.$dirty && signupform.password.$valid"></span>
-						</div>
-						</label>
-						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.confirm.$dirty && signupform.confirm.$invalid, 'no-error' : signupform.confirm.$dirty && signupform.confirm.$valid}">
-							<span class="input-label">Password</span>
-							<div class="row">
-								<input type="password" name="confirm" placeholder="Confirm Password . . ." ng-model="newUser.confirm" match="newUser.password" required />
-								<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="signupform.confirm.$dirty && signupform.confirm.$invalid"></span>
-								<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="signupform.confirm.$dirty && signupform.confirm.$valid"></span>
-							</div>
-						</label>
-						<p>------------------OR------------------</p>
-						<div class="row">
-							<div class="col">
-								<button class="button btn-social btn-facebook button-small button-block">
-									<i class="fa fa-facebook"></i> Sign in
-								</button>
-							</div>
-							<div class="col">
-								<button class="button btn-social btn-google-plus button-small button-block">
-									<i class="fa fa-google-plus"></i> Sign in
-									</a>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="list">
 				<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.cpno.$dirty && signupform.cpno.$invalid, 'no-error' : signupform.cpno.$dirty && signupform.cpno.$valid}">
 					<span class="input-label">Cellphone Number</span>
