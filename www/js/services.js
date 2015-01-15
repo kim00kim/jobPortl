@@ -1,22 +1,37 @@
 angular.module('jobPortl.services', [])
 
 	.factory('UserService', function(){
-		var user_info= {
+/*		var user_info= [{
 			isLogged : false,
 			user_email : '',
 			user_id : '',
-			user_name : '',
-			user_type : ''
-		}
+			user_firstName : '',
+			user_lastName : '',
+			user_type : '',
+			gender : '',
+			birthdate : '',
+			user_profile: ''
+		}]*/
 		return {
-			getUserInfo: function (user_id){
+			isLogged : false,
+			user_email : '',
+			user_id : '',
+			user_firstName : '',
+			user_lastName : '',
+			user_type : '',
+			gender : '',
+			birthdate : '',
+			user_profile: '',
+			user_acct_type: '',
+			fb_id: '',
+			isLimited: true
+
+			/*getUserInfo: function (user_id){
 				user_info.isLogged = true;
 				user_info.user_type = 0
-				return user_info.user_type;
+				return user_info.user_type;*/
 			}
-		}
 	})
-
 
 	.factory('User_Account', function () {
 		var user_account=[
