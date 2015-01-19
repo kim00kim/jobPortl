@@ -1,6 +1,10 @@
 angular.module('jobPortl.controllers', [])
 
-	.controller('AccountCtrl', function ($scope, UserService) {
+	.config(function($compileProvider){
+		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+	})
+
+	.controller('AccountCtrl', function ($scope, UserService, $state) {
 		$scope.name = UserService.user_firstName + " " + UserService.user_lastName
 		$scope.pic = "https://graph.facebook.com/" + UserService.fb_id + "/picture?width=80&height=80"
 		console.log($scope.pic)
@@ -64,7 +68,7 @@ angular.module('jobPortl.controllers', [])
 							//check if user has account
 
 							//proceed to app
-							$state.go('tab.job-post');
+							//$state.go('tab.job-post');
 						},
 						function(err) {
 							console.log(err)
@@ -144,7 +148,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 
-	.controller('SignupCtrl', function ($scope) {
+	.controller('SignupCtrl', function ($scope, $state, $window) {
 		$scope.newUser={}
 
 		$scope.cities=['Baao', 'Balatan', 'Bato', 'Bombon','Buhi','Bula','Cabusao', 'Calabanga', 'Camaligan','Canaman','Caramoan','Del Gallego','Gainza',
@@ -158,7 +162,36 @@ angular.module('jobPortl.controllers', [])
 		$scope.addUser = function(){
 			console.log($scope.newUser)
 		}
+		$scope.cancel= function(){
+			$window.history.back();
+		}
+	})
 
+	.controller('EditProfileCtrl', function ($scope, Camera) {
+		$scope.lastPhoto = "img/	blank.png"
+		$scope.getPhoto = function() {
+			console.log('Getting camera');
+			Camera.getPicture().then(function(imageURI) {
+				console.log(imageURI);
+				$scope.lastPhoto = imageURI;
+			}, function(err) {
+				console.err(err);
+			}, {
+				quality: 75,
+				targetWidth: 100,
+				targetHeight: 100,
+				saveToPhotoAlbum: false
+			});
+			/*
+			 navigator.camera.getPicture(function(imageURI) {
+			 console.log(imageURI);
+			 }, function(err) {
+			 }, {
+			 quality: 50,
+			 destinationType: Camera.DestinationType.DATA_URL
+			 });
+			 */
+		}
 	})
 
 	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {

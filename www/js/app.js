@@ -129,6 +129,15 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 					}
 				}
 			})
+			.state('tab.modify', {
+				url: '/edit-profile',
+				views: {
+					'tab-account' : {
+						templateUrl: 'templates/edit-profile.html',
+						controller: 'EditProfileCtrl'
+					}
+				}
+			})
 
 			.state('sample', {
 				url: "/sample",
@@ -139,4 +148,3 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 		$urlRouterProvider.otherwise('/login');
 
 	});
-

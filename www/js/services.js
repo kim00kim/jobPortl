@@ -33,6 +33,24 @@ angular.module('jobPortl.services', [])
 			}
 	})
 
+	.factory('Camera', ['$q', function($q) {
+
+		return {
+			getPicture: function(options) {
+				var q = $q.defer();
+
+				navigator.camera.getPicture(function(result) {
+					// Do any magic you need
+					q.resolve(result);
+				}, function(err) {
+					q.reject(err);
+				}, options);
+
+				return q.promise;
+			}
+		}
+	}])
+
 	.factory('User_Account', function () {
 		var user_account=[
 			{ user_acct_id: 2, email: 'me@domain.com', password: '1234', user_acct_type: 'typical', user_id: 0, user_type: 0},
