@@ -4,7 +4,7 @@
 		<button class="button button-clear button-primary icon ion-close-circled" ng-click="createJobPost.hide()"></button>
 	</ion-header-bar>
 	<ion-content class="padding">
-		<form name="jobPost" novalidate>
+		<form name="jobPost" ng-submit="createNewJobPost(newJobPost)" novalidate>
 			<div class="list">
 				<label class="item item-input item-floating-label" ng-class="{'has-error' : jobPost.title.$dirty && jobPost.title.$invalid, 'no-error' : jobPost.title.$dirty && jobPost.title.$valid}">
 					<span class="input-label">Job Title</span>
@@ -40,7 +40,7 @@
 					</div>
 				</label>
 			</div>
-				<button class="button button-block button-positive" ng-click="createNewJobPost(newJobPost)" ng-disabled="jobPost.$invalid">Post Job</button>
+				<button class="button button-block button-positive" ng-disabled="jobPost.$invalid">Post Job</button>
 		</form>
 	</ion-content>
 </ion-modal-view>

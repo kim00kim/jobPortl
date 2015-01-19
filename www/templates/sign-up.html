@@ -1,6 +1,6 @@
 <ion-view title="Sign Up">
 	<ion-content class="signup padding" >
-		<form name="signupform" novalidate>
+		<form name="signupform" ng-submit="addUser(newUser)" novalidate>
 				<div class="card">
 					<div class="item item-text-wrap">
 						<label class="item item-input item-floating-label" ng-class="{'has-error' : signupform.email.$dirty && signupform.email.$invalid, 'no-error' : signupform.email.$dirty && signupform.email.$valid}">
@@ -137,10 +137,10 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<button class="button button-positive button-block" ng-disabled="signupform.$invalid" ng-click="addUser(newUser)">Create Account</button>
+					<button class="button button-positive button-block" ng-disabled="signupform.$invalid" type="submit">Create Account</button>
 				</div>
 				<div class="col">
-					<button class="button button-assertive button-block">Cancel</button>
+					<button class="button button-assertive button-block" ng-click="cancel()">Cancel</button>
 				</div>
 			</div>
 		</form>
