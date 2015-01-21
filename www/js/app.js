@@ -24,8 +24,8 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 			}
 		});
 
-		// UI Router Authentication Check
-		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+		 //UI Router Authentication Check
+		 $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
 			if (toState.data.authenticate) {
 				// User isn’t authenticated
 				$state.transitionTo("login");

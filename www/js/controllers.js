@@ -36,9 +36,9 @@ angular.module('jobPortl.controllers', [])
 		//for facebook login
 		var userid;
 		/*$scope.fblogin = function() {
-
 			$facebook.login().then(function() {
 				refresh();
+			});
 			});
             (function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -88,10 +88,8 @@ angular.module('jobPortl.controllers', [])
 				function(err) {
 					console.log(err)
 				});
-		}*/
-		//refresh();
+		refresh();*/
 		var fbLogged = new Parse.Promise();
-
 		var fbLoginSuccess = function(response) {
 			if (!response.authResponse){
 				fbLoginError("Cannot find the authResponse");
@@ -116,8 +114,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		$scope.fblogin = function() {
-
-            console.log('Login');
+			console.log('Login');
 			if (!window.cordova) {
 				facebookConnectPlugin.browserInit('569148046553676');
 			}
