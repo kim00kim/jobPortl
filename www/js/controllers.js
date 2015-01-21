@@ -37,21 +37,30 @@ angular.module('jobPortl.controllers', [])
 		var userid;
 		$scope.fblogin = function() {
 			/*$facebook.login().then(function() {
-
 				refresh();
 			});*/
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
 			$facebook.login("email,user_birthday").then(function(){
+                alert("Clicked")
 				refresh();
 //				getBirthDate();
 			})
 		}
+
 		function refresh() {
 			$facebook.api("/me", ["user_birthday"]).then(
 				function(profile) {
 					$facebook.api("/me/picture").then(
 						function(pic) {
-							$facebook.getAuthResponse();
-
+							//$facebook.getAuthResponse();
+                            alert(pic)
 							//store user info
 							UserService.isLogged = true;
 							UserService.user_email= profile.email;
@@ -79,7 +88,7 @@ angular.module('jobPortl.controllers', [])
 					console.log(err)
 				});
 		}
-		refresh();
+		//refresh();
 		/*var fbLogged = new Parse.Promise();
 
 		var fbLoginSuccess = function(response) {
