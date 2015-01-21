@@ -10,6 +10,9 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 	//.config( function( $facebookProvider ) {
 	//	$facebookProvider.setAppId('569148046553676');
 	//})
+    .config(function($compileProvider){
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+    })
 
 	.run(function ($ionicPlatform,$rootScope, $state) {
 		$ionicPlatform.ready(function () {

@@ -189,7 +189,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('EditProfileCtrl', function ($scope, Camera) {
-		$scope.lastPhoto = "img/	blank.png"
+		$scope.lastPhoto = "img/blank.png"
 		$scope.getPhoto = function() {
 			console.log('Getting camera');
 			Camera.getPicture().then(function(imageURI) {
