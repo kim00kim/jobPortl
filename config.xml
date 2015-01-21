@@ -24,10 +24,12 @@
     <icon src="img/logos/logo_72x72.png" gap:platform="android" gap:density="hdpi" />
     <icon src="img/logos/logo_96x96.png" gap:platform="android" gap:density="xhdpi" />
 
+<!--
     <gap:splash src="splash.png" />
     <gap:splash src="img/splash/splash_640x960.png" gap:platform="ios" width="640" height="960" />
     <gap:splash src="img/splash/splash_640x1136.png" gap:platform="ios" width="640" height="1136" />
     <gap:splash src="img/splash/splash_360x640.jpg" gap:platform="winphone" />
+-->
 
 
     <preference name="prerendered-icon" value="true"/>
@@ -37,10 +39,10 @@
         <param name="APP_ID" value="569148046553676"/>
         <param name="APP_NAME" value="JobPortl"/>
     </gap:plugin>
-    <resources>
+    <!--<resources>
         <string name="fb_app_id">569148046553676</string>
         <string name="fb_app_name">JobPortl</string>
-    </resources>
+    </resources>-->
 
     <!-- IOS ONLY -->
     <gap:plugin name="com.phonegap.plugin.statusbar"/>

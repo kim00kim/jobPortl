@@ -5,11 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'ngFacebook'])
+angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
 
-	.config( function( $facebookProvider ) {
-		$facebookProvider.setAppId('569148046553676');
-	})
+	//.config( function( $facebookProvider ) {
+	//	$facebookProvider.setAppId('569148046553676');
+	//})
 
 	.run(function ($ionicPlatform,$rootScope, $state) {
 		$ionicPlatform.ready(function () {
@@ -24,24 +24,14 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 			}
 		});
 
-		(function(d, s, id){
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-
-
-
-		/*// UI Router Authentication Check
+		// UI Router Authentication Check
 		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
 			if (toState.data.authenticate) {
 				// User isn’t authenticated
 				$state.transitionTo("login");
 				event.preventDefault();
 			}
-		});*/
+		});
 	})
 
 
@@ -66,13 +56,19 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 			.state('signUp', {
 				url: "/signUp",
 				templateUrl: "templates/sign-up.html",
-				controller: 'SignupCtrl'
+				controller: 'SignupCtrl',
+                data: {
+                    authenticate: false
+                }
 			})
 
 			.state('tab', {
 				url: "/tab",
 				abstract: true,
-				templateUrl: "templates/tabs.html"
+				templateUrl: "templates/tabs.html",
+                data: {
+                    authenticate: false
+                }
 			})
 
 			// Each tab has its own nav history stack:
@@ -96,7 +92,10 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				views: {
 					'tab-skilled-laborer': {
 						templateUrl: 'templates/tab-skilled-laborer.html',
-						controller: 'SkilledLaborerCtrl'
+						controller: 'SkilledLaborerCtrl',
+                        data: {
+                            authenticate: true
+                        }
 					}
 				}
 			})
@@ -125,7 +124,10 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				views: {
 					'tab-account': {
 						templateUrl: 'templates/tab-account.html',
-						controller: 'AccountCtrl'
+						controller: 'AccountCtrl',
+                        data: {
+                            authenticate: true
+                        }
 					}
 				}
 			})
@@ -134,7 +136,10 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				views: {
 					'tab-account' : {
 						templateUrl: 'templates/edit-profile.html',
-						controller: 'EditProfileCtrl'
+						controller: 'EditProfileCtrl',
+                        data: {
+                            authenticate: true
+                        }
 					}
 				}
 			})

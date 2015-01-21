@@ -10,7 +10,7 @@ angular.module('jobPortl.controllers', [])
 		console.log($scope.pic)
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, User_Account, UserService, $facebook) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, User_Account, UserService) {
 		$scope.userInput= {}
 //		$scope.isLimited = false;
 
@@ -35,23 +35,33 @@ angular.module('jobPortl.controllers', [])
 
 		//for facebook login
 		var userid;
-		$scope.fblogin = function() {
-			/*$facebook.login().then(function() {
+		/*$scope.fblogin = function() {
 
+			$facebook.login().then(function() {
 				refresh();
-			});*/
+			});
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
 			$facebook.login("email,user_birthday").then(function(){
+                alert("Clicked")
 				refresh();
 //				getBirthDate();
 			})
 		}
+
 		function refresh() {
 			$facebook.api("/me", ["user_birthday"]).then(
 				function(profile) {
 					$facebook.api("/me/picture").then(
 						function(pic) {
-							$facebook.getAuthResponse();
-
+							//$facebook.getAuthResponse();
+                            alert(pic)
 							//store user info
 							UserService.isLogged = true;
 							UserService.user_email= profile.email;
@@ -78,9 +88,9 @@ angular.module('jobPortl.controllers', [])
 				function(err) {
 					console.log(err)
 				});
-		}
-		refresh();
-		/*var fbLogged = new Parse.Promise();
+		}*/
+		//refresh();
+		var fbLogged = new Parse.Promise();
 
 		var fbLoginSuccess = function(response) {
 			if (!response.authResponse){
@@ -106,7 +116,8 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		$scope.fblogin = function() {
-			console.log('Login');
+
+            console.log('Login');
 			if (!window.cordova) {
 				facebookConnectPlugin.browserInit('569148046553676');
 			}
@@ -121,9 +132,21 @@ angular.module('jobPortl.controllers', [])
 					facebookConnectPlugin.api('/me', null,
 						function(response) {
 							console.log(response);
-							userObject.set('name', response.name);
+							/*userObject.set('name', response.name);
 							userObject.set('email', response.email);
-							userObjectuserObject.save();
+                            userObject.set('id', response.id);
+							userObject.save();*/
+                            UserService.isLogged = true;
+                            UserService.user_email= response.email;
+//							UserService.user_id = ''
+                            UserService.user_firstName = response.first_name;
+                            UserService.user_lastName = response.last_name;
+                            UserService.gender = response.gender;
+                            UserService.birthdate = response.birthday;
+                            UserService.fb_id = response.id;
+                            UserService.user_acct_type = 0;
+                            UserService.isLimited = false;
+                            console.log(UserService)
 						},
 						function(error) {
 							console.log(error);
@@ -131,8 +154,9 @@ angular.module('jobPortl.controllers', [])
 					);
 					facebookConnectPlugin.api('/me/picture', null,
 						function(response) {
-							userObject.set('profilePicture', response.data.url);
-							userObject.save();
+							/*userObject.set('profilePicture', response.data.url);
+							userObject.save();*/
+                            UserService.user_profile = response.data.url;
 						},
 						function(error) {
 							console.log(error);
@@ -144,7 +168,7 @@ angular.module('jobPortl.controllers', [])
 				}, function(error) {
 					console.log(error);
 				});
-		};*/
+		};
 	})
 
 
