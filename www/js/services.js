@@ -84,7 +84,7 @@ angular.module('jobPortl.services', [])
 
 	})
 
-	.factory('JobPost', function () {
+	.factory('JobPost', function ($http) {
 		// Some fake testing data
 		var jobPosts = [
 			{ job_id: 0, title: 'Job Title1', description: 'Description Blah Blah Description Blah Blah Description Blah Blah Description Blah Blah', location: 'Naga City', category: 'Furniture Maker', employer: 'John Doe', datetimePosted: '5 Jan 2015 at 8:00pm' },
@@ -100,6 +100,12 @@ angular.module('jobPortl.services', [])
 
 		return {
 			all: function () {
+				// return $http.get('http://jobprtl.com/api/post/all');
+
+				// // PHP Rest API Controller
+				// function getPostsAllAction() {
+				// 	myOrm.posts.getAll();
+				// }
 				return jobPosts;
 			},
 			allCategories: function () {
@@ -112,7 +118,7 @@ angular.module('jobPortl.services', [])
 
 		return{
 			getSkilledLaborers:function(){
-				return $http.get('skilled_laborer.json')
+				return $http.get('skilled_laborer.json');
 			}
 		}
 	})

@@ -34,61 +34,6 @@ angular.module('jobPortl.controllers', [])
 		}
 
 		//for facebook login
-		var userid;
-		/*$scope.fblogin = function() {
-			$facebook.login().then(function() {
-				refresh();
-			});
-			});
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-
-			$facebook.login("email,user_birthday").then(function(){
-                alert("Clicked")
-				refresh();
-//				getBirthDate();
-			})
-		}
-
-		function refresh() {
-			$facebook.api("/me", ["user_birthday"]).then(
-				function(profile) {
-					$facebook.api("/me/picture").then(
-						function(pic) {
-							//$facebook.getAuthResponse();
-                            alert(pic)
-							//store user info
-							UserService.isLogged = true;
-							UserService.user_email= profile.email;
-//							UserService.user_id = ''
-							UserService.user_firstName = profile.first_name;
-							UserService.user_lastName = profile.last_name;
-							UserService.gender = profile.gender;
-							UserService.birthdate = profile.birthday;
-							UserService.user_profile = pic.data.url;
-							UserService.fb_id = profile.id;
-							UserService.user_acct_type = 0;
-							UserService.isLimited = false;
-							console.log(UserService)
-							//check if user has account
-
-							//proceed to app
-							//$state.go('tab.job-post');
-						},
-						function(err) {
-							console.log(err)
-						});
-//					console.log(response)
-				},
-				function(err) {
-					console.log(err)
-				});
-		refresh();*/
 		var fbLogged = new Parse.Promise();
 		var fbLoginSuccess = function(response) {
 			if (!response.authResponse){
