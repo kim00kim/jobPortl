@@ -33,7 +33,7 @@ angular.module('jobPortl.services', [])
 			}
 	})
 
-	.factory('Camera', ['$q', function($q) {
+	/*.factory('Camera', ['$q', function($q) {
 
 		return {
 			getPicture: function(options) {
@@ -49,7 +49,7 @@ angular.module('jobPortl.services', [])
 				return q.promise;
 			}
 		}
-	}])
+	}])*/
 
 	.factory('User_Account', function () {
 		var user_account=[
