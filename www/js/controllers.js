@@ -133,11 +133,11 @@ angular.module('jobPortl.controllers', [])
 		}
 	})
 
-	.controller('EditProfileCtrl', function ($scope, Camera) {
+	.controller('EditProfileCtrl', function ($scope) {
 		$scope.lastPhoto = "img/blank.png"
 		$scope.getPhoto = function() {
 			console.log('Getting camera');
-			Camera.getPicture().then(function(imageURI) {
+			/*Camera.getPicture().then(function(imageURI) {
 				console.log(imageURI);
 				$scope.lastPhoto = imageURI;
 			}, function(err) {
@@ -147,16 +147,30 @@ angular.module('jobPortl.controllers', [])
 				targetWidth: 100,
 				targetHeight: 100,
 				saveToPhotoAlbum: false
-			});
-			/*
-			 navigator.camera.getPicture(function(imageURI) {
+			});*/
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('myImage');
+                image.src = "data:image/jpeg;base64," + imageData;
+                $scope.lastPhoto = image.src;
+                alert(imageData)
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+
+			 /*navigator.Camera.getPicture(function(imageURI) {
 			 console.log(imageURI);
+                 $scope.lastPhoto = imageURI;
 			 }, function(err) {
 			 }, {
 			 quality: 50,
 			 destinationType: Camera.DestinationType.DATA_URL
-			 });
-			 */
+			 });*/
 		}
 	})
 
