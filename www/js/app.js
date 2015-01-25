@@ -7,36 +7,31 @@
 // 'jobPortl.controllers' is found in controllers.js
 angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
 
-	//.config( function( $facebookProvider ) {
-	//	$facebookProvider.setAppId('569148046553676');
-	//})
-    .config(function($compileProvider){
+    /*.config(function($compileProvider){
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-    })
+    })*/
 
 	.run(function ($ionicPlatform,$rootScope, $state) {
-		$ionicPlatform.ready(function () {
-			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-			// for form inputs)
-			if (window.cordova && window.cordova.plugins.Keyboard) {
-				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-			}
-			if (window.StatusBar) {
-				// org.apache.cordova.statusbar required
-				StatusBar.styleDefault();
-			}
-		});
-
-		 //UI Router Authentication Check
-		 $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-			if (toState.data.authenticate) {
-				// User isn’t authenticated
-				$state.transitionTo("login");
-				event.preventDefault();
-			}
-		});
-	})
-
+        $ionicPlatform.ready(function () {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleDefault();
+            }
+        });
+        // UI Router Authentication Check
+        $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+            if (toState.data.authenticate && !Parse.User.current()) {
+                // User isn’t authenticated
+                $state.transitionTo("login");
+                event.preventDefault();
+            }
+        })
+    })
 
 	.config(function ($stateProvider, $urlRouterProvider) {
 

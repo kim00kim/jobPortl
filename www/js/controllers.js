@@ -34,36 +34,39 @@ angular.module('jobPortl.controllers', [])
 		}
 
 		//for facebook login
-		var fbLogged = new Parse.Promise();
-		var fbLoginSuccess = function(response) {
-			if (!response.authResponse){
-				fbLoginError("Cannot find the authResponse");
-				return;
-			}
-			var expDate = new Date(
-				new Date().getTime() + response.authResponse.expiresIn * 1000
-			).toISOString();
+        var fbLogged = new Parse.Promise();
 
-			var authData = {
-				id: String(response.authResponse.userID),
-				access_token: response.authResponse.accessToken,
-				expiration_date: expDate
-			}
-			fbLogged.resolve(authData);
-			fbLoginSuccess = null;
-			console.log(response);
-		};
+        var fbLoginSuccess = function(response) {
+            if (!response.authResponse){
+                fbLoginError("Cannot find the authResponse");
+                return;
+            }
+            var expDate = new Date(
+                new Date().getTime() + response.authResponse.expiresIn * 1000
+            ).toISOString();
 
-		var fbLoginError = function(error){
-			fbLogged.reject(error);
-		};
+            var authData = {
+                id: String(response.authResponse.userID),
+                access_token: response.authResponse.accessToken,
+                expiration_date: expDate
+            }
+            fbLogged.resolve(authData);
+            fbLoginSuccess = null;
+            console.log(response);
+        };
+
+        var fbLoginError = function(error){
+            fbLogged.reject(error);
+        };
 
 		$scope.fblogin = function() {
 			console.log('Login');
 			if (!window.cordova) {
 				facebookConnectPlugin.browserInit('569148046553676');
 			}
+            alert("Logging in!")
 			facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
+            alert("facebook login successful!")
 
 			fbLogged.then( function(authData) {
 				console.log('Promised');
@@ -77,7 +80,7 @@ angular.module('jobPortl.controllers', [])
 							/*userObject.set('name', response.name);
 							userObject.set('email', response.email);
                             userObject.set('id', response.id);
-							userObject.save();*/
+							userObject.save();*//*
                             UserService.isLogged = true;
                             UserService.user_email= response.email;
 //							UserService.user_id = ''
@@ -88,7 +91,7 @@ angular.module('jobPortl.controllers', [])
                             UserService.fb_id = response.id;
                             UserService.user_acct_type = 0;
                             UserService.isLimited = false;
-                            console.log(UserService)
+                            console.log(UserService)*/
 						},
 						function(error) {
 							console.log(error);
@@ -98,7 +101,7 @@ angular.module('jobPortl.controllers', [])
 						function(response) {
 							/*userObject.set('profilePicture', response.data.url);
 							userObject.save();*/
-                            UserService.user_profile = response.data.url;
+                            //UserService.user_profile = response.data.url;
 						},
 						function(error) {
 							console.log(error);
