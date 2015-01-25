@@ -64,9 +64,7 @@ angular.module('jobPortl.controllers', [])
 			if (!window.cordova) {
 				facebookConnectPlugin.browserInit('569148046553676');
 			}
-            alert("Logging in!")
 			facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
-            alert("facebook login successful!")
 
 			fbLogged.then( function(authData) {
 				console.log('Promised');
@@ -108,7 +106,6 @@ angular.module('jobPortl.controllers', [])
 						}
 					);
 					alert("logged in successfully")
-
 					$state.go('tab.job-post');
 				}, function(error) {
 					console.log(error);
