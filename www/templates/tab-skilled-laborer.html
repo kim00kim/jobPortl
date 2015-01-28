@@ -1,6 +1,6 @@
 <ion-view title="Skilled Laborer">
 	<ion-content class="padding">
-		<div class="list card" ng-repeat="info in skilledLaborerInfo">
+		<div class="list card" ng-repeat="info in skilled_laborer_info">
 			<div class="item item-avatar">
 				<img src="img/SL.jpg">
 				<h2 class="highlight">{{info.first_name + " " + info.last_name}} </h2>
@@ -12,7 +12,6 @@
 					<button class="button button-light icon ion-ios7-eye-outline" ng-click="viewProfile(info)"> View Profile</button>
 					<button class="button icon ion-ios7-telephone-outline button-balanced" ng-click="call(info.number)"> Call To Hire</button>
 				</div>
-
 			</div>
 		</div>
 	</ion-content>

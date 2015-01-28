@@ -6,30 +6,30 @@
 <ion-view title="Job Post">
 	<ion-content class="padding">
 		<!--<h1>Job Posts</h1>-->
-		<div class="list card" ng-repeat="jobPost in jobPosts">
+		<div class="list card" ng-repeat="job_post in job_posts">
 			<div class="item bar bar-header bar-positive">
-				{{jobPost.title}}
-				<span class="datetime-posted"><i>Posted on {{jobPost.datetimePosted}}</i></span>
+				{{job_post.title}}
+				<span class="datetime-posted"><i>Posted on {{job_post.datetime_posted}}</i></span>
 			</div>
 			<div class="item item-body job-post">
 				<div class="category">
-					<h3>Category: {{jobPost.category}}</h3>
+					<h3>Category: {{job_post.category}}</h3>
 				</div>
 				<div class="row row-center">
 					<div class="col col-75">
 						<div class="job-info">
 
 							<div class="description">
-								<p>{{jobPost.description}}</p>
+								<p>{{job_post.description}}</p>
 							</div>
 							<div class="location">
-								<p><label>Location:</label> {{jobPost.location}}</p>
+								<p><label>Location:</label> {{job_post.location}}</p>
 							</div>
 						</div>
 					</div>
 					<div class="col avatar">
 						<img src="img/avatar.jpg" >
-						<h4>{{jobPost.employer}}</h4>
+						<h4>{{job_post.employer}}</h4>
 					</div>
 				</div>
 			</div>

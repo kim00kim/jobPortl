@@ -2,8 +2,8 @@
 	text-align: center;
 	margin: 5%;
 }
-.social-button{
-	margin-bottom: 20px;
+#social-button{
+	margin-bottom: 30px;
 }
 
 span.input-label.has-input{
@@ -59,15 +59,15 @@ span.error-handler,{
 	text-align: right;
 }
 label.has-error{
-	-webkit-box-shadow: 1px 1.5px	3px 1px #ef4e3a;
-	-moz-box-shadow: 1px 1.5px 3px 1px #ef4e3a;
-	box-shadow: 1px 1.5px	3px 1px #ef4e3a;
+	-webkit-box-shadow: 1px 1px	1px 1px #ef4e3a;
+	-moz-box-shadow: 1px 1px 1px 1px #ef4e3a;
+	box-shadow: 1px 1px	1px 1px #ef4e3a;
 }
 
 label.no-error{
-	-webkit-box-shadow: 1px 1.5px 3px 1px #66cc33;
-	-moz-box-shadow: 1px 1.5px 3px 1px #66cc33;
-	box-shadow: 1px 1.5px 3px 1px #66cc33;
+	-webkit-box-shadow: 1px 1px 1px 1px #66cc33;
+	-moz-box-shadow: 1px 1px 1px 1px #66cc33;
+	box-shadow: 1px 1px 1px 1px #66cc33;
 }
 
 

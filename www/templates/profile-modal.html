@@ -7,8 +7,8 @@
 		<div class="list">
 			<div class="item item-thumbnail-left" >
 				<img src="img/SL.jpg">
-				<h2 class="highlight">{{userInfo.first_name + " " + userInfo.last_name}}</h2>
-				<h2 class="title">{{userInfo.title}}</h2>
+				<h2 class="highlight">{{user_info.first_name + " " + user_info.last_name}}</h2>
+				<h2 class="title">{{user_info.title}}</h2>
 			</div>
 			<div class="item reviews">
 				<!--<rating ng-model="rate" max="max"></rating>-->
@@ -16,21 +16,21 @@
 			</div>
 			<div class="item details">
 				<h2><strong>Overview</strong></h2>
-				<p>{{userInfo.overview}}</p>
+				<p>{{user_info.overview}}</p>
 				<div class="item item-divider headers">Language(s)</div>
-				<div class="item language subList" ng-repeat="language in userInfo.language">
+				<div class="item language subList" ng-repeat="language in user_info.language">
 					{{language.desc}}
 				</div>
 
 				<!--<h2>Availability</h2>
-				<div class="item schedule subList" ng-repeat="language in userInfo.language">
+				<div class="item schedule subList" ng-repeat="language in user_info.language">
 				</div>-->
 				<div class="item item-divider headers">Skill(s)</div>
-				<div class="item skills subList" ng-repeat="skill in userInfo.skill">
+				<div class="item skills subList" ng-repeat="skill in user_info.skill">
 					{{skill.desc}}
 				</div>
 				<div class="item item-divider headers">Certification(s)</div>
-				<div class="item certification subList" ng-repeat="certification in userInfo.certification">
+				<div class="item certification subList" ng-repeat="certification in user_info.certification">
 					{{certification.desc}}
 				</div>
 			</div>
