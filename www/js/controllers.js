@@ -4,33 +4,35 @@ angular.module('jobPortl.controllers', [])
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 	})
 
-	.controller('AccountCtrl', function ($scope, UserService, $state) {
-		$scope.name = UserService.user_firstName + " " + UserService.user_lastName
+	.controller('AccountCtrl', function ($scope, UserService) {
+		$scope.name = UserService.user_first_name + " " + UserService.user_last_name
 		$scope.pic = "https://graph.facebook.com/" + UserService.fb_id + "/picture?width=80&height=80"
 		console.log($scope.pic)
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, User_Account, UserService) {
-		$scope.userInput= {}
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
+		$scope.user_input= {}
 //		$scope.isLimited = false;
 
 		$scope.skipLogin=function($scope){
-			UserService.isLimited= true;
-//			$scope.isLimited = UserService.isLimited;
+			UserService.is_limited= true;
+//			$scope.is_limited = UserService.is_limited;
 
 			$state.go('tab.job-post');
 		}
-		$scope.signUp=function($scope){
-			$state.go('signUp');
+		$scope.register=function(){
+			$state.go('registerLogin');
 		}
 
-		$scope.login=function(user){
-			console.log(user)
-			/*var response = User_Account.checkUser(user)
-			if(response > 1){
-				UserService.getUserInfo(response)
-			}
-			console.log('user_type: ' + UserService.user_info.user_type)*/
+		$scope.login=function(user_input){
+			console.log(user_input)
+			UserAccount.checkUser(user_input).success(function(response){
+				console.log(response)
+			})
+			.error(function(err){
+				console.log(err)
+			})
+			//console.log('user_type: ' + UserService.user_info.user_type)
 		}
 
 		//for facebook login
@@ -78,7 +80,7 @@ angular.module('jobPortl.controllers', [])
 							userObject.set('email', response.email);
                             userObject.set('id', response.id);
 							userObject.save();*/
-                            UserService.isLogged = true;
+                            UserService.is_logged = true;
                             UserService.user_email= response.email;
 //							UserService.user_id = ''
                             UserService.user_firstName = response.first_name;
@@ -114,22 +116,62 @@ angular.module('jobPortl.controllers', [])
 	})
 
 
-	.controller('SignupCtrl', function ($scope, $state, $window) {
-		$scope.newUser={}
+	.controller('RegisterCtrl', function ($scope, $state, $window, UserAccount, User, $ionicViewService) {
+		$scope.new_user={}
+		$scope.new_user_account={}
 
 		$scope.cities=['Baao', 'Balatan', 'Bato', 'Bombon','Buhi','Bula','Cabusao', 'Calabanga', 'Camaligan','Canaman','Caramoan','Del Gallego','Gainza',
 						'Garchitorena', 'Goa','Iriga City', 'Lagonoy', 'Libmanan', 'Lupi', 'Magarao', 'Milaor', 'Minalabac', 'Nabua', 'Naga City', 'Ocampo',
 						'Pamplona', 'Pasacao', 'Pili', 'Presentacion', 'Ragay', 'Sagñay', 'San Fernando', 'San Jose', 'Sipocot', 'Siruma', 'Tigaon', 'Tinambac'];
 
-		$scope.newUser.city=$scope.cities[0];
-		$scope.newUser.user_type = 0
-		$scope.newUser.gender= "m"
+		$scope.new_user.city=$scope.cities[0];
+		$scope.new_user.user_type = 0
+		$scope.new_user.gender= "m"
 
 		$scope.addUser = function(){
-			console.log($scope.newUser)
+			var user_account= UserAccount.getUserAccount()
+			$scope.new_user.email= user_account.email
+			$scope.new_user.password= user_account.confirm
+			$scope.new_user.user_acc_type= user_account.user_acc_type
+			User.addUser($scope.new_user).success(function () {
+				alert("Success!")
+				//disable back button
+				$ionicViewService.nextViewOptions({
+					disableBack: true
+				});
+				$state.go('login')
+			});
+		}
+		$scope.addUserAccount = function(user_acc){
+			user_acc.user_acc_type= 1
+			UserAccount.setUserAccount(user_acc)
+			$state.go('registerDetails');
+
 		}
 		$scope.cancel= function(){
 			$window.history.back();
+		}
+
+		$scope.fbRegister = function(){
+			user_acc.user_acc_type= 0
+			facebookConnectPlugin.api('/me', null,
+				function(response) {
+					console.log(response);
+				},
+				function(error) {
+					console.log(error);
+				}
+			);
+			facebookConnectPlugin.api('/me/picture', null,
+				function(response) {
+					/*userObject.set('profilePicture', response.data.url);
+					 userObject.save();*/
+					UserService.user_profile = response.data.url;
+				},
+				function(error) {
+					console.log(error);
+				}
+			);
 		}
 	})
 
@@ -161,7 +203,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
-		$scope.skilledLaborerInfo= {}
+		$scope.skilled_laborer_info= {}
 
         //call function
         $scope.call=function(number){
@@ -175,7 +217,7 @@ angular.module('jobPortl.controllers', [])
 				console.log("Status: " + status);
 				console.log("Length: " + headers("content-length"));
 				console.log(data)
-				$scope.skilledLaborerInfo = data;
+				$scope.skilled_laborer_info = data;
 			}).
 			error(function() {
 				alert("An error occurred. Cannot get skilled laborer info")
@@ -202,13 +244,14 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost, UserService) {
-		$scope.newJobPost={};
+		$scope.new_job_post={};
 
 		//get current date and time
 		var datenow= new Date();
 		datenow = $filter('date')(datenow, "EEE d MMM yyyy ") + "at" + $filter('date')(datenow, " hh:mm a");
 
-		$scope.jobPosts=JobPost.all();
+		$scope.job_posts=JobPost.all();
+		console.log($scope.job_posts)
 
 		$ionicModal.fromTemplateUrl('templates/create-job-post-modal.html', {
 			scope: $scope,
@@ -216,16 +259,16 @@ angular.module('jobPortl.controllers', [])
 		}).then(function(modal) {
 			$scope.createJobPost = modal;
 			$scope.categories= JobPost.allCategories();
-			$scope.newJobPost.category=$scope.categories[0];
+			$scope.new_job_post.category=$scope.categories[0];
 		});
 
 		//add job post in service
-		$scope.createNewJobPost = function(newJobPost) {
-			$scope.jobPosts.push({ job_id: 3, title: newJobPost.title, description: newJobPost.description, location: newJobPost.location, category: newJobPost.category.category_name, employer: 'New Employer', datetimePosted: datenow });
+		$scope.createNewJobPost = function(new_job_post) {
+			$scope.job_posts.push({ job_id: 3, title: new_job_post.title, description: new_job_post.description, location: new_job_post.location, category: new_job_post.category.category_name, employer: 'New Employer', datetime_posted: datenow });
 			$scope.createJobPost.hide();
 			//clean form input
-			$scope.newJobPost= {};
-			$scope.newJobPost.category= $scope.categories[0];
+			$scope.new_job_post= {};
+			$scope.new_job_post.category= $scope.categories[0];
 			alert("New job post successfully created!")
 		};
 	})

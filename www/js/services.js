@@ -1,33 +1,35 @@
 angular.module('jobPortl.services', [])
 
+	.constant('baseUrl', 'http://127.0.0.1/jobportl/web/api/')
+
 	.factory('UserService', function(){
 /*		var user_info= [{
-			isLogged : false,
+			is_logged : false,
 			user_email : '',
 			user_id : '',
-			user_firstName : '',
-			user_lastName : '',
+			user_first_name : '',
+			user_last_name : '',
 			user_type : '',
 			gender : '',
 			birthdate : '',
 			user_profile: ''
 		}]*/
 		return {
-			isLogged : false,
+			is_logged : false,
 			user_email : '',
 			user_id : '',
-			user_firstName : '',
-			user_lastName : '',
+			user_first_name : '',
+			user_last_name : '',
 			user_type : '',
 			gender : '',
 			birthdate : '',
 			user_profile: '',
 			user_acct_type: '',
 			fb_id: '',
-			isLimited: true
+			is_limited: true
 
 			/*getUserInfo: function (user_id){
-				user_info.isLogged = true;
+				user_info.is_logged = true;
 				user_info.user_type = 0
 				return user_info.user_type;*/
 			}
@@ -51,24 +53,22 @@ angular.module('jobPortl.services', [])
 		}
 	}])
 
-	.factory('User_Account', function () {
-		var user_account=[
-			{ user_acct_id: 2, email: 'me@domain.com', password: '1234', user_acct_type: 'typical', user_id: 0, user_type: 0},
-			{ user_acct_id: 3, email: 'you@domain.com', password: '1234', user_acct_type: 'typical', user_id: 1, user_type: 1}
-		];
+	.factory('UserAccount', function ($http, baseUrl) {
+		var user_account= new Object();
 
 		return {
-			checkUser: function (userInput) {
-				console.log(user_account)
-				console.log("Email & password: " +userInput.emailAdd + userInput.passwrd)
-
+			checkUser: function (user_input) {
+//				console.log(user_account)
+				console.log("Email & password: " +user_input.email_add + user_input.password)
+				return $http({method: "POST", url: baseUrl+ 'users', data: user_input})
+//				return $http.get('http://127.0.0.1/jobportl/web/api/usercredentials/'+ user_input)
 				// 0 = doesnt have an account; 1 = wrong password
-				var result = 0;
+				/*var result = 0;
 				for (var i = 0; i < user_account.length; i++) {
-					var exists= angular.equals(userInput.emailAdd, user_account[i].email)
+					var exists= angular.equals(user_input.email, user_account[i].email)
 					if(exists){
-						var checkPassword = angular.equals(userInput.passwrd, user_account[i].password)
-						if(!checkPassword){
+						var check_password = angular.equals(user_input.passwrd, user_account[i].password)
+						if(!check_password){
 							result= 1;
 						}
 						else{
@@ -78,19 +78,33 @@ angular.module('jobPortl.services', [])
 
 					}
 				}
-				return result;
+				return result;*/
+			},
+			setUserAccount: function(user_acc) {
+				user_account=user_acc
+			},
+			getUserAccount: function() {
+				return user_account
 			}
 		}
 
 	})
 
+	.factory('User', function ($http, baseUrl) {
+		return {
+			addUser: function(user) {
+				console.log(user)
+				return $http({method: "POST", url: baseUrl+'addusers', data: user})
+			}
+		}
+	})
+
 	.factory('JobPost', function ($http) {
 		// Some fake testing data
-		var jobPosts = [
-			{ job_id: 0, title: 'Job Title1', description: 'Description Blah Blah Description Blah Blah Description Blah Blah Description Blah Blah', location: 'Naga City', category: 'Furniture Maker', employer: 'John Doe', datetimePosted: '5 Jan 2015 at 8:00pm' },
-			{ job_id: 1, title: 'Job Title2', description: 'Blah Blah', location: 'Nabua', category: 'Plumbing Services', employer: 'Anna Smith', datetimePosted: '5 Jan 2015 8:00pm' },
-			{ job_id: 2, title: 'Job Title3', description: 'Another Blah Blah', location: 'Iriga City', category: 'Plumbing Services', employer: 'Juan dela Cruz', datetimePosted: '5 Jan 2015 8:00pm' }
-
+		var job_posts = [
+			{ job_id: 0, title: 'Job Title1', description: 'Description Blah Blah Description Blah Blah Description Blah Blah Description Blah Blah', location: 'Naga City', category: 'Furniture Maker', employer: 'John Doe', datetime_posted: '5 Jan 2015 at 8:00pm' },
+			{ job_id: 1, title: 'Job Title2', description: 'Blah Blah', location: 'Nabua', category: 'Plumbing Services', employer: 'Anna Smith', datetime_posted: '5 Jan 2015 8:00pm' },
+			{ job_id: 2, title: 'Job Title3', description: 'Another Blah Blah', location: 'Iriga City', category: 'Plumbing Services', employer: 'Juan dela Cruz', datetime_posted: '5 Jan 2015 8:00pm' }
 		];
 
 		var category= [
@@ -106,7 +120,7 @@ angular.module('jobPortl.services', [])
 				// function getPostsAllAction() {
 				// 	myOrm.posts.getAll();
 				// }
-				return jobPosts;
+				return job_posts;
 			},
 			allCategories: function () {
 				return category;
@@ -115,7 +129,6 @@ angular.module('jobPortl.services', [])
 	})
 
 	.factory('SkilledLaborer', function ($http) {
-
 		return{
 			getSkilledLaborers:function(){
 				return $http.get('skilled_laborer.json');
