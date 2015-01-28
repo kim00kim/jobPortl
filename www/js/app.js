@@ -56,13 +56,22 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				}
 			})
 
-			.state('signUp', {
-				url: "/signUp",
-				templateUrl: "templates/sign-up.html",
-				controller: 'SignupCtrl',
+			.state('registerLogin', {
+				url: "/register/login",
+				templateUrl: "templates/register-login.html",
+				controller: 'RegisterCtrl',
                 data: {
                     authenticate: false
                 }
+			})
+
+			.state('registerDetails', {
+				url: "/register/details",
+				templateUrl: "templates/register-details.html",
+				controller: 'RegisterCtrl',
+				data: {
+					authenticate: false
+				}
 			})
 
 			.state('tab', {
