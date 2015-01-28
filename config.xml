@@ -39,10 +39,10 @@
         <param name="APP_ID" value="569148046553676"/>
         <param name="APP_NAME" value="JobPortl"/>
     </gap:plugin>
-    <!--<resources>
+    <resources>
         <string name="fb_app_id">569148046553676</string>
         <string name="fb_app_name">JobPortl</string>
-    </resources>-->
+    </resources>
 
     <!-- IOS ONLY -->
     <gap:plugin name="com.phonegap.plugin.statusbar"/>
