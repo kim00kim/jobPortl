@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://127.0.0.1/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	.factory('UserService', function(){
 /*		var user_info= [{
@@ -61,24 +61,6 @@ angular.module('jobPortl.services', [])
 //				console.log(user_account)
 				console.log("Email & password: " +user_input.email_add + user_input.password)
 				return $http({method: "POST", url: baseUrl+ 'users', data: user_input})
-//				return $http.get('http://127.0.0.1/jobportl/web/api/usercredentials/'+ user_input)
-				// 0 = doesnt have an account; 1 = wrong password
-				/*var result = 0;
-				for (var i = 0; i < user_account.length; i++) {
-					var exists= angular.equals(user_input.email, user_account[i].email)
-					if(exists){
-						var check_password = angular.equals(user_input.passwrd, user_account[i].password)
-						if(!check_password){
-							result= 1;
-						}
-						else{
-							result = user_account[i].user_acct_id;
-							break;
-						}
-
-					}
-				}
-				return result;*/
 			},
 			setUserAccount: function(user_acc) {
 				user_account=user_acc

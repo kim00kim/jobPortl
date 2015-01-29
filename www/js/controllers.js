@@ -28,11 +28,28 @@ angular.module('jobPortl.controllers', [])
 			console.log(user_input)
 			UserAccount.checkUser(user_input).success(function(response){
 				console.log(response)
+				if(!response){
+					alert("Incorrect email and password!")
+				}
+				else{
+					alert("Logged in successfully!")
+					$scope.toggleUser = function(){
+						if ($scope.user_type == 0) { //employer
+							// return "ng-show";
+						} else if($scope.user_type == 1) { //skilled-laborer
+							// return "ng-hide";
+						}
+						else {
+
+						}
+					}
+					$state.go('tab.account')
+				}
+
 			})
 			.error(function(err){
-				console.log(err)
+				alert(err)
 			})
-			//console.log('user_type: ' + UserService.user_info.user_type)
 		}
 
 		//for facebook login
