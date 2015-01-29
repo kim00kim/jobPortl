@@ -1,0 +1,4 @@
+users :
+    type: rest
+    resource:     "JobPortlJPBundle:Rest"
+    name_prefix:  api_

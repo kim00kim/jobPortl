@@ -1,0 +1,9 @@
+parameters:
+    jpdal.dal.service: JobPortl\JPBundle\Service\DALService
+
+services:
+    jpdal.dal:
+        class: %jpdal.dal.service%
+        arguments: [@doctrine.orm.entity_manager, @logger]
+    sha256salted_encoder:
+            class: JobPortl\JPBundle\Service\Sha256Salted

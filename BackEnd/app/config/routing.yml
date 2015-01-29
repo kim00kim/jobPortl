@@ -1,0 +1,8 @@
+job_portl_jp:
+    resource: "@JobPortlJPBundle/Resources/config/routing.yml"
+    prefix:   /
+
+rest :
+    type : rest
+    resource : "routing_rest.yml"
+    prefix : /api
