@@ -67,7 +67,8 @@
 					</select>
 				</label>
 			</div>
-			<label class="item item-input" ng-class="{'has-error' : registerform.birthdate.$dirty && registerform.birthdate.$invalid, 'no-error' : registerform.birthdate.$dirty && registerform.birthdate.$valid}">
+			<!--ng-class="{'has-error' : registerform.birthdate.$dirty && registerform.birthdate.$invalid, 'no-error' : registerform.birthdate.$dirty && registerform.birthdate.$valid}"-->
+			<label class="item item-input">
 				<span class="input-label">Birth date</span>
 				<input type="date" name="birthdate" ng-model="new_user.birthdate" class="form-control" required>
 			</label>
