@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://10.20.1.198//jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	/*.factory('$localstorage', ['$window', function($window) {
 		return {

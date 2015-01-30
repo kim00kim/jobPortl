@@ -47,7 +47,7 @@
 					<select ng-options="city for city in cities" ng-model="new_user.city" name="city">
 					</select>
 				</label>
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.zipcode.$dirty && registerform.zipcode.$invalid, 'no-error' : registerform.zipcode.$dirty && registerform.zipcode.$valid}">
+				<label class="item item-input item-floating-label " ng-class="{'has-error' : registerform.zipcode.$dirty && registerform.zipcode.$invalid, 'no-error' : registerform.zipcode.$dirty && registerform.zipcode.$valid}">
 					<span class="input-label">Zip Code</span>
 					<div class="row">
 						<input type="tel" name="zipcode" placeholder="Zip Code . . ." ng-model="new_user.zipcode" class="form-control" maxlength="4" minlength="4" required>
@@ -67,13 +67,15 @@
 					</select>
 				</label>
 			</div>
-			<!--ng-class="{'has-error' : registerform.birthdate.$dirty && registerform.birthdate.$invalid, 'no-error' : registerform.birthdate.$dirty && registerform.birthdate.$valid}"-->
-			<label class="item item-input">
+
+			<label class="item item-input " ng-class="{'has-error' : registerform.birthdate.$dirty && registerform.birthdate.$invalid, 'no-error' : registerform.birthdate.$dirty && registerform.birthdate.$valid}">
 				<span class="input-label">Birth date</span>
 				<input type="date" name="birthdate" ng-model="new_user.birthdate" class="form-control" required>
 			</label>
+
+
 			<div class="list">
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.cpno.$dirty && registerform.cpno.$invalid, 'no-error' : registerform.cpno.$dirty && registerform.cpno.$valid}">
+				<label class="item item-input " ng-class="{'has-error' : registerform.cpno.$dirty && registerform.cpno.$invalid, 'no-error' : registerform.cpno.$dirty && registerform.cpno.$valid}">
 					<span class="input-label">Cellphone Number</span>
 					<div class="row">
 						<input type="tel" name = "cpno"  placeholder="Cellphone number <eg. 09xxxxxxxxx > . . ." class="col" ng-model="new_user.cpno" maxlength="11" minlength="11" required />
