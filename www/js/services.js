@@ -1,39 +1,23 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
+	.constant('baseUrl', 'http://127.0.0.1//jobportl/web/api/')
 
-	.factory('UserService', function(){
-/*		var user_info= [{
-			is_logged : false,
-			user_email : '',
-			user_id : '',
-			user_first_name : '',
-			user_last_name : '',
-			user_type : '',
-			gender : '',
-			birthdate : '',
-			user_profile: ''
-		}]*/
+	/*.factory('$localstorage', ['$window', function($window) {
 		return {
-			is_logged : false,
-			user_email : '',
-			user_id : '',
-			user_first_name : '',
-			user_last_name : '',
-			user_type : '',
-			gender : '',
-			birthdate : '',
-			user_profile: '',
-			user_acct_type: '',
-			fb_id: '',
-			is_limited: true
-
-			/*getUserInfo: function (user_id){
-				user_info.is_logged = true;
-				user_info.user_type = 0
-				return user_info.user_type;*/
+			set: function(key, value) {
+				$window.localStorage[key] = value;
+			},
+			get: function(key, defaultValue) {
+				return $window.localStorage[key] || defaultValue;
+			},
+			setObject: function(key, value) {
+				$window.localStorage[key] = JSON.stringify(value);
+			},
+			getObject: function(key) {
+				return JSON.parse($window.localStorage[key] || '{}');
 			}
-	})
+		}
+	}])*/
 
 	/*.factory('Camera', ['$q', function($q) {
 

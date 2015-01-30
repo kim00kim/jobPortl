@@ -4,20 +4,24 @@ angular.module('jobPortl.controllers', [])
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 	})
 
-	.controller('AccountCtrl', function ($scope, UserService) {
-		$scope.name = UserService.user_first_name + " " + UserService.user_last_name
-		$scope.pic = "https://graph.facebook.com/" + UserService.fb_id + "/picture?width=80&height=80"
-		console.log($scope.pic)
+	.controller('AccountCtrl', function ($scope, $localForage) {
+		$localForage.getItem('user').then(function(data) {
+			$scope.id = data.user_id;
+			$scope.status = data.is_logged_in;
+			$scope.user_acc_type = data.user_acc_type,
+			$scope.user_type= data.user_type,
+			$scope.email= data.email,
+			$scope.first_name= data.first_name,
+			$scope.last_name= data.last_name
+			console.log(data)
+		});
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount/*, $localstorage*/, $localForage) {
 		$scope.user_input= {}
 //		$scope.isLimited = false;
 
 		$scope.skipLogin=function($scope){
-			UserService.is_limited= true;
-//			$scope.is_limited = UserService.is_limited;
-
 			$state.go('tab.job-post');
 		}
 		$scope.register=function(){
@@ -33,6 +37,16 @@ angular.module('jobPortl.controllers', [])
 				}
 				else{
 					alert("Logged in successfully!")
+					$localForage.setItem('user',
+						{ 	user_id: response.user.user_id,
+							is_logged_in: 0,
+							user_acc_type: response.user_acc_type,
+							user_type: response.	user_type,
+							email: response.email,
+							first_name: response.user.first_name,
+							last_name: response.user.last_name
+						})
+
 					$scope.toggleUser = function(){
 						if ($scope.user_type == 0) { //employer
 							// return "ng-show";
@@ -93,21 +107,6 @@ angular.module('jobPortl.controllers', [])
 					facebookConnectPlugin.api('/me', null,
 						function(response) {
 							console.log(response);
-							/*userObject.set('name', response.name);
-							userObject.set('email', response.email);
-                            userObject.set('id', response.id);
-							userObject.save();*/
-                            UserService.is_logged = true;
-                            UserService.user_email= response.email;
-//							UserService.user_id = ''
-                            UserService.user_firstName = response.first_name;
-                            UserService.user_lastName = response.last_name;
-                            UserService.gender = response.gender;
-                            UserService.birthdate = response.birthday;
-                            UserService.fb_id = response.id;
-                            UserService.user_acct_type = 0;
-                            UserService.isLimited = false;
-                            console.log(UserService)
 						},
 						function(error) {
 							console.log(error);
@@ -115,9 +114,7 @@ angular.module('jobPortl.controllers', [])
 					);
 					facebookConnectPlugin.api('/me/picture', null,
 						function(response) {
-							/*userObject.set('profilePicture', response.data.url);
-							userObject.save();*/
-                            UserService.user_profile = response.data.url;
+//                            UserService.user_profile = response.data.url;
 						},
 						function(error) {
 							console.log(error);
@@ -181,9 +178,7 @@ angular.module('jobPortl.controllers', [])
 			);
 			facebookConnectPlugin.api('/me/picture', null,
 				function(response) {
-					/*userObject.set('profilePicture', response.data.url);
-					 userObject.save();*/
-					UserService.user_profile = response.data.url;
+//					UserService.user_profile = response.data.url;
 				},
 				function(error) {
 					console.log(error);
@@ -219,8 +214,9 @@ angular.module('jobPortl.controllers', [])
 		}
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer/*, $localstorage*/) {
 		$scope.skilled_laborer_info= {}
+
 
         //call function
         $scope.call=function(number){
@@ -260,7 +256,7 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost, UserService) {
+	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost) {
 		$scope.new_job_post={};
 
 		//get current date and time
