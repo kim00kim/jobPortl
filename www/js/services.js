@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://192.168.56.1//jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198//jobportl/web/api/')
 
 	/*.factory('$localstorage', ['$window', function($window) {
 		return {
@@ -42,7 +42,6 @@ angular.module('jobPortl.services', [])
 
 		return {
 			checkUser: function (user_input) {
-//				console.log(user_account)
 				console.log("Email & password: " +user_input.email_add + user_input.password)
 				return $http({method: "POST", url: baseUrl+ 'users', data: user_input})
 			},
