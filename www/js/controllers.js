@@ -17,7 +17,30 @@ angular.module('jobPortl.controllers', [])
 		});
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount/*, $localstorage*/, $localForage) {
+    .controller('ToggleUserCtrl', function($scope, $localForage){
+        $localForage.getItem('user').then(function(data){
+            //$scope.toggle_user= data
+            if (data == 0) { //employer
+                $scope.toggle_employer = 'ng-hide'
+                // return "ng-show";
+            } else if($scope.user_type == 1) { //skilled-laborer
+                // return "ng-hide";
+                $scope.toggle_sl= 'ng-hide'
+            }
+            else{
+                $scope.toggle_sl = 'ng-show'
+                $scope.toggle_employer = 'ng-show'
+            }
+        })
+    })
+
+    .controller('AbstractTabCtrl', function($scope) {
+        $scope.$on('$ionicView.loaded', function () {
+            console.log('TesterCtrl');
+        })
+    })
+
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
 		$scope.user_input= {}
 //		$scope.isLimited = false;
 
@@ -37,29 +60,9 @@ angular.module('jobPortl.controllers', [])
 				}
 				else{
 					alert("Logged in successfully!")
-					$localForage.setItem('user',
-						{ 	user_id: response.user.user_id,
-							is_logged_in: 0,
-							user_acc_type: response.user_acc_type,
-							user_type: response.	user_type,
-							email: response.email,
-							first_name: response.user.first_name,
-							last_name: response.user.last_name
-						})
-
-					$scope.toggleUser = function(){
-						if ($scope.user_type == 0) { //employer
-							// return "ng-show";
-						} else if($scope.user_type == 1) { //skilled-laborer
-							// return "ng-hide";
-						}
-						else {
-
-						}
-					}
+					UserService.setUser(response)
 					$state.go('tab.account')
 				}
-
 			})
 			.error(function(err){
 				alert(err)

@@ -1,7 +1,32 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
+	.constant('baseUrl', 'http://127.0.0.1/jobportl/web/api/')
 
+    .factory('UserService', function ($localForage) {
+        return{
+            setUser: function(response){
+                $localForage.setItem('user',
+                    { 	user_id: response.user.user_id,
+                        is_logged_in: 1,
+                        user_acc_type: response.user_acc_type,
+                        user_type: response.	user_type,
+                        email: response.email,
+                        first_name: response.user.first_name,
+                        last_name: response.user.last_name,
+                        address: response.user.address,
+                        city_mun: response.user.city_mun,
+                        gender: response.user.gender,
+                        birthdate: response.user.birthdate,
+                        cpno: response.user.cpno,
+                        has_verified_num: response.user.has_verified_number,
+                        photo: response.user.photo,
+                        gender: response.user.gender,
+                        zipcode: response.user.zipcode
+                    })
+            }
+        }
+    })
+    
 	/*.factory('$localstorage', ['$window', function($window) {
 		return {
 			set: function(key, value) {
@@ -79,12 +104,6 @@ angular.module('jobPortl.services', [])
 
 		return {
 			all: function () {
-				// return $http.get('http://jobprtl.com/api/post/all');
-
-				// // PHP Rest API Controller
-				// function getPostsAllAction() {
-				// 	myOrm.posts.getAll();
-				// }
 				return job_posts;
 			},
 			allCategories: function () {
