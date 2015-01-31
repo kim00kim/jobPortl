@@ -1,17 +1,22 @@
 <ion-modal-view>
 	<ion-header-bar class="bar bar-header bar-dark">
 		<h1 class="title">Create A Job Post</h1>
-		<button class="button button-clear button-primary icon ion-close-circled" ng-click="createJobPost.hide()"></button>
+		<button class="button button-clear button-primary icon ion-close-circled"
+				ng-click="createJobPost.hide()"></button>
 	</ion-header-bar>
 	<ion-content class="padding">
 		<form name="jobPost" ng-submit="createNewJobPost(new_job_post)" novalidate>
 			<div class="list">
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : jobPost.title.$dirty && jobPost.title.$invalid, 'no-error' : jobPost.title.$dirty && jobPost.title.$valid}">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : jobPost.title.$dirty && jobPost.title.$invalid, 'no-error' : jobPost.title.$dirty && jobPost.title.$valid}">
 					<span class="input-label">Job Title</span>
+
 					<div class="row">
 						<input type="text" placeholder="Job Title. . ." name="title" ng-model="new_job_post.title">
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="jobPost.title.$dirty && jobPost.title.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="jobPost.title.$dirty && jobPost.title.$valid"></span>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="jobPost.title.$dirty && jobPost.title.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="jobPost.title.$dirty && jobPost.title.$valid"></span>
 					</div>
 				</label>
 
@@ -19,28 +24,38 @@
 					<div class="input-label">
 						Choose a Category
 					</div>
-					<select ng-options="category.category_name for category in categories" ng-model="new_job_post.category" name="category">
+					<select ng-options="category.category_name for category in categories"
+							ng-model="new_job_post.category" name="category">
 					</select>
 				</label>
 
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : jobPost.desc.$dirty && jobPost.desc.$invalid, 'no-error' : jobPost.desc.$dirty && jobPost.desc.$valid}">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : jobPost.desc.$dirty && jobPost.desc.$invalid, 'no-error' : jobPost.desc.$dirty && jobPost.desc.$valid}">
 					<span class="input-label">Description</span>
+
 					<div class="row">
-						<textarea placeholder="Description. . ." name="desc" ng-model="new_job_post.description"></textarea>
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="jobPost.desc.$dirty && jobPost.desc.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="jobPost.desc.$dirty && jobPost.desc.$valid"></span>
+						<textarea placeholder="Description. . ." name="desc"
+								  ng-model="new_job_post.description"></textarea>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="jobPost.desc.$dirty && jobPost.desc.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="jobPost.desc.$dirty && jobPost.desc.$valid"></span>
 					</div>
 				</label>
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : jobPost.location.$dirty && jobPost.location.$invalid, 'no-error' : jobPost.location.$dirty && jobPost.location.$valid}">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : jobPost.location.$dirty && jobPost.location.$invalid, 'no-error' : jobPost.location.$dirty && jobPost.location.$valid}">
 					<span class="input-label">Location</span>
+
 					<div class="row">
 						<input type="text" placeholder="Location. . ." name="location" ng-model="new_job_post.location">
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="jobPost.location.$dirty && jobPost.location.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="jobPost.location.$dirty && jobPost.location.$valid"></span>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="jobPost.location.$dirty && jobPost.location.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="jobPost.location.$dirty && jobPost.location.$valid"></span>
 					</div>
 				</label>
 			</div>
-				<button class="button button-block button-positive" ng-disabled="jobPost.$invalid">Post Job</button>
+			<button class="button button-block button-positive" ng-disabled="jobPost.$invalid">Post Job</button>
 		</form>
 	</ion-content>
 </ion-modal-view>

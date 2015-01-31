@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Posting
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="postingId", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $postingId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="postingId", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $postingId;
 	/**
 	 * @var datetime
 	 *
@@ -40,122 +40,124 @@ class Posting
 	 * @ORM\OneToMany(targetEntity="Application", mappedBy="posting", fetch="EXTRA_LAZY")
 	 */
 	protected $applications;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    /**
-     * Set datetimePosted
-     *
-     * @param \DateTime $datetimePosted
-     * @return Posting
-     */
-    public function setDatetimePosted($datetimePosted)
-    {
-        $this->datetimePosted = $datetimePosted;
 
-        return $this;
-    }
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
-    /**
-     * Get datetimePosted
-     *
-     * @return \DateTime 
-     */
-    public function getDatetimePosted()
-    {
-        return $this->datetimePosted;
-    }
+	/**
+	 * Set datetimePosted
+	 *
+	 * @param \DateTime $datetimePosted
+	 * @return Posting
+	 */
+	public function setDatetimePosted($datetimePosted)
+	{
+		$this->datetimePosted = $datetimePosted;
 
-    /**
-     * Set user
-     *
-     * @param \JobPortl\JPBundle\Entity\UserJ $user
-     * @return Posting
-     */
-    public function setUser(\JobPortl\JPBundle\Entity\UserJ $user)
-    {
-        $this->user = $user;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get datetimePosted
+	 *
+	 * @return \DateTime
+	 */
+	public function getDatetimePosted()
+	{
+		return $this->datetimePosted;
+	}
 
-    /**
-     * Get user
-     *
-     * @return \JobPortl\JPBundle\Entity\UserJ 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
+	/**
+	 * Set user
+	 *
+	 * @param \JobPortl\JPBundle\Entity\UserJ $user
+	 * @return Posting
+	 */
+	public function setUser(\JobPortl\JPBundle\Entity\UserJ $user)
+	{
+		$this->user = $user;
 
-    /**
-     * Set job
-     *
-     * @param \JobPortl\JPBundle\Entity\Job $job
-     * @return Posting
-     */
-    public function setJob(\JobPortl\JPBundle\Entity\Job $job)
-    {
-        $this->job = $job;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get user
+	 *
+	 * @return \JobPortl\JPBundle\Entity\UserJ
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
 
-    /**
-     * Get job
-     *
-     * @return \JobPortl\JPBundle\Entity\Job 
-     */
-    public function getJob()
-    {
-        return $this->job;
-    }
+	/**
+	 * Set job
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Job $job
+	 * @return Posting
+	 */
+	public function setJob(\JobPortl\JPBundle\Entity\Job $job)
+	{
+		$this->job = $job;
 
-    /**
-     * Add applications
-     *
-     * @param \JobPortl\JPBundle\Entity\Application $applications
-     * @return Posting
-     */
-    public function addApplication(\JobPortl\JPBundle\Entity\Application $applications)
-    {
-        $this->applications[] = $applications;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get job
+	 *
+	 * @return \JobPortl\JPBundle\Entity\Job
+	 */
+	public function getJob()
+	{
+		return $this->job;
+	}
 
-    /**
-     * Remove applications
-     *
-     * @param \JobPortl\JPBundle\Entity\Application $applications
-     */
-    public function removeApplication(\JobPortl\JPBundle\Entity\Application $applications)
-    {
-        $this->applications->removeElement($applications);
-    }
+	/**
+	 * Add applications
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Application $applications
+	 * @return Posting
+	 */
+	public function addApplication(\JobPortl\JPBundle\Entity\Application $applications)
+	{
+		$this->applications[] = $applications;
 
-    /**
-     * Get applications
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getApplications()
-    {
-        return $this->applications;
-    }
+		return $this;
+	}
 
-    /**
-     * Get postingId
-     *
-     * @return integer 
-     */
-    public function getPostingId()
-    {
-        return $this->postingId;
-    }
+	/**
+	 * Remove applications
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Application $applications
+	 */
+	public function removeApplication(\JobPortl\JPBundle\Entity\Application $applications)
+	{
+		$this->applications->removeElement($applications);
+	}
+
+	/**
+	 * Get applications
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getApplications()
+	{
+		return $this->applications;
+	}
+
+	/**
+	 * Get postingId
+	 *
+	 * @return integer
+	 */
+	public function getPostingId()
+	{
+		return $this->postingId;
+	}
 }

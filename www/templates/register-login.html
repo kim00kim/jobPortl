@@ -1,44 +1,63 @@
 <ion-view title="Register">
-	<ion-content class="register padding" >
+	<ion-content class="register padding">
 		<form name="registerform" novalidate>
 			<div class="card">
 				<div class="item item-text-wrap">
 					<h2>Choose Login Method</h2>
 				</div>
 				<div class="item item-text-wrap">
-					<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.email.$dirty && registerform.email.$invalid, 'no-error' : registerform.email.$dirty && registerform.email.$valid}">
+					<label class="item item-input item-floating-label"
+						   ng-class="{'has-error' : registerform.email.$dirty && registerform.email.$invalid, 'no-error' : registerform.email.$dirty && registerform.email.$valid}">
 						<span class="input-label">Email Address</span>
+
 						<div class="row">
-							<input type="email" name="email" placeholder="Email Address . . ." ng-model="new_user_account.email" required />
-							<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.email.$dirty && registerform.email.$invalid"></span>
-							<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.email.$dirty && registerform.email.$valid"></span>
+							<input type="email" name="email" placeholder="Email Address . . ."
+								   ng-model="new_user_account.email" required/>
+							<span class="error-handler col col-10 icon ion-alert-circled assertive"
+								  ng-show="registerform.email.$dirty && registerform.email.$invalid"></span>
+							<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+								  ng-show="registerform.email.$dirty && registerform.email.$valid"></span>
 						</div>
 					</label>
-					<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.password.$dirty && registerform.password.$invalid, 'no-error' : registerform.password.$dirty && registerform.password.$valid}">
+					<label class="item item-input item-floating-label"
+						   ng-class="{'has-error' : registerform.password.$dirty && registerform.password.$invalid, 'no-error' : registerform.password.$dirty && registerform.password.$valid}">
 						<span class="input-label">Password</span>
+
 						<div class="row">
-							<input type="password" name="password" placeholder="Password . . ." ng-model="new_user_account.password" required />
-							<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.password.$dirty && registerform.password.$invalid"></span>
-							<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.password.$dirty && registerform.password.$valid"></span>
+							<input type="password" name="password" placeholder="Password . . ."
+								   ng-model="new_user_account.password" required/>
+							<span class="error-handler col col-10 icon ion-alert-circled assertive"
+								  ng-show="registerform.password.$dirty && registerform.password.$invalid"></span>
+							<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+								  ng-show="registerform.password.$dirty && registerform.password.$valid"></span>
 						</div>
 					</label>
-					<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.confirm.$dirty && registerform.confirm.$invalid, 'no-error' : registerform.confirm.$dirty && registerform.confirm.$valid}">
+					<label class="item item-input item-floating-label"
+						   ng-class="{'has-error' : registerform.confirm.$dirty && registerform.confirm.$invalid, 'no-error' : registerform.confirm.$dirty && registerform.confirm.$valid}">
 						<span class="input-label">Password</span>
+
 						<div class="row">
-							<input type="password" name="confirm" placeholder="Confirm Password . . ." ng-model="new_user_account.confirm" match="new_user_account.password" required />
-							<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.confirm.$dirty && registerform.confirm.$invalid"></span>
-							<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.confirm.$dirty && registerform.confirm.$valid"></span>
+							<input type="password" name="confirm" placeholder="Confirm Password . . ."
+								   ng-model="new_user_account.confirm" match="new_user_account.password" required/>
+							<span class="error-handler col col-10 icon ion-alert-circled assertive"
+								  ng-show="registerform.confirm.$dirty && registerform.confirm.$invalid"></span>
+							<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+								  ng-show="registerform.confirm.$dirty && registerform.confirm.$valid"></span>
 						</div>
 					</label>
+
 					<p>------------------OR------------------</p>
-					<button class="button btn-social btn-facebook button-small button-block" id="social-button" ng-click="fbRegister()">
+					<button class="button btn-social btn-facebook button-small button-block" id="social-button"
+							ng-click="fbRegister()">
 						<i class="fa fa-facebook"></i> Log in with Facebook
 					</button>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<button class="button button-positive button-block" ng-disabled="registerform.$invalid" ng-click="addUserAccount(new_user_account)" >Next</button>
+					<button class="button button-positive button-block" ng-disabled="registerform.$invalid"
+							ng-click="addUserAccount(new_user_account)">Next
+					</button>
 				</div>
 				<div class="col">
 					<button class="button button-assertive button-block" ng-click="cancel()">Cancel</button>

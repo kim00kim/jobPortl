@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Admin
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="adminId", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $adminId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="adminId", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $adminId;
 	/**
 	 * @var string
 	 *
@@ -33,59 +33,59 @@ class Admin
 	 */
 	private $password;
 
-    /**
-     * Get adminId
-     *
-     * @return integer 
-     */
-    public function getAdminId()
-    {
-        return $this->adminId;
-    }
+	/**
+	 * Get adminId
+	 *
+	 * @return integer
+	 */
+	public function getAdminId()
+	{
+		return $this->adminId;
+	}
 
-    /**
-     * Set userName
-     *
-     * @param string $userName
-     * @return Admin
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
+	/**
+	 * Set userName
+	 *
+	 * @param string $userName
+	 * @return Admin
+	 */
+	public function setUserName($userName)
+	{
+		$this->userName = $userName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get userName
-     *
-     * @return string 
-     */
-    public function getUserName()
-    {
-        return $this->userName;
-    }
+	/**
+	 * Get userName
+	 *
+	 * @return string
+	 */
+	public function getUserName()
+	{
+		return $this->userName;
+	}
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return Admin
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+	/**
+	 * Set password
+	 *
+	 * @param string $password
+	 * @return Admin
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $password;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+	/**
+	 * Get password
+	 *
+	 * @return string
+	 */
+	public function getPassword()
+	{
+		return $this->password;
+	}
 }

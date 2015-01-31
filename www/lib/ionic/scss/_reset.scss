@@ -1,4 +1,3 @@
-
 /**
  * Resets
  * --------------------------------------------------
@@ -37,9 +36,11 @@ time, mark, audio, video {
 ol, ul {
   list-style: none;
 }
+
 blockquote, q {
   quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
   content: '';
@@ -96,7 +97,6 @@ body {
   line-height: 1;
 }
 
-
 /**
  * Remove default outlines.
  */
@@ -128,7 +128,6 @@ a {
    Typography
    ========================================================================== */
 
-
 /**
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
@@ -155,7 +154,6 @@ hr {
   box-sizing: content-box;
   height: 0;
 }
-
 
 /**
  * Correct font family set oddly in Safari 5 and Chrome.
@@ -345,7 +343,6 @@ textarea {
   overflow: auto; /* 1 */
   vertical-align: top; /* 2 */
 }
-
 
 img {
   -webkit-user-drag: none;

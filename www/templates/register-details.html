@@ -1,5 +1,5 @@
 <ion-view title="Sign Up">
-	<ion-content class="register padding" >
+	<ion-content class="register padding">
 		<form name="registerform" ng-submit="addUser(new_user)" novalidate>
 			<div class="list">
 				<label class="item item-input item-select" ng-class="{'no-error' : registerform.user_type.$dirty}">
@@ -13,30 +13,45 @@
 				</label>
 			</div>
 			<div class="list">
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.firstname.$dirty && registerform.firstname.$invalid, 'no-error' : registerform.firstname.$dirty && registerform.firstname.$valid}">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : registerform.firstname.$dirty && registerform.firstname.$invalid, 'no-error' : registerform.firstname.$dirty && registerform.firstname.$valid}">
 					<span class="input-label">First Name</span>
+
 					<div class="row">
-						<input type="text" name = "firstname"  placeholder="First Name . . ." class="form-control" ng-model="new_user.first_name" required />
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.firstname.$dirty && registerform.firstname.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.firstname.$dirty && registerform.firstname.$valid"></span>
+						<input type="text" name="firstname" placeholder="First Name . . ." class="form-control"
+							   ng-model="new_user.first_name" required/>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="registerform.firstname.$dirty && registerform.firstname.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="registerform.firstname.$dirty && registerform.firstname.$valid"></span>
 					</div>
 				</label>
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.lastname.$dirty && registerform.lastname.$invalid, 'no-error' : registerform.lastname.$dirty && registerform.lastname.$valid}">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : registerform.lastname.$dirty && registerform.lastname.$invalid, 'no-error' : registerform.lastname.$dirty && registerform.lastname.$valid}">
 					<span class="input-label">Last Name</span>
+
 					<div class="row">
-						<input type="text" name="lastname"  placeholder="Last Name . . ." class="form-control" ng-model="new_user.last_name" required>
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.lastname.$dirty && registerform.lastname.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.lastname.$dirty && registerform.lastname.$valid"></span>
+						<input type="text" name="lastname" placeholder="Last Name . . ." class="form-control"
+							   ng-model="new_user.last_name" required>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="registerform.lastname.$dirty && registerform.lastname.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="registerform.lastname.$dirty && registerform.lastname.$valid"></span>
 					</div>
 				</label>
 			</div>
 			<div class="list">
-				<label class="item item-input item-floating-label" ng-class="{'has-error' : registerform.address.$dirty && registerform.address.$invalid, 'no-error' : registerform.address.$dirty && registerform.address.$valid}">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : registerform.address.$dirty && registerform.address.$invalid, 'no-error' : registerform.address.$dirty && registerform.address.$valid}">
 					<span class="input-label">Address</span>
+
 					<div class="row">
-						<input type="text" name="address" placeholder="Address . . ." class="form-control" ng-model="new_user.address" required>
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.address.$dirty && registerform.address.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.address.$dirty && registerform.address.$valid"></span>
+						<input type="text" name="address" placeholder="Address . . ." class="form-control"
+							   ng-model="new_user.address" required>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="registerform.address.$dirty && registerform.address.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="registerform.address.$dirty && registerform.address.$valid"></span>
 					</div>
 				</label>
 				<br>
@@ -47,12 +62,17 @@
 					<select ng-options="city for city in cities" ng-model="new_user.city" name="city">
 					</select>
 				</label>
-				<label class="item item-input item-floating-label " ng-class="{'has-error' : registerform.zipcode.$dirty && registerform.zipcode.$invalid, 'no-error' : registerform.zipcode.$dirty && registerform.zipcode.$valid}">
+				<label class="item item-input item-floating-label "
+					   ng-class="{'has-error' : registerform.zipcode.$dirty && registerform.zipcode.$invalid, 'no-error' : registerform.zipcode.$dirty && registerform.zipcode.$valid}">
 					<span class="input-label">Zip Code</span>
+
 					<div class="row">
-						<input type="tel" name="zipcode" placeholder="Zip Code . . ." ng-model="new_user.zipcode" class="form-control" maxlength="4" minlength="4" required>
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.zipcode.$dirty && registerform.zipcode.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.zipcode.$dirty && registerform.zipcode.$valid"></span>
+						<input type="tel" name="zipcode" placeholder="Zip Code . . ." ng-model="new_user.zipcode"
+							   class="form-control" maxlength="4" minlength="4" required>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="registerform.zipcode.$dirty && registerform.zipcode.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="registerform.zipcode.$dirty && registerform.zipcode.$valid"></span>
 					</div>
 				</label>
 			</div>
@@ -68,19 +88,25 @@
 				</label>
 			</div>
 
-			<label class="item item-input " ng-class="{'has-error' : registerform.birthdate.$dirty && registerform.birthdate.$invalid, 'no-error' : registerform.birthdate.$dirty && registerform.birthdate.$valid}">
+			<label class="item item-input "
+				   ng-class="{'has-error' : registerform.birthdate.$dirty && registerform.birthdate.$invalid, 'no-error' : registerform.birthdate.$dirty && registerform.birthdate.$valid}">
 				<span class="input-label">Birth date</span>
 				<input type="date" name="birthdate" ng-model="new_user.birthdate" class="form-control" required>
 			</label>
 
 
 			<div class="list">
-				<label class="item item-input " ng-class="{'has-error' : registerform.cpno.$dirty && registerform.cpno.$invalid, 'no-error' : registerform.cpno.$dirty && registerform.cpno.$valid}">
+				<label class="item item-input "
+					   ng-class="{'has-error' : registerform.cpno.$dirty && registerform.cpno.$invalid, 'no-error' : registerform.cpno.$dirty && registerform.cpno.$valid}">
 					<span class="input-label">Cellphone Number</span>
+
 					<div class="row">
-						<input type="tel" name = "cpno"  placeholder="Cellphone number <eg. 09xxxxxxxxx > . . ." class="col" ng-model="new_user.cpno" maxlength="11" minlength="11" required />
-						<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="registerform.cpno.$dirty && registerform.cpno.$invalid"></span>
-						<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="registerform.cpno.$dirty && registerform.cpno.$valid"></span>
+						<input type="tel" name="cpno" placeholder="Cellphone number <eg. 09xxxxxxxxx > . . ."
+							   class="col" ng-model="new_user.cpno" maxlength="11" minlength="11" required/>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="registerform.cpno.$dirty && registerform.cpno.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="registerform.cpno.$dirty && registerform.cpno.$valid"></span>
 					</div>
 				</label>
 				<!--<div class="item item-input-inset">-->
@@ -98,7 +124,9 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<button class="button button-positive button-block" ng-disabled="registerform.$invalid" type="submit">Create Account</button>
+					<button class="button button-positive button-block" ng-disabled="registerform.$invalid"
+							type="submit">Create Account
+					</button>
 				</div>
 				<div class="col">
 					<button class="button button-assertive button-block" ng-click="cancel()">Cancel</button>

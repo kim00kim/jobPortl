@@ -5,35 +5,35 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
+angular.module('jobPortl', ['ionic', 'ionic.rating', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
 
 	//})
-    /*.config(function($compileProvider){
-        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-    })*/
+	/*.config(function($compileProvider){
+	 $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+	 })*/
 
-	.run(function ($ionicPlatform,$rootScope, $state) {
-        $ionicPlatform.ready(function () {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            }
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
-            }
-        });
-        // UI Router Authentication Check
-        $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-            if (toState.data.authenticate && !Parse.User.current()) {
-                // User isn�t authenticated
-                $state.transitionTo("login");
-                event.preventDefault();
-            }
-        })
+	.run(function ($ionicPlatform, $rootScope, $state) {
+		$ionicPlatform.ready(function () {
+			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+			// for form inputs)
+			if (window.cordova && window.cordova.plugins.Keyboard) {
+				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			}
+			if (window.StatusBar) {
+				// org.apache.cordova.statusbar required
+				StatusBar.styleDefault();
+			}
+		});
+		// UI Router Authentication Check
+		$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+			if (toState.data.authenticate && !Parse.User.current()) {
+				// User isn�t authenticated
+				$state.transitionTo("login");
+				event.preventDefault();
+			}
+		})
 		//localStorage.clear()
-    })
+	})
 
 	.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -57,9 +57,9 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				url: "/register/login",
 				templateUrl: "templates/register-login.html",
 				controller: 'RegisterCtrl',
-                data: {
-                    authenticate: false
-                }
+				data: {
+					authenticate: false
+				}
 			})
 
 			.state('registerDetails', {
@@ -75,10 +75,10 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				url: "/tab",
 				abstract: true,
 				templateUrl: "templates/tabs.html",
-                controller: 'ToggleUserCtrl',
-                data: {
-                    authenticate: false
-                }
+				controller: 'ToggleUserCtrl',
+				data: {
+					authenticate: false
+				}
 			})
 
 			// Each tab has its own nav history stack:
@@ -103,9 +103,9 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 					'tab-skilled-laborer': {
 						templateUrl: 'templates/tab-skilled-laborer.html',
 						controller: 'SkilledLaborerCtrl',
-                        data: {
-                            authenticate: true
-                        }
+						data: {
+							authenticate: true
+						}
 					}
 				}
 			})
@@ -135,21 +135,21 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 					'tab-account': {
 						templateUrl: 'templates/tab-account.html',
 						controller: 'AccountCtrl',
-                        data: {
-                            authenticate: true
-                        }
+						data: {
+							authenticate: true
+						}
 					}
 				}
 			})
 			.state('tab.modify', {
 				url: '/edit-profile',
 				views: {
-					'tab-account' : {
+					'tab-account': {
 						templateUrl: 'templates/edit-profile.html',
 						controller: 'EditProfileCtrl',
-                        data: {
-                            authenticate: true
-                        }
+						data: {
+							authenticate: true
+						}
 					}
 				}
 			})

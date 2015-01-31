@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Job
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="jobId", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $jobId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="jobId", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $jobId;
 	/**
 	 * @var string
 	 *
@@ -56,151 +56,151 @@ class Job
 	 */
 	protected $jobCategory;
 
-    /**
-     * Get jobId
-     *
-     * @return integer 
-     */
-    public function getJobId()
-    {
-        return $this->jobId;
-    }
+	/**
+	 * Get jobId
+	 *
+	 * @return integer
+	 */
+	public function getJobId()
+	{
+		return $this->jobId;
+	}
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Job
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
+	/**
+	 * Set title
+	 *
+	 * @param string $title
+	 * @return Job
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
+	/**
+	 * Get title
+	 *
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Job
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
+	/**
+	 * Set description
+	 *
+	 * @param string $description
+	 * @return Job
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+	/**
+	 * Get description
+	 *
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
 
-    /**
-     * Set location
-     *
-     * @param string $location
-     * @return Job
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
+	/**
+	 * Set location
+	 *
+	 * @param string $location
+	 * @return Job
+	 */
+	public function setLocation($location)
+	{
+		$this->location = $location;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get location
-     *
-     * @return string 
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
+	/**
+	 * Get location
+	 *
+	 * @return string
+	 */
+	public function getLocation()
+	{
+		return $this->location;
+	}
 
-    /**
-     * Set requiredApplicant
-     *
-     * @param integer $requiredApplicant
-     * @return Job
-     */
-    public function setRequiredApplicant($requiredApplicant)
-    {
-        $this->requiredApplicant = $requiredApplicant;
+	/**
+	 * Set requiredApplicant
+	 *
+	 * @param integer $requiredApplicant
+	 * @return Job
+	 */
+	public function setRequiredApplicant($requiredApplicant)
+	{
+		$this->requiredApplicant = $requiredApplicant;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get requiredApplicant
-     *
-     * @return integer 
-     */
-    public function getRequiredApplicant()
-    {
-        return $this->requiredApplicant;
-    }
+	/**
+	 * Get requiredApplicant
+	 *
+	 * @return integer
+	 */
+	public function getRequiredApplicant()
+	{
+		return $this->requiredApplicant;
+	}
 
-    /**
-     * Set status
-     *
-     * @param integer $status
-     * @return Job
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
+	/**
+	 * Set status
+	 *
+	 * @param integer $status
+	 * @return Job
+	 */
+	public function setStatus($status)
+	{
+		$this->status = $status;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get status
-     *
-     * @return integer 
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
+	/**
+	 * Get status
+	 *
+	 * @return integer
+	 */
+	public function getStatus()
+	{
+		return $this->status;
+	}
 
-    /**
-     * Set jobCategory
-     *
-     * @param \JobPortl\JPBundle\Entity\JobCategory $jobCategory
-     * @return Job
-     */
-    public function setJobCategory(\JobPortl\JPBundle\Entity\JobCategory $jobCategory)
-    {
-        $this->jobCategory = $jobCategory;
+	/**
+	 * Set jobCategory
+	 *
+	 * @param \JobPortl\JPBundle\Entity\JobCategory $jobCategory
+	 * @return Job
+	 */
+	public function setJobCategory(\JobPortl\JPBundle\Entity\JobCategory $jobCategory)
+	{
+		$this->jobCategory = $jobCategory;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get jobCategory
-     *
-     * @return \JobPortl\JPBundle\Entity\JobCategory 
-     */
-    public function getJobCategory()
-    {
-        return $this->jobCategory;
-    }
+	/**
+	 * Get jobCategory
+	 *
+	 * @return \JobPortl\JPBundle\Entity\JobCategory
+	 */
+	public function getJobCategory()
+	{
+		return $this->jobCategory;
+	}
 }
