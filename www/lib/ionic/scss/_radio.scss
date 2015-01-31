@@ -1,3 +1,4 @@
+
 /**
  * Radio Button Inputs
  * --------------------------------------------------
@@ -50,12 +51,7 @@
 .platform-android.grade-c .item-radio {
   -webkit-animation: androidCheckedbugfix infinite 1s;
 }
-
 @-webkit-keyframes androidCheckedbugfix {
-  from {
-    padding: 0;
-  }
-  to {
-    padding: 0;
-  }
+  from { padding: 0; }
+  to { padding: 0; }
 }

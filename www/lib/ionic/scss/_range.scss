@@ -1,3 +1,4 @@
+
 /**
  * Range
  * --------------------------------------------------
@@ -26,7 +27,7 @@ input[type="range"] {
     height: $range-slider-height;
     border-radius: $range-slider-border-radius;
     background-color: $toggle-handle-off-bg-color;
-    box-shadow: 0 0 2px rgba(0, 0, 0, .5), 1px 3px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
     cursor: pointer;
     -webkit-appearance: none;
   }
@@ -61,49 +62,31 @@ input[type="range"] {
   padding: 2px 11px;
 
   &.range-light {
-    input {
-      @include range-style($range-light-track-bg);
-    }
+    input { @include range-style($range-light-track-bg); }
   }
   &.range-stable {
-    input {
-      @include range-style($range-stable-track-bg);
-    }
+    input { @include range-style($range-stable-track-bg); }
   }
   &.range-positive {
-    input {
-      @include range-style($range-positive-track-bg);
-    }
+    input { @include range-style($range-positive-track-bg); }
   }
   &.range-calm {
-    input {
-      @include range-style($range-calm-track-bg);
-    }
+    input { @include range-style($range-calm-track-bg); }
   }
   &.range-balanced {
-    input {
-      @include range-style($range-balanced-track-bg);
-    }
+    input { @include range-style($range-balanced-track-bg); }
   }
   &.range-assertive {
-    input {
-      @include range-style($range-assertive-track-bg);
-    }
+    input { @include range-style($range-assertive-track-bg); }
   }
   &.range-energized {
-    input {
-      @include range-style($range-energized-track-bg);
-    }
+    input { @include range-style($range-energized-track-bg); }
   }
   &.range-royal {
-    input {
-      @include range-style($range-royal-track-bg);
-    }
+    input { @include range-style($range-royal-track-bg); }
   }
   &.range-dark {
-    input {
-      @include range-style($range-dark-track-bg);
-    }
+    input { @include range-style($range-dark-track-bg); }
   }
 }
 
@@ -131,7 +114,6 @@ input[type="range"] {
 .range-label:first-child {
   padding-left: 5px;
 }
-
 .range input + .range-label {
   padding-right: 5px;
   padding-left: 0;

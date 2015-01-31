@@ -1,3 +1,4 @@
+
 /**
  * Utility Classes
  * --------------------------------------------------
@@ -6,25 +7,20 @@
 .hide {
   display: none;
 }
-
 .opacity-hide {
   opacity: 0;
 }
-
 .grade-b .opacity-hide,
 .grade-c .opacity-hide {
   opacity: 1;
   display: none;
 }
-
 .show {
   display: block;
 }
-
 .opacity-show {
   opacity: 1;
 }
-
 .invisible {
   visibility: hidden;
 }
@@ -140,6 +136,7 @@
   padding-left: $content-padding;
 }
 
+
 /**
  * Rounded
  * --------------------------------------------------
@@ -148,6 +145,7 @@
 .rounded {
   border-radius: $border-radius-base;
 }
+
 
 /**
  * Utility Colors
@@ -160,11 +158,9 @@
 .light, a.light {
   color: $light;
 }
-
 .light-bg {
   background-color: $light;
 }
-
 .light-border {
   border-color: $button-light-border;
 }
@@ -172,11 +168,9 @@
 .stable, a.stable {
   color: $stable;
 }
-
 .stable-bg {
   background-color: $stable;
 }
-
 .stable-border {
   border-color: $button-stable-border;
 }
@@ -184,11 +178,9 @@
 .positive, a.positive {
   color: $positive;
 }
-
 .positive-bg {
   background-color: $positive;
 }
-
 .positive-border {
   border-color: $button-positive-border;
 }
@@ -196,11 +188,9 @@
 .calm, a.calm {
   color: $calm;
 }
-
 .calm-bg {
   background-color: $calm;
 }
-
 .calm-border {
   border-color: $button-calm-border;
 }
@@ -208,11 +198,9 @@
 .assertive, a.assertive {
   color: $assertive;
 }
-
 .assertive-bg {
   background-color: $assertive;
 }
-
 .assertive-border {
   border-color: $button-assertive-border;
 }
@@ -220,11 +208,9 @@
 .balanced, a.balanced {
   color: $balanced;
 }
-
 .balanced-bg {
   background-color: $balanced;
 }
-
 .balanced-border {
   border-color: $button-balanced-border;
 }
@@ -232,11 +218,9 @@
 .energized, a.energized {
   color: $energized;
 }
-
 .energized-bg {
   background-color: $energized;
 }
-
 .energized-border {
   border-color: $button-energized-border;
 }
@@ -244,11 +228,9 @@
 .royal, a.royal {
   color: $royal;
 }
-
 .royal-bg {
   background-color: $royal;
 }
-
 .royal-border {
   border-color: $button-royal-border;
 }
@@ -256,11 +238,9 @@
 .dark, a.dark {
   color: $dark;
 }
-
 .dark-bg {
   background-color: $dark;
 }
-
 .dark-border {
   border-color: $button-dark-border;
 }

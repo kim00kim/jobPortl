@@ -1,3 +1,4 @@
+
 /**
  * Lists
  * --------------------------------------------------
@@ -10,13 +11,13 @@
   padding-left: 0; // reset padding because ul and ol
   margin-bottom: 20px;
 }
-
 .list:last-child {
   margin-bottom: 0px;
-  &.card {
-    margin-bottom: 40px;
+  &.card{
+    margin-bottom:40px;
   }
 }
+
 
 /**
  * List Header
@@ -36,6 +37,7 @@
   padding-right: 1px;
   padding-left: 1px;
 }
+
 
 /**
  * Cards and Inset Lists
@@ -66,7 +68,8 @@
 
 .card .item,
 .list-inset .item,
-.padding > .list .item {
+.padding > .list .item
+{
   &:first-child {
     border-top-left-radius: $card-border-radius;
     border-top-right-radius: $card-border-radius;
@@ -103,11 +106,9 @@
     padding-right: 44px;
   }
 }
-
 .padding-left > .list .item {
   margin-left: 0;
 }
-
 .padding-right > .list .item {
   margin-right: 0;
 }

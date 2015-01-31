@@ -1,10 +1,10 @@
 <ion-view title="Edit Profile">
 	<ion-content class="padding">
 		<div class="item image">
-			<img ng-src="{{last_photo}}">
+			<img ng-src="{{myPicture}}">
 
 			<div class="inputs">
-				<button ng-click="getPhoto()" class="button button-small button-stable"><i
+				<button camera ng-model="myPicture" class="button button-small button-stable"><i
 						class="icon ion-ios7-camera"></i> Take Photo
 				</button>
 				<button ng-click="getPhoto()" class="button button-small"><i class="icon ion-ios7-photos-outline"></i>
