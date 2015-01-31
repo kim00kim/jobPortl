@@ -84,10 +84,30 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				url: "/tab",
 				abstract: true,
 				templateUrl: "templates/tabs.html",
+                controller: 'AbstractTabCtrl',
                 data: {
                     authenticate: false
                 }
 			})
+
+            .state('tab-employer', {
+                url: "/tab",
+                abstract: true,
+                templateUrl: "templates/tabs-employer.html",
+                data: {
+                    authenticate: false
+                }
+            })
+
+            .state('tab-sl', {
+                url: "/tab",
+                abstract: true,
+                templateUrl: "templates/tabs-sl.html",
+                data: {
+                    authenticate: false
+                }
+            })
+
 
 			// Each tab has its own nav history stack:
 
