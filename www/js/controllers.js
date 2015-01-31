@@ -212,31 +212,29 @@ angular.module('jobPortl.controllers', [])
 		}
 	})
 
-	.controller('EditProfileCtrl', function ($scope, Camera) {
-		$scope.lastPhoto = "img/blank.png"
-		$scope.getPhoto = function () {
+	.controller('EditProfileCtrl', function ($scope) {
+		//$scope.lastPhoto = "img/blank.png"
+		//$scope.myPicture = "img/blank.png"
+		$scope.$watch('myPicture', function(value) {
+			if(value) {
+				$scope.myPicture = value
+			}
+		}, true);
+
+		/*$scope.getPhoto = function () {
 			console.log('Getting camera');
 			Camera.getPicture().then(function (imageURI) {
 				console.log(imageURI);
 				$scope.lastPhoto = imageURI;
 			}, function (err) {
-				console.err(err);
+				console.log(err);
 			}, {
 				quality: 75,
 				targetWidth: 100,
 				targetHeight: 100,
 				saveToPhotoAlbum: false
 			});
-			/*
-			 navigator.camera.getPicture(function(imageURI) {
-			 console.log(imageURI);
-			 }, function(err) {
-			 }, {
-			 quality: 50,
-			 destinationType: Camera.DestinationType.DATA_URL
-			 });
-			 */
-		}
+		}*/
 	})
 
 	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
