@@ -15,7 +15,7 @@ class Sha256Salted implements PasswordEncoderInterface
 
 	public function isPasswordValid($encoded, $raw, $salt)
 	{
-		return $encoded === substr($this->encodePassword($raw, $salt), 0, 60) ;
+		return $encoded === substr($this->encodePassword($raw, $salt), 0, 60);
 	}
 
 }

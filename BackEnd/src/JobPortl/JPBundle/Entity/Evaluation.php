@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Evaluation
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="evaluationId", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $evaluationId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="evaluationId", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $evaluationId;
 	/**
 	 * @var integer
 	 *
@@ -43,123 +43,123 @@ class Evaluation
 	 */
 	protected $applications;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
-    /**
-     * Get evaluationId
-     *
-     * @return integer 
-     */
-    public function getEvaluationId()
-    {
-        return $this->evaluationId;
-    }
+	/**
+	 * Get evaluationId
+	 *
+	 * @return integer
+	 */
+	public function getEvaluationId()
+	{
+		return $this->evaluationId;
+	}
 
-    /**
-     * Set rating
-     *
-     * @param integer $rating
-     * @return Evaluation
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
+	/**
+	 * Set rating
+	 *
+	 * @param integer $rating
+	 * @return Evaluation
+	 */
+	public function setRating($rating)
+	{
+		$this->rating = $rating;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get rating
-     *
-     * @return integer 
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
+	/**
+	 * Get rating
+	 *
+	 * @return integer
+	 */
+	public function getRating()
+	{
+		return $this->rating;
+	}
 
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     * @return Evaluation
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
+	/**
+	 * Set comment
+	 *
+	 * @param string $comment
+	 * @return Evaluation
+	 */
+	public function setComment($comment)
+	{
+		$this->comment = $comment;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get comment
-     *
-     * @return string 
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
+	/**
+	 * Get comment
+	 *
+	 * @return string
+	 */
+	public function getComment()
+	{
+		return $this->comment;
+	}
 
-    /**
-     * Set datetimeEvaluated
-     *
-     * @param \DateTime $datetimeEvaluated
-     * @return Evaluation
-     */
-    public function setDatetimeEvaluated($datetimeEvaluated)
-    {
-        $this->datetimeEvaluated = $datetimeEvaluated;
+	/**
+	 * Set datetimeEvaluated
+	 *
+	 * @param \DateTime $datetimeEvaluated
+	 * @return Evaluation
+	 */
+	public function setDatetimeEvaluated($datetimeEvaluated)
+	{
+		$this->datetimeEvaluated = $datetimeEvaluated;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get datetimeEvaluated
-     *
-     * @return \DateTime 
-     */
-    public function getDatetimeEvaluated()
-    {
-        return $this->datetimeEvaluated;
-    }
+	/**
+	 * Get datetimeEvaluated
+	 *
+	 * @return \DateTime
+	 */
+	public function getDatetimeEvaluated()
+	{
+		return $this->datetimeEvaluated;
+	}
 
-    /**
-     * Add applications
-     *
-     * @param \JobPortl\JPBundle\Entity\Application $applications
-     * @return Evaluation
-     */
-    public function addApplication(\JobPortl\JPBundle\Entity\Application $applications)
-    {
-        $this->applications[] = $applications;
+	/**
+	 * Add applications
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Application $applications
+	 * @return Evaluation
+	 */
+	public function addApplication(\JobPortl\JPBundle\Entity\Application $applications)
+	{
+		$this->applications[] = $applications;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Remove applications
-     *
-     * @param \JobPortl\JPBundle\Entity\Application $applications
-     */
-    public function removeApplication(\JobPortl\JPBundle\Entity\Application $applications)
-    {
-        $this->applications->removeElement($applications);
-    }
+	/**
+	 * Remove applications
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Application $applications
+	 */
+	public function removeApplication(\JobPortl\JPBundle\Entity\Application $applications)
+	{
+		$this->applications->removeElement($applications);
+	}
 
-    /**
-     * Get applications
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getApplications()
-    {
-        return $this->applications;
-    }
+	/**
+	 * Get applications
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getApplications()
+	{
+		return $this->applications;
+	}
 }

@@ -12,10 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class AdminRepository extends EntityRepository
 {
-	public function findAdminByName($name){
+	public function findAdminByName($name)
+	{
 		return $this->getEntityManager()
 			->createQuery(
-				'SELECT a.adminId FROM JobPortlJPBundle:Admin a where a.user_name='.$name
+				'SELECT a.adminId FROM JobPortlJPBundle:Admin a where a.user_name=' . $name
 			)
 			->getResult();
 	}

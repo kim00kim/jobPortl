@@ -1,26 +1,37 @@
 <ion-view title="Login">
 	<ion-content class="padding login">
 		<div class="list">
-			<button class="button btn-social btn-facebook button-small button-block" id="social-button" ng-click="fblogin()">
+			<button class="button btn-social btn-facebook button-small button-block" id="social-button"
+					ng-click="fblogin()">
 				<i class="fa fa-facebook"></i> Log in with Facebook
 			</button>
 			<form name="loginForm" novalidate>
 				<div class="list">
-					<label class="item item-input item-floating-label" ng-class="{'has-error' : loginForm.email.$dirty && loginForm.email.$invalid, 'no-error' : loginForm.email.$dirty && loginForm.email.$valid}">
+					<label class="item item-input item-floating-label"
+						   ng-class="{'has-error' : loginForm.email.$dirty && loginForm.email.$invalid, 'no-error' : loginForm.email.$dirty && loginForm.email.$valid}">
 						<span class="input-label">Email Address</span>
+
 						<div class="row">
-							<input type="email" placeholder="Email Address" ng-model="user_input.email_add" class="form-control" name="email" required />
-							<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
-							<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="loginForm.email.$dirty && loginForm.email.$valid"></span>
+							<input type="email" placeholder="Email Address" ng-model="user_input.email_add"
+								   class="form-control" name="email" required/>
+							<span class="error-handler col col-10 icon ion-alert-circled assertive"
+								  ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
+							<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+								  ng-show="loginForm.email.$dirty && loginForm.email.$valid"></span>
 						</div>
 					</label>
 
-					<label class="item item-input item-floating-label" ng-class="{'has-error' : loginForm.password.$dirty && loginForm.password.$invalid, 'no-error' : loginForm.password.$dirty && loginForm.password.$valid}">
+					<label class="item item-input item-floating-label"
+						   ng-class="{'has-error' : loginForm.password.$dirty && loginForm.password.$invalid, 'no-error' : loginForm.password.$dirty && loginForm.password.$valid}">
 						<span class="input-label">Password</span>
+
 						<div class="row">
-							<input type="password" placeholder="Password" ng-model="user_input.password" class="form-control" name="password" required />
-							<span class="error-handler col col-10 icon ion-alert-circled assertive" ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>
-							<span class="error-handler col col-10 icon ion-checkmark-circled balanced" ng-show="loginForm.password.$dirty && loginForm.password.$valid"></span>
+							<input type="password" placeholder="Password" ng-model="user_input.password"
+								   class="form-control" name="password" required/>
+							<span class="error-handler col col-10 icon ion-alert-circled assertive"
+								  ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>
+							<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+								  ng-show="loginForm.password.$dirty && loginForm.password.$valid"></span>
 						</div>
 					</label>
 				</div>

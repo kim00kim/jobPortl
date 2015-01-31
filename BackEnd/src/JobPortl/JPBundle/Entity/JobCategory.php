@@ -42,99 +42,100 @@ class JobCategory
 	 */
 	protected $skills;
 
-    /**
-     * Get categoryId
-     *
-     * @return integer 
-     */
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
+	/**
+	 * Get categoryId
+	 *
+	 * @return integer
+	 */
+	public function getCategoryId()
+	{
+		return $this->categoryId;
+	}
 
-    /**
-     * Set categoryName
-     *
-     * @param string $categoryName
-     * @return JobCategory
-     */
-    public function setCategoryName($categoryName)
-    {
-        $this->categoryName = $categoryName;
+	/**
+	 * Set categoryName
+	 *
+	 * @param string $categoryName
+	 * @return JobCategory
+	 */
+	public function setCategoryName($categoryName)
+	{
+		$this->categoryName = $categoryName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get categoryName
-     *
-     * @return string 
-     */
-    public function getCategoryName()
-    {
-        return $this->categoryName;
-    }
+	/**
+	 * Get categoryName
+	 *
+	 * @return string
+	 */
+	public function getCategoryName()
+	{
+		return $this->categoryName;
+	}
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return JobCategory
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
+	/**
+	 * Set description
+	 *
+	 * @param string $description
+	 * @return JobCategory
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->skills = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+	/**
+	 * Get description
+	 *
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
 
-    /**
-     * Add skills
-     *
-     * @param \JobPortl\JPBundle\Entity\Skill $skills
-     * @return JobCategory
-     */
-    public function addSkill(\JobPortl\JPBundle\Entity\Skill $skills)
-    {
-        $this->skills[] = $skills;
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->skills = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
-        return $this;
-    }
+	/**
+	 * Add skills
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Skill $skills
+	 * @return JobCategory
+	 */
+	public function addSkill(\JobPortl\JPBundle\Entity\Skill $skills)
+	{
+		$this->skills[] = $skills;
 
-    /**
-     * Remove skills
-     *
-     * @param \JobPortl\JPBundle\Entity\Skill $skills
-     */
-    public function removeSkill(\JobPortl\JPBundle\Entity\Skill $skills)
-    {
-        $this->skills->removeElement($skills);
-    }
+		return $this;
+	}
 
-    /**
-     * Get skills
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSkills()
-    {
-        return $this->skills;
-    }
+	/**
+	 * Remove skills
+	 *
+	 * @param \JobPortl\JPBundle\Entity\Skill $skills
+	 */
+	public function removeSkill(\JobPortl\JPBundle\Entity\Skill $skills)
+	{
+		$this->skills->removeElement($skills);
+	}
+
+	/**
+	 * Get skills
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getSkills()
+	{
+		return $this->skills;
+	}
 }

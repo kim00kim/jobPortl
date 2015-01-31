@@ -13,11 +13,13 @@ use \Monolog\Logger;
 
 class RestController extends Controller
 {
-    public function getTestAction() {
-        return "Hello!";
-    }
+	public function getTestAction()
+	{
+		return "Hello!";
+	}
 
-	public function postAdduserAction(Request $request) {
+	public function postAdduserAction(Request $request)
+	{
 		$post = $request->request;
 
 		$logger = $this->get('logger');
@@ -32,10 +34,10 @@ class RestController extends Controller
 		$user->setGender($post->get('gender'));
 		$user->setBirthdate(\DateTime::createFromFormat('Y-m-d', $post->get('birthdate')));;
 		$user->setCpNo($post->get('cpno'));
-        $user->setPhoto($post->get('photo'));
+		$user->setPhoto($post->get('photo'));
 
 		$userAccount = new Entity\UserAccount();
-		$userAccount ->setEmail($post->get('email'));
+		$userAccount->setEmail($post->get('email'));
 		$userAccount->setSalt(uniqid(mt_rand())); // Unique salt for user
 
 		// Set encrypted password
@@ -45,9 +47,9 @@ class RestController extends Controller
 		$userAccount->setPassword($password);
 		//$userAccount->setPassword($post->get('confirm'));
 
-		$userAccount ->setUserAccType($post->get('user_acc_type'));
-		$userAccount ->setUserType($post->get('user_type'));
-		$userAccount ->setUser($user);
+		$userAccount->setUserAccType($post->get('user_acc_type'));
+		$userAccount->setUserType($post->get('user_type'));
+		$userAccount->setUser($user);
 
 		$dal = $this->get('jpdal.dal');
 		$dal->saveUser($user);
@@ -55,44 +57,46 @@ class RestController extends Controller
 		return $user;
 	}
 
-	public function postUserAction(Request $request) {
+	public function postUserAction(Request $request)
+	{
 		$logger = $this->get('logger');
 		$post = $request->request;
 		$userAccount = new Entity\UserAccount();
 
 		$dal = $this->get('jpdal.dal');
 		$dal->validateUser($post->get('email_add'));
-		$logger->debug("Email: " .  $post->get('email_add'));
+		$logger->debug("Email: " . $post->get('email_add'));
 
 		$userAccount = $dal->validateUser($post->get('email_add'));
-		$logger->debug("Result: " .  json_encode($userAccount));
-		if(count($userAccount)!=1){
+		$logger->debug("Result: " . json_encode($userAccount));
+		if (count($userAccount) != 1) {
 			return $userAccount;
-		}
-		else{
+		} else {
 //			$userAccount = $result;
 			$encoder = $this->container->get('security.encoder_factory')
 				->getEncoder($userAccount);
 			$password = $encoder->encodePassword($post->get('password'), $userAccount->getSalt());
 //			$logger->debug("Pass:" . strlen($password));
-			$isValid = $encoder->isPasswordValid($userAccount->getPassword(),$post->get('password'), $userAccount->getSalt());
+			$isValid = $encoder->isPasswordValid($userAccount->getPassword(), $post->get('password'), $userAccount->getSalt());
 //			$logger->debug("Result: " .$isValid . " encoded: " . $userAccount->getPassword() . " raw: ".$post->get('password'). " salt: " .$userAccount->getSalt());
-			if(!$isValid)
+			if (!$isValid)
 				return null;
 			else
 				return $userAccount;
 		}
 	}
 
-	public function getAdminAction($id) {
+	public function getAdminAction($id)
+	{
 		$logger = $this->get('logger');
 		$dal = $this->get('jpdal.dal');
-		$res= $dal->getAdmin($id);
-		$logger->debug("Admin: " .  json_encode($res));
+		$res = $dal->getAdmin($id);
+		$logger->debug("Admin: " . json_encode($res));
 //		return $dal->getAdmin($id);
 	}
 
-	public function postAddadminAction(Request $request) {
+	public function postAddadminAction(Request $request)
+	{
 		/*$encoder_service = $this->get('security.encoder_factory');
 		$encoder = $encoder_service->getEncoder($user);
 		$encoded_pass = $encoder->encodePassword($password, $user->getSalt());*/

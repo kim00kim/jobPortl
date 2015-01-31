@@ -2,11 +2,12 @@
 	text-align: center;
 	margin: 5%;
 }
-#social-button{
+
+#social-button {
 	margin-bottom: 30px;
 }
 
-span.input-label.has-input{
+span.input-label.has-input {
 	width: 0;
 }
 
@@ -37,16 +38,17 @@ span.input-label.has-input{
 	z-index: 5;
 }
 
-#social-button{
+#social-button {
 	text-align: center;
 	padding-left: 0;
 }
-.card p{
+
+.card p {
 	text-align: center;
 	margin: 15px 0;
 }
 
-.col.col-75.number-input{
+.col.col-75.number-input {
 	margin-bottom: 0;
 }
 
@@ -55,55 +57,57 @@ span.input-label.has-input{
 }*/
 
 /*validation */
-span.error-handler,{
+span.error-handler, {
 	text-align: right;
 }
-label.has-error{
-	-webkit-box-shadow: 1px 1px	1px 1px #ef4e3a;
+
+label.has-error {
+	-webkit-box-shadow: 1px 1px 1px 1px #ef4e3a;
 	-moz-box-shadow: 1px 1px 1px 1px #ef4e3a;
-	box-shadow: 1px 1px	1px 1px #ef4e3a;
+	box-shadow: 1px 1px 1px 1px #ef4e3a;
 }
 
-label.no-error{
+label.no-error {
 	-webkit-box-shadow: 1px 1px 1px 1px #66cc33;
 	-moz-box-shadow: 1px 1px 1px 1px #66cc33;
 	box-shadow: 1px 1px 1px 1px #66cc33;
 }
 
-
 /*Job Post*/
-.datetime-posted{
+.datetime-posted {
 	float: right;
 	font-weight: normal;
 	font-size: 12px;
 	font-style: italic;
 }
 
-.job-info p{
+.job-info p {
 	text-align: left;
 	margin: 5px 0;
 }
-.description p{
+
+.description p {
 	text-indent: 20px;
 }
 
-.item.item-body.job-post{
+.item.item-body.job-post {
 	padding-top: 0px;
 }
 
-.category h3{
+.category h3 {
 	font-weight: bold;
 }
 
-.col.avatar{
+.col.avatar {
 	text-align: right;
 }
 
-.col.avatar h4{
+.col.avatar h4 {
 	margin-top: 5px;
 	font-weight: bold;
 }
-.col.avatar img{
+
+.col.avatar img {
 	position: relative;
 	max-width: 40px;
 	max-height: 40px;
@@ -111,31 +115,32 @@ label.no-error{
 	border-radius: 4px;
 }
 
-.item.apply{
+.item.apply {
 	padding: 0;
 }
 
-.item.apply button{
+.item.apply button {
 	padding: 0;
 	margin: 0;
 }
 
 /*Skilled Laborer*/
-.item.item-body.skilled-laborer{
+.item.item-body.skilled-laborer {
 	border-top: none;
 	padding: 16px 2px;
 }
 
-.buttons{
+.buttons {
 	float: right;
 }
 
-h2.highlight{
+h2.highlight {
 	font-size: 20px;
 	font-weight: bolder;
 	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", serif;
 }
-h2.title{
+
+h2.title {
 	font-style: italic;
 }
 
@@ -146,59 +151,61 @@ ul.rating li {
 	background: none;
 	padding: 5px 10px;
 }
+
 ul.rating li i {
 	font-size: 30px;
 }
 
 /*reviews*/
-span.review{
+span.review {
 	float: right;
 	margin-right: 50px;
 }
 
-.item.reviews{
+.item.reviews {
 	border-top: none;
 	padding-top: 0;
 	padding-left: 0;
 }
 
-span.comments{
+span.comments {
 	float: right;
 	font-style: italic;
 }
 
-span.comments a{
+span.comments a {
 	text-decoration: none;
 }
 
-.item.details{
+.item.details {
 	border-top: none;
 }
 
-.item.details p{
+.item.details p {
 	text-indent: 25px;
 }
 
-.item-divider.headers{
+.item-divider.headers {
 	font-weight: bold;
 	padding-left: 2px;
 	margin-top: 15px;
 }
-.subList{
+
+.subList {
 	padding: 5px 16px;
 }
 
 /*edit profile*/
-.item.image{
+.item.image {
 	text-align: center;
 
 }
 
-.inputs, .inputs button{
+.inputs, .inputs button {
 	margin: 3px;
 }
 
-.inputs label{
+.inputs label {
 	display: block;
 	margin-top: 5px;
 }

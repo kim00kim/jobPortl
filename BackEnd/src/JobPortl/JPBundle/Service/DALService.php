@@ -4,17 +4,21 @@ namespace JobPortl\JPBundle\Service;
 
 use \Monolog\Logger;
 
-class DALService {
+class DALService
+{
 
 	private $adminRepo;
 	private $userAccountRepo;
 
-	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger) {
+	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger)
+	{
 		$this->manager = $entityManager;
 		$this->adminRepo = $entityManager->getRepository('JobPortlJPBundle:Admin');
 		$this->userAccountRepo = $entityManager->getRepository('JobPortlJPBundle:UserAccount');
 	}
-	public function getAdmin($adminId) {
+
+	public function getAdmin($adminId)
+	{
 //		$logger = $this->get('logger');
 
 		/*$query = $this->adminRepo->createQueryBuilder('a')
@@ -26,17 +30,24 @@ class DALService {
 		return $this->adminRepo->findOneBy(array('userName' => $adminId));
 
 	}
-	function saveUser($user) {
+
+	function saveUser($user)
+	{
 		return $this->_persistFlush($user);
 	}
-	function saveUserAccount($userAccount) {
+
+	function saveUserAccount($userAccount)
+	{
 		return $this->_persistFlush($userAccount);
 	}
-	public function validateUser($email){
+
+	public function validateUser($email)
+	{
 		return $this->userAccountRepo->findOneBy(array('email' => $email));
 	}
 
-	private function _persistFlush($object) {
+	private function _persistFlush($object)
+	{
 		$this->manager->persist($object);
 		$this->manager->flush();
 
