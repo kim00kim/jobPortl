@@ -13,6 +13,10 @@ use \Monolog\Logger;
 
 class RestController extends Controller
 {
+    public function getTestAction() {
+        return "Hello!";
+    }
+
 	public function postAdduserAction(Request $request) {
 		$post = $request->request;
 
@@ -28,6 +32,7 @@ class RestController extends Controller
 		$user->setGender($post->get('gender'));
 		$user->setBirthdate(\DateTime::createFromFormat('Y-m-d', $post->get('birthdate')));;
 		$user->setCpNo($post->get('cpno'));
+        $user->setPhoto($post->get('photo'));
 
 		$userAccount = new Entity\UserAccount();
 		$userAccount ->setEmail($post->get('email'));

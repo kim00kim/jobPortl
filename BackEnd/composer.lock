@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f3f40dd2ee6cdd5bf01bd9d9aee94e44",
+    "hash": "d84af768b12ddc5f6e3a562783fe3c3b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -725,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "e77d0c391a8c07a484c29e18910c5ca1d2eaeae7"
+                "reference": "6badeaa8d65d81fcc777c8e57509d96ff71cc3ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/e77d0c391a8c07a484c29e18910c5ca1d2eaeae7",
-                "reference": "e77d0c391a8c07a484c29e18910c5ca1d2eaeae7",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/6badeaa8d65d81fcc777c8e57509d96ff71cc3ba",
+                "reference": "6badeaa8d65d81fcc777c8e57509d96ff71cc3ba",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +794,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-01-27 13:40:03"
+            "time": "2015-01-29 06:57:15"
         },
         {
             "name": "incenteev/composer-parameter-handler",
