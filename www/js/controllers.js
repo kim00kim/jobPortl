@@ -4,69 +4,87 @@ angular.module('jobPortl.controllers', [])
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 	})
 
-	.controller('AccountCtrl', function ($scope, $localForage) {
-		$localForage.getItem('user').then(function(data) {
-			$scope.id = data.user_id;
-			$scope.status = data.is_logged_in;
-			$scope.user_acc_type = data.user_acc_type,
-			$scope.user_type= data.user_type,
-			$scope.email= data.email,
-			$scope.first_name= data.first_name,
-			$scope.last_name= data.last_name
-			console.log(data)
-		});
+	.controller('AccountCtrl', function ($scope, $state, $ionicPopup, UserService) {
+		var user_type = UserService.getUserType()
+
+		if(user_type == 2)
+			$state.go('login')
+		else{
+			var user = UserService.getUser()
+			$scope.id = user.user_id;
+			$scope.status = user.is_logged_in;
+			$scope.user_acc_type = user.user_acc_type,
+			$scope.user_type= user.user_type,
+			$scope.email= user.email,
+			$scope.first_name= user.first_name,
+			$scope.last_name= user.last_name,
+			$scope.photo = "img/"+ user.photo
+			console.log("Response: " + JSON.stringify(user))
+		}
+
+        $scope.logOut = function (){
+            // A confirm log out dialog
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Log Out',
+                template: 'Confirm log out?'
+            });
+            confirmPopup.then(function(res) {
+                if(res) {
+	                UserService.clearStorage()
+                    $state.go('login')
+                }
+            });
+        }
 	})
 
-    .controller('ToggleUserCtrl', function($scope, $localForage){
-        $localForage.getItem('user').then(function(data){
-            //$scope.toggle_user= data
-            if (data == 0) { //employer
-                $scope.toggle_employer = 'ng-hide'
-                // return "ng-show";
-            } else if($scope.user_type == 1) { //skilled-laborer
-                // return "ng-hide";
-                $scope.toggle_sl= 'ng-hide'
-            }
-            else{
-                $scope.toggle_sl = 'ng-show'
-                $scope.toggle_employer = 'ng-show'
-            }
-        })
-    })
-
-    .controller('AbstractTabCtrl', function($scope) {
-        $scope.$on('$ionicView.loaded', function () {
-            console.log('TesterCtrl');
-        })
+    .controller('ToggleUserCtrl', function($scope, UserService){
+        if (UserService.getUserType() == 0) //employer
+            $scope.toggle_employer = 'ng-hide'
+        else if(UserService.getUserType() == 1)//skilled-laborer
+            $scope.toggle_sl = 'ng-hide'
     })
 
 	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
 		$scope.user_input= {}
-//		$scope.isLimited = false;
 
-		$scope.skipLogin=function($scope){
+		console.log("User: " + JSON.stringify(UserService.getUser))
+		console.log("User_Type: " + UserService.getUserType())
+		$scope.skipLogin=function($scope, $localstorage){
+			UserService.setUserType(2)
 			$state.go('tab.job-post');
+			console.log("User: " + JSON.stringify(UserService.getUser))
+			console.log("User_Type: " + UserService.getUserType())
 		}
 		$scope.register=function(){
+
 			$state.go('registerLogin');
 		}
 
 		$scope.login=function(user_input){
-			console.log(user_input)
 			UserAccount.checkUser(user_input).success(function(response){
-				console.log(response)
+				console.log((response))
 				if(!response){
 					alert("Incorrect email and password!")
 				}
 				else{
 					alert("Logged in successfully!")
 					UserService.setUser(response)
-					$state.go('tab.account')
+					UserService.setUserType(response.user_type)
+                    //UserService.setUser(response)
+                    //UserService.setUserType(response.user_type)
+                    //var user = UserService.getUserType()
+					console.log("LOGIN CTRL getUser: " + JSON.stringify(UserService.getUser()))
+					console.log("LOGIN CTRL getUserType: " + UserService.getUserType())
+                    navigate(UserService.getUserType())
 				}
 			})
-			.error(function(err){
-				alert(err)
-			})
+
+			var navigate = function(user_type){
+                if(user_type == 0)
+                    $state.go('tab.skilled-laborer')
+                else
+                    $state.go('tab.job-post')
+            }
 		}
 
 		//for facebook login
@@ -146,10 +164,14 @@ angular.module('jobPortl.controllers', [])
 		$scope.new_user.gender= "m"
 
 		$scope.addUser = function(){
-			var user_account= UserAccount.getUserAccount()
-			$scope.new_user.email= user_account.email
+			var photo = "blank.png"
+            var user_account= UserAccount.getUserAccount()
+
+            $scope.new_user.email= user_account.email
 			$scope.new_user.password= user_account.confirm
 			$scope.new_user.user_acc_type= user_account.user_acc_type
+            $scope.new_user.photo = photo
+
 			User.addUser($scope.new_user).success(function () {
 				alert("Success!")
 				//disable back button
@@ -217,7 +239,7 @@ angular.module('jobPortl.controllers', [])
 		}
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer/*, $localstorage*/) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
 		$scope.skilled_laborer_info= {}
 
 

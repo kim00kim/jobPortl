@@ -1,33 +1,8 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://127.0.0.1/jobportl/web/api/')
+	.constant('baseUrl', 'http://192.168.1.4/jobportl/web/api/')
 
-    .factory('UserService', function ($localForage) {
-        return{
-            setUser: function(response){
-                $localForage.setItem('user',
-                    { 	user_id: response.user.user_id,
-                        is_logged_in: 1,
-                        user_acc_type: response.user_acc_type,
-                        user_type: response.	user_type,
-                        email: response.email,
-                        first_name: response.user.first_name,
-                        last_name: response.user.last_name,
-                        address: response.user.address,
-                        city_mun: response.user.city_mun,
-                        gender: response.user.gender,
-                        birthdate: response.user.birthdate,
-                        cpno: response.user.cpno,
-                        has_verified_num: response.user.has_verified_number,
-                        photo: response.user.photo,
-                        gender: response.user.gender,
-                        zipcode: response.user.zipcode
-                    })
-            }
-        }
-    })
-    
-	/*.factory('$localstorage', ['$window', function($window) {
+	.factory('$localstorage', ['$window', function($window) {
 		return {
 			set: function(key, value) {
 				$window.localStorage[key] = value;
@@ -42,9 +17,47 @@ angular.module('jobPortl.services', [])
 				return JSON.parse($window.localStorage[key] || '{}');
 			}
 		}
-	}])*/
+	}])
 
-	/*.factory('Camera', ['$q', function($q) {
+    .factory('UserService', function ($localstorage) {
+        return{
+            setUserType: function (response){
+                $localstorage.set('user_type', response)
+            },
+            setUser: function(response){
+                $localstorage.setObject('user',
+                    { 	user_id: response.user.user_id,
+                        is_logged_in: 1,
+                        user_acc_type: response.user_acc_type,
+                        email: response.email,
+                        first_name: response.user.first_name,
+                        last_name: response.user.last_name,
+                        address: response.user.address,
+                        city_mun: response.user.city_mun,
+                        gender: response.user.gender,
+                        birthdate: response.user.birthdate,
+                        cpno: response.user.cpno,
+                        has_verified_num: response.user.has_verified_number,
+                        photo: response.user.photo,
+                        gender: response.user.gender,
+                        zipcode: response.user.zipcode
+                    })
+            },
+            getUserType: function(){
+	            return $localstorage.get('user_type')
+            },
+	        getUser: function () {
+		        return $localstorage.getObject('user')
+	        },
+	        clearStorage: function () {
+		        //console.log(localStorage.length)
+		        localStorage.clear()
+		        //console.log(localStorage.length)
+	        }
+        }
+    })
+
+	.factory('Camera', ['$q', function($q) {
 
 		return {
 			getPicture: function(options) {
@@ -60,7 +73,7 @@ angular.module('jobPortl.services', [])
 				return q.promise;
 			}
 		}
-	}])*/
+	}])
 
 	.factory('UserAccount', function ($http, baseUrl) {
 		var user_account= new Object();

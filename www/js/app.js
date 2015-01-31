@@ -5,22 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'LocalForageModule' ])
+angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
 
 	//})
     /*.config(function($compileProvider){
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     })*/
-
-	.config(['$localForageProvider', function($localForageProvider){
-		$localForageProvider.config({
-			driver      : 'localStorageWrapper', // if you want to force a driver
-			name        : 'jobPortl', // name of the database and prefix for your data, it is "lf" by default
-			version     : 1.0, // version of the database, you shouldn't have to use this
-			storeName   : 'user_j', // name of the table
-			description : 'logged in user info'
-		});
-	}])
 
 	.run(function ($ionicPlatform,$rootScope, $state) {
         $ionicPlatform.ready(function () {
@@ -42,6 +32,7 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
                 event.preventDefault();
             }
         })
+		//localStorage.clear()
     })
 
 	.config(function ($stateProvider, $urlRouterProvider) {
@@ -84,30 +75,11 @@ angular.module('jobPortl', ['ionic', 'ionic.rating','jobPortl.controllers', 'job
 				url: "/tab",
 				abstract: true,
 				templateUrl: "templates/tabs.html",
-                controller: 'AbstractTabCtrl',
+                controller: 'ToggleUserCtrl',
                 data: {
                     authenticate: false
                 }
 			})
-
-            .state('tab-employer', {
-                url: "/tab",
-                abstract: true,
-                templateUrl: "templates/tabs-employer.html",
-                data: {
-                    authenticate: false
-                }
-            })
-
-            .state('tab-sl', {
-                url: "/tab",
-                abstract: true,
-                templateUrl: "templates/tabs-sl.html",
-                data: {
-                    authenticate: false
-                }
-            })
-
 
 			// Each tab has its own nav history stack:
 
