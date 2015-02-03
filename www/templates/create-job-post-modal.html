@@ -54,6 +54,18 @@
 							  ng-show="jobPost.location.$dirty && jobPost.location.$valid"></span>
 					</div>
 				</label>
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : jobPost.location.$dirty && jobPost.location.$invalid, 'no-error' : jobPost.location.$dirty && jobPost.location.$valid}">
+					<span class="input-label">Required Applicant</span>
+
+					<div class="row">
+						<input type="number" placeholder="Required Applicant . . ." name="required_applicant" ng-model="new_job_post.required_applicant"  ng-minlength=1 required>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="jobPost.required_applicant.$dirty && jobPost.required_applicant.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="jobPost.required_applicant.$dirty && jobPost.required_applicant.$valid"></span>
+					</div>
+				</label>
 			</div>
 			<button class="button button-block button-positive" ng-disabled="jobPost.$invalid">Post Job</button>
 		</form>

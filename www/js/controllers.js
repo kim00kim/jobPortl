@@ -49,7 +49,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_stalker = 'ng-hide'
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService) {
 		$scope.user_input = {}
 
 		console.log("User: " + JSON.stringify(UserService.getUser))
@@ -66,18 +66,23 @@ angular.module('jobPortl.controllers', [])
 		}
 
 		$scope.login = function (user_input) {
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 500,
+				showDelay: 0
+			});
 			UserAccount.checkUser(user_input).success(function (response) {
+				$ionicLoading.hide();
 				console.log((response))
 				if (!response) {
 					alert("Incorrect email and password!")
 				}
 				else {
-					alert("Logged in successfully!")
+					//alert("Logged in successfully!")
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
-					//UserService.setUser(response)
-					//UserService.setUserType(response.user_type)
-					//var user = UserService.getUserType()
 					console.log("LOGIN CTRL getUser: " + JSON.stringify(UserService.getUser()))
 					console.log("LOGIN CTRL getUserType: " + UserService.getUserType())
 					navigate(UserService.getUserType())
@@ -156,7 +161,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 
-	.controller('RegisterCtrl', function ($scope, $state, $window, UserAccount, User, $ionicViewService) {
+	.controller('RegisterCtrl', function ($scope, $state, $window, $ionicLoading,UserAccount, User, $ionicViewService) {
 		$scope.new_user = {}
 		$scope.new_user_account = {}
 
@@ -172,17 +177,25 @@ angular.module('jobPortl.controllers', [])
 			var photo = "blank.png"
 			var user_account = UserAccount.getUserAccount()
 
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 200,
+				showDelay: 0
+			});
+
 			$scope.new_user.email = user_account.email
 			$scope.new_user.password = user_account.confirm
 			$scope.new_user.user_acc_type = user_account.user_acc_type
 			$scope.new_user.photo = photo
-
 			User.addUser($scope.new_user).success(function () {
-				alert("Success!")
+
 				//disable back button
 				$ionicViewService.nextViewOptions({
 					disableBack: true
 				});
+				$ionicLoading.hide();
 				$state.go('login')
 			});
 		}
@@ -295,8 +308,9 @@ angular.module('jobPortl.controllers', [])
 
 		if (user_type  == 0){ //employer
 			$scope.toggle_employer = 'ng-hide'
-			/*$scope.job_posts = JobPost.getMyPost().success(function(response) {
-			})*/
+			$scope.job_posts = JobPost.getMyPost().success(function(response) {
+
+			})
 		}
 		else if (user_type  == 1){ //skilled-laborer
 			$scope.toggle_sl = 'ng-hide'
@@ -307,7 +321,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.job_posts = JobPost.all();
 		}
 
-		$scope.job_posts = JobPost.all();
+		//$scope.job_posts = JobPost.all();
 
 		console.log($scope.job_posts)
 
@@ -323,32 +337,35 @@ angular.module('jobPortl.controllers', [])
 			JobPost.getAllCategories().success(function(response){
 				$scope.categories = response
 				console.log($scope.categories)
-				/*if(!response)
+				if(!response)
 					alert("Couldn't get categories.")
 				else{
 					$scope.predicate = 'category_name'
 					$scope.categories = response
 					$scope.new_job_post.category = $scope.categories[0];
-				}*/
+				}
 			})
 		});
 
 		//add job post in service
 		$scope.createNewJobPost = function (new_job_post) {
-			$scope.job_posts.push({
-				job_id: 3,
-				title: new_job_post.title,
-				description: new_job_post.description,
-				location: new_job_post.location,
-				category: new_job_post.category.category_name,
-				employer: 'New Employer',
-				datetime_posted: datenow
-			});
-			$scope.createJobPost.hide();
-			//clean form input
-			$scope.new_job_post = {};
-			$scope.new_job_post.category = $scope.categories[0];
-			alert("New job post successfully created!")
+			UserService.getObject('user').success(function(response){
+				$scope.job_posts.push({
+					title: new_job_post.title,
+					description: new_job_post.description,
+					location: new_job_post.location,
+					category: new_job_post.category.category_name,
+					employer: response.user_name + " " + response.last_name,
+					photo: response.photo,
+					datetime_posted: datenow
+				});
+				$scope.createJobPost.hide();
+				//clean form input
+				$scope.new_job_post = {};
+				$scope.new_job_post.category = $scope.categories[0];
+				alert("New job post successfully created!")
+			})
+
 		};
 	})
 

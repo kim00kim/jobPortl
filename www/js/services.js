@@ -105,7 +105,7 @@ angular.module('jobPortl.services', [])
 
 	.factory('JobPost', function ($http, baseUrl) {
 		// Some fake testing data
-		var job_posts = [
+		/*var job_posts = [
 			{
 				job_id: 0,
 				title: 'Job Title1',
@@ -133,7 +133,7 @@ angular.module('jobPortl.services', [])
 				employer: 'Juan dela Cruz',
 				datetime_posted: '5 Jan 2015 8:00pm'
 			}
-		];
+		];*/
 
 		/*var category = [
 			{category_id: 0, category_name: 'Furniture Maker'},
@@ -148,7 +148,7 @@ angular.module('jobPortl.services', [])
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
 			},
 			getMyPost: function(user){
-
+				return $http({method: "POST", url: baseUrl})
 			},
 			saveJobPost: function (new_job){
 
