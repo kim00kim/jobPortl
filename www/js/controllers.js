@@ -49,7 +49,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_stalker = 'ng-hide'
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, $cordovaToast, $ionicPlatform, UserAccount, UserService) {
 		$scope.user_input = {}
 
 		console.log("User: " + JSON.stringify(UserService.getUser))
@@ -67,6 +67,16 @@ angular.module('jobPortl.controllers', [])
 
 		$scope.login = function (user_input) {
 			UserAccount.checkUser(user_input).success(function (response) {
+				$ionicPlatform.ready(function() {
+					$cordovaToast.showShortTop('Here is a message').then(function(success) {
+						// success
+					}, function (error) {
+						// error
+					});
+				});
+
+
+
 				console.log((response))
 				if (!response) {
 					alert("Incorrect email and password!")
@@ -75,9 +85,6 @@ angular.module('jobPortl.controllers', [])
 					alert("Logged in successfully!")
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
-					//UserService.setUser(response)
-					//UserService.setUserType(response.user_type)
-					//var user = UserService.getUserType()
 					console.log("LOGIN CTRL getUser: " + JSON.stringify(UserService.getUser()))
 					console.log("LOGIN CTRL getUserType: " + UserService.getUserType())
 					navigate(UserService.getUserType())
@@ -156,7 +163,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 
-	.controller('RegisterCtrl', function ($scope, $state, $window, UserAccount, User, $ionicViewService) {
+	.controller('RegisterCtrl', function ($scope, $state, $window, $ionicLoading,UserAccount, User, $ionicViewService) {
 		$scope.new_user = {}
 		$scope.new_user_account = {}
 
@@ -178,11 +185,14 @@ angular.module('jobPortl.controllers', [])
 			$scope.new_user.photo = photo
 
 			User.addUser($scope.new_user).success(function () {
-				alert("Success!")
+				$ionicLoading.show({
+					template: 'Loading...'
+				});
 				//disable back button
 				$ionicViewService.nextViewOptions({
 					disableBack: true
 				});
+				$ionicLoading.hide();
 				$state.go('login')
 			});
 		}
