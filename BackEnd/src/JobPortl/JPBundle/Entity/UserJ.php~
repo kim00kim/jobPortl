@@ -83,7 +83,7 @@ class UserJ
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=255, options={"default"=" "})
+	 * @ORM\Column(type="string", length=255, options={"default"=" "}, nullable=true)
 	 */
 	private $title;
 	/**
