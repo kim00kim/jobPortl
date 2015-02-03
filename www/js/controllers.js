@@ -6,10 +6,14 @@ angular.module('jobPortl.controllers', [])
 
 	.controller('AccountCtrl', function ($scope, $state, $ionicPopup, UserService) {
 		var user_type = UserService.getUserType()
-
 		if (user_type == 2)
 			$state.go('login')
 		else {
+			if (user_type == 0) //employer
+				$scope.toggle_employer = 'ng-hide'
+			else //skilled-laborer
+				$scope.toggle_sl = 'ng-hide'
+
 			var user = UserService.getUser()
 			$scope.id = user.user_id;
 			$scope.status = user.is_logged_in;
@@ -21,7 +25,6 @@ angular.module('jobPortl.controllers', [])
 			$scope.photo = "img/" + user.photo
 			console.log("Response: " + JSON.stringify(user))
 		}
-
 		$scope.logOut = function () {
 			// A confirm log out dialog
 			var confirmPopup = $ionicPopup.confirm({
@@ -42,6 +45,8 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_employer = 'ng-hide'
 		else if (UserService.getUserType() == 1)//skilled-laborer
 			$scope.toggle_sl = 'ng-hide'
+		else
+			$scope.toggle_stalker = 'ng-hide'
 	})
 
 	.controller('LoginCtrl', function ($scope, $state, $rootScope, UserAccount, UserService) {
@@ -267,7 +272,8 @@ angular.module('jobPortl.controllers', [])
 
 			$ionicModal.fromTemplateUrl('templates/profile-modal.html', {
 				scope: $scope,
-				animation: 'slide-in-right' //or slide-left-right-ios7
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
 			}).then(function (modal) {
 				$scope.profileModal = modal;
 				$scope.profileModal.show();
@@ -279,23 +285,52 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost) {
+	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost, UserService) {
+		var user_type = UserService.getUserType()
 		$scope.new_job_post = {};
 
 		//get current date and time
 		var datenow = new Date();
 		datenow = $filter('date')(datenow, "EEE d MMM yyyy ") + "at" + $filter('date')(datenow, " hh:mm a");
 
+		if (user_type  == 0){ //employer
+			$scope.toggle_employer = 'ng-hide'
+			/*$scope.job_posts = JobPost.getMyPost().success(function(response) {
+			})*/
+		}
+		else if (user_type  == 1){ //skilled-laborer
+			$scope.toggle_sl = 'ng-hide'
+			$scope.job_posts = JobPost.all();
+		}
+		else{
+			$scope.toggle_stalker = 'ng-hide'
+			$scope.job_posts = JobPost.all();
+		}
+
 		$scope.job_posts = JobPost.all();
+
 		console.log($scope.job_posts)
+
+
 
 		$ionicModal.fromTemplateUrl('templates/create-job-post-modal.html', {
 			scope: $scope,
-			animation: 'slide-in-right' //or slide-left-right-ios7
+			animation: 'slide-in-right', //or slide-left-right-ios7
+			focusFirstInput: true
 		}).then(function (modal) {
 			$scope.createJobPost = modal;
-			$scope.categories = JobPost.allCategories();
-			$scope.new_job_post.category = $scope.categories[0];
+//			$scope.categories = JobPost.allCategories();
+			JobPost.getAllCategories().success(function(response){
+				$scope.categories = response
+				console.log($scope.categories)
+				/*if(!response)
+					alert("Couldn't get categories.")
+				else{
+					$scope.predicate = 'category_name'
+					$scope.categories = response
+					$scope.new_job_post.category = $scope.categories[0];
+				}*/
+			})
 		});
 
 		//add job post in service

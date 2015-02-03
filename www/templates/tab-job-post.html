@@ -1,6 +1,6 @@
 <!--for employers' view-->
 <ion-nav-buttons side="right">
-	<button class="button button-clear icon ion-compose" ng-click="createJobPost.show()"></button>
+	<button class="button button-clear icon ion-compose {{toggle_sl}} {{toggle_stalker}}" ng-click="createJobPost.show()"></button>
 </ion-nav-buttons>
 <!--for skilled laborers' view-->
 <ion-view title="Job Post">
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<div class="item apply">
-				<button class="button button-block button-calm"><i class="icon ion-checkmark-round"></i> Apply Job
+				<button class="button button-block button-calm {{toggle_stalker}}	"><i class="icon ion-checkmark-round"></i> Apply Job
 				</button>
 			</div>
 		</div>

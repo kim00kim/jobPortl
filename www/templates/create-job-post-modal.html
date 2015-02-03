@@ -24,8 +24,8 @@
 					<div class="input-label">
 						Choose a Category
 					</div>
-					<select ng-options="category.category_name for category in categories"
-							ng-model="new_job_post.category" name="category">
+					<select ng-options="category.category_name for category in categories | orderBy:predicate"
+							ng-model="new_job_post.category_name" name="category">
 					</select>
 				</label>
 

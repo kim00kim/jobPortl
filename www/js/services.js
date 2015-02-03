@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://192.168.1.4/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	.factory('$localstorage', ['$window', function ($window) {
 		return {
@@ -103,7 +103,7 @@ angular.module('jobPortl.services', [])
 		}
 	})
 
-	.factory('JobPost', function ($http) {
+	.factory('JobPost', function ($http, baseUrl) {
 		// Some fake testing data
 		var job_posts = [
 			{
@@ -135,17 +135,23 @@ angular.module('jobPortl.services', [])
 			}
 		];
 
-		var category = [
+		/*var category = [
 			{category_id: 0, category_name: 'Furniture Maker'},
 			{category_id: 1, category_name: 'Plumbing Services'}
-		];
+		];*/
 
 		return {
 			all: function () {
 				return job_posts;
 			},
-			allCategories: function () {
-				return category;
+			getAllCategories: function () {
+				return $http({method: "GET", url: baseUrl + 'allcategories'})
+			},
+			getMyPost: function(user){
+
+			},
+			saveJobPost: function (new_job){
+
 			}
 		}
 	})
