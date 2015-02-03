@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Schedule
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="scheduleId", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $scheduleId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="scheduleId", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $scheduleId;
 	/**
 	 * @var datetime
 	 *
@@ -32,59 +32,59 @@ class Schedule
 	 */
 	protected $user;
 
-    /**
-     * Get scheduleId
-     *
-     * @return integer 
-     */
-    public function getScheduleId()
-    {
-        return $this->scheduleId;
-    }
+	/**
+	 * Get scheduleId
+	 *
+	 * @return integer
+	 */
+	public function getScheduleId()
+	{
+		return $this->scheduleId;
+	}
 
-    /**
-     * Set datetimeUnavailable
-     *
-     * @param \DateTime $datetimeUnavailable
-     * @return Schedule
-     */
-    public function setDatetimeUnavailable($datetimeUnavailable)
-    {
-        $this->datetimeUnavailable = $datetimeUnavailable;
+	/**
+	 * Set datetimeUnavailable
+	 *
+	 * @param \DateTime $datetimeUnavailable
+	 * @return Schedule
+	 */
+	public function setDatetimeUnavailable($datetimeUnavailable)
+	{
+		$this->datetimeUnavailable = $datetimeUnavailable;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get datetimeUnavailable
-     *
-     * @return \DateTime 
-     */
-    public function getDatetimeUnavailable()
-    {
-        return $this->datetimeUnavailable;
-    }
+	/**
+	 * Get datetimeUnavailable
+	 *
+	 * @return \DateTime
+	 */
+	public function getDatetimeUnavailable()
+	{
+		return $this->datetimeUnavailable;
+	}
 
-    /**
-     * Set user
-     *
-     * @param \JobPortl\JPBundle\Entity\UserJ $user
-     * @return Schedule
-     */
-    public function setUser(\JobPortl\JPBundle\Entity\UserJ $user)
-    {
-        $this->user = $user;
+	/**
+	 * Set user
+	 *
+	 * @param \JobPortl\JPBundle\Entity\UserJ $user
+	 * @return Schedule
+	 */
+	public function setUser(\JobPortl\JPBundle\Entity\UserJ $user)
+	{
+		$this->user = $user;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get user
-     *
-     * @return \JobPortl\JPBundle\Entity\UserJ 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
+	/**
+	 * Get user
+	 *
+	 * @return \JobPortl\JPBundle\Entity\UserJ
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
 }

@@ -12,20 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Admin
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="adminId", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $adminId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="adminId", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $adminId;
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=60)
 	 */
-	private $userName;
+	private $username;
 	/**
 	 * @var string
 	 *
@@ -44,26 +44,26 @@ class Admin
     }
 
     /**
-     * Set userName
+     * Set username
      *
-     * @param string $userName
+     * @param string $username
      * @return Admin
      */
-    public function setUserName($userName)
+    public function setUsername($username)
     {
-        $this->userName = $userName;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get userName
+     * Get username
      *
      * @return string 
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
 
     /**

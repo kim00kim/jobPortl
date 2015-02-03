@@ -25,7 +25,7 @@ class Admin
 	 *
 	 * @ORM\Column(type="string", length=60)
 	 */
-	private $userName;
+	private $username;
 	/**
 	 * @var string
 	 *
@@ -33,59 +33,59 @@ class Admin
 	 */
 	private $password;
 
-	/**
-	 * Get adminId
-	 *
-	 * @return integer
-	 */
-	public function getAdminId()
-	{
-		return $this->adminId;
-	}
+    /**
+     * Get adminId
+     *
+     * @return integer 
+     */
+    public function getAdminId()
+    {
+        return $this->adminId;
+    }
 
-	/**
-	 * Set userName
-	 *
-	 * @param string $userName
-	 * @return Admin
-	 */
-	public function setUserName($userName)
-	{
-		$this->userName = $userName;
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Admin
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get userName
-	 *
-	 * @return string
-	 */
-	public function getUserName()
-	{
-		return $this->userName;
-	}
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-	/**
-	 * Set password
-	 *
-	 * @param string $password
-	 * @return Admin
-	 */
-	public function setPassword($password)
-	{
-		$this->password = $password;
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Admin
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get password
-	 *
-	 * @return string
-	 */
-	public function getPassword()
-	{
-		return $this->password;
-	}
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 }
