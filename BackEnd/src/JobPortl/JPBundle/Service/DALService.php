@@ -9,26 +9,22 @@ class DALService
 
 	private $adminRepo;
 	private $userAccountRepo;
+	private $categoryRepo;
+	private $skillRepo;
 
 	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger)
 	{
 		$this->manager = $entityManager;
+
 		$this->adminRepo = $entityManager->getRepository('JobPortlJPBundle:Admin');
 		$this->userAccountRepo = $entityManager->getRepository('JobPortlJPBundle:UserAccount');
+		$this->categoryRepo = $entityManager->getRepository('JobPortlJPBundle:JobCategory');
+		$this->skillRepo = $entityManager->getRepository('JobPortlJPBundle:Skill');
 	}
 
 	public function getAdmin($adminId)
 	{
-//		$logger = $this->get('logger');
-
-		/*$query = $this->adminRepo->createQueryBuilder('a')
-			->where('a.user_name > :adminId')
-			->setParameter('adminId', $adminId)
-			->getQuery();*/
-//		$logger->debug("Query: " .  $query);
-//		return  $query->getOneOrNullResult(); /*$this->adminRepo->findBy(array('user_name' => $adminId));  // Equivalent to a SELECT * FROM child WHERE id = $id*/
-		return $this->adminRepo->findOneBy(array('userName' => $adminId));
-
+		return $this->adminRepo->find($adminId);
 	}
 
 	function saveUser($user)
@@ -46,6 +42,34 @@ class DALService
 		return $this->userAccountRepo->findOneBy(array('email' => $email));
 	}
 
+	public function validateAdmin($username, $password)
+	{
+		return $this->adminRepo->findOneBy(array('username' => $username, 'password' =>$password));
+	}
+
+	public function saveCategory($category){
+		return $this->_persistFlush($category);
+	}
+
+	public function saveSkill($skill){
+		return $this->_persistFlush($skill);
+	}
+
+	public function getAllCategories()
+	{
+		return $this->categoryRepo->findAll();
+	}
+
+	public  function getJobCategory($id)
+	{
+		return $this->categoryRepo->find($id);
+	}
+
+	public function getAllSkills()
+	{
+		return $this->skillRepo->findAll();
+	}
+
 	private function _persistFlush($object)
 	{
 		$this->manager->persist($object);
@@ -53,6 +77,4 @@ class DALService
 
 		return $object;
 	}
-
-
 }
