@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
+angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'ngCordova'])
 
 	//})
 	/*.config(function($compileProvider){
@@ -23,6 +23,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				// org.apache.cordova.statusbar required
 				StatusBar.styleDefault();
 			}
+			//$cordovaPlugin.someFunction().then(success, error);
 		});
 		// UI Router Authentication Check
 		$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
