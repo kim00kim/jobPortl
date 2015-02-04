@@ -25,7 +25,7 @@
 						Choose a Category
 					</div>
 					<select ng-options="category.category_name for category in categories | orderBy:predicate"
-							ng-model="new_job_post.category_name" name="category">
+							ng-model="new_job_post.category" name="category">
 					</select>
 				</label>
 
@@ -55,7 +55,7 @@
 					</div>
 				</label>
 				<label class="item item-input item-floating-label"
-					   ng-class="{'has-error' : jobPost.location.$dirty && jobPost.location.$invalid, 'no-error' : jobPost.location.$dirty && jobPost.location.$valid}">
+					   ng-class="{'has-error' : jobPost.required_applicant.$dirty && jobPost.required_applicant.$invalid, 'no-error' : jobPost.required_applicant.$dirty && jobPost.required_applicant.$valid}">
 					<span class="input-label">Required Applicant</span>
 
 					<div class="row">

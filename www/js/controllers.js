@@ -294,23 +294,25 @@ angular.module('jobPortl.controllers', [])
 				$scope.max = 5;
 			});
 		}
-
-
 	})
 
-	.controller('JobCtrl', function ($scope, $ionicModal, $filter, JobPost, UserService) {
+	.controller('JobCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, JobPost, UserService) {
 		var user_type = UserService.getUserType()
 		$scope.new_job_post = {};
+
+		var displayJobPost = function() {
+			$scope.job_posts = JobPost.getMyPost(UserService.getUser().user_id).success(function(response) {
+				console.log(response)
+			})
+		}
 
 		//get current date and time
 		var datenow = new Date();
 		datenow = $filter('date')(datenow, "EEE d MMM yyyy ") + "at" + $filter('date')(datenow, " hh:mm a");
-
 		if (user_type  == 0){ //employer
 			$scope.toggle_employer = 'ng-hide'
-			$scope.job_posts = JobPost.getMyPost().success(function(response) {
-
-			})
+//			console.log("User: " + UserService.getUser().user_id)
+			displayJobPost()
 		}
 		else if (user_type  == 1){ //skilled-laborer
 			$scope.toggle_sl = 'ng-hide'
@@ -321,50 +323,78 @@ angular.module('jobPortl.controllers', [])
 			$scope.job_posts = JobPost.all();
 		}
 
-		//$scope.job_posts = JobPost.all();
-
-		console.log($scope.job_posts)
-
-
-
-		$ionicModal.fromTemplateUrl('templates/create-job-post-modal.html', {
-			scope: $scope,
-			animation: 'slide-in-right', //or slide-left-right-ios7
-			focusFirstInput: true
-		}).then(function (modal) {
-			$scope.createJobPost = modal;
-//			$scope.categories = JobPost.allCategories();
-			JobPost.getAllCategories().success(function(response){
-				$scope.categories = response
-				console.log($scope.categories)
-				if(!response)
-					alert("Couldn't get categories.")
-				else{
-					$scope.predicate = 'category_name'
-					$scope.categories = response
-					$scope.new_job_post.category = $scope.categories[0];
-				}
-			})
-		});
-
-		//add job post in service
-		$scope.createNewJobPost = function (new_job_post) {
-			UserService.getObject('user').success(function(response){
-				$scope.job_posts.push({
-					title: new_job_post.title,
-					description: new_job_post.description,
-					location: new_job_post.location,
-					category: new_job_post.category.category_name,
-					employer: response.user_name + " " + response.last_name,
-					photo: response.photo,
-					datetime_posted: datenow
+		$scope.openModal = function(){
+			$ionicModal.fromTemplateUrl('templates/create-job-post-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
+			}).then(function (modal) {
+				$scope.createJobPost = modal;
+				$ionicLoading.show({
+					content: 'Loading...',
+					animation: 'fade-in',
+					showBackdrop: true,
+					maxWidth: 500,
+					showDelay: 0
 				});
+				JobPost.getAllCategories().success(function(response){
+					$ionicLoading.hide()
+					$scope.categories = response
+					console.log($scope.categories)
+					if(!response)
+						alert("Couldn't get categories.")
+					else{
+						$scope.predicate = 'category_name'
+						$scope.categories = response
+						$scope.new_job_post.category = $scope.categories[0];
+					}
+				})
+				$scope.createJobPost.show()
+			})
+
+		}
+		//add job post in service
+
+		$scope.createNewJobPost = function (new_job_post) {
+			var user = UserService.getUser()
+			var job_post = {
+				title: new_job_post.title,
+				description: new_job_post.description,
+				location: new_job_post.location,
+				category_id: new_job_post.category.category_id,
+				user_id: user.user_id,
+				required_applicant: new_job_post.required_applicant
+			}
+
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 500,
+				showDelay: 0
+			});
+			JobPost.saveJobPost(job_post).success(function(response){
+				$ionicLoading.hide()
+				console.log(response)
 				$scope.createJobPost.hide();
 				//clean form input
 				$scope.new_job_post = {};
 				$scope.new_job_post.category = $scope.categories[0];
-				alert("New job post successfully created!")
+//				alert("New job post successfully created!")
+				/*$scope.new_job_post.push({
+
+				})*/
 			})
+//			console.log(job_post)
+				/*$scope.job_posts = ({
+					title: new_job_post.title,
+					description: new_job_post.description,
+					location: new_job_post.location,
+					category: new_job_post.category.category_id,
+					employer: user.first_name + " " + user.last_name,
+					photo: user.photo,
+					datetime_posted: datenow
+				});*/
 
 		};
 	})

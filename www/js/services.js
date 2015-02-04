@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://192.168.1.7/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	.factory('$localstorage', ['$window', function ($window) {
 		return {
@@ -51,9 +51,7 @@ angular.module('jobPortl.services', [])
 				return $localstorage.getObject('user')
 			},
 			clearStorage: function () {
-				//console.log(localStorage.length)
 				localStorage.clear()
-				//console.log(localStorage.length)
 			}
 		}
 	})
@@ -104,42 +102,6 @@ angular.module('jobPortl.services', [])
 	})
 
 	.factory('JobPost', function ($http, baseUrl) {
-		// Some fake testing data
-		/*var job_posts = [
-			{
-				job_id: 0,
-				title: 'Job Title1',
-				description: 'Description Blah Blah Description Blah Blah Description Blah Blah Description Blah Blah',
-				location: 'Naga City',
-				category: 'Furniture Maker',
-				employer: 'John Doe',
-				datetime_posted: '5 Jan 2015 at 8:00pm'
-			},
-			{
-				job_id: 1,
-				title: 'Job Title2',
-				description: 'Blah Blah',
-				location: 'Nabua',
-				category: 'Plumbing Services',
-				employer: 'Anna Smith',
-				datetime_posted: '5 Jan 2015 8:00pm'
-			},
-			{
-				job_id: 2,
-				title: 'Job Title3',
-				description: 'Another Blah Blah',
-				location: 'Iriga City',
-				category: 'Plumbing Services',
-				employer: 'Juan dela Cruz',
-				datetime_posted: '5 Jan 2015 8:00pm'
-			}
-		];*/
-
-		/*var category = [
-			{category_id: 0, category_name: 'Furniture Maker'},
-			{category_id: 1, category_name: 'Plumbing Services'}
-		];*/
-
 		return {
 			all: function () {
 				return job_posts;
@@ -147,11 +109,13 @@ angular.module('jobPortl.services', [])
 			getAllCategories: function () {
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
 			},
-			getMyPost: function(user){
-				return $http({method: "POST", url: baseUrl})
+			getMyPost: function(user_id){
+				console.log(baseUrl + 'jobpostbyusers')
+//				return 1
+				return $http({method: "GET", url: baseUrl + 'jobpostbyusers/'+ user_id})
 			},
-			saveJobPost: function (new_job){
-
+			saveJobPost: function (job_post){
+				return $http({method: "POST", url: baseUrl + 'addjobposts', data: job_post})
 			}
 		}
 	})
