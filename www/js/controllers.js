@@ -260,10 +260,10 @@ angular.module('jobPortl.controllers', [])
 
 
 		//call function
-		$scope.call = function (number) {
+		/*$scope.call = function (number) {
 			var call = "tel:" + number;
 			document.location.href = call;
-		}
+		}*/
 
 		SkilledLaborer.getSkilledLaborers().
 			success(function (data, status, headers) {
@@ -302,7 +302,7 @@ angular.module('jobPortl.controllers', [])
 
 		var displayJobPost = function() {
 			$scope.job_posts = JobPost.getMyPost(UserService.getUser().user_id).success(function(response) {
-				console.log(response)
+				//console.log(response)
 			})
 		}
 
@@ -312,15 +312,25 @@ angular.module('jobPortl.controllers', [])
 		if (user_type  == 0){ //employer
 			$scope.toggle_employer = 'ng-hide'
 //			console.log("User: " + UserService.getUser().user_id)
-			displayJobPost()
+//			displayJobPost()
+			JobPost.all().success(function(response){
+				//console.log("JobPost: " + angular.toJson(response))
+				$scope.job_posts = response
+			})
 		}
 		else if (user_type  == 1){ //skilled-laborer
 			$scope.toggle_sl = 'ng-hide'
-			$scope.job_posts = JobPost.all();
+			JobPost.all().success(function(response){
+				//console.log("JobPost: " + angular.toJson(response))
+				$scope.job_posts = response
+			})
 		}
 		else{
 			$scope.toggle_stalker = 'ng-hide'
-			$scope.job_posts = JobPost.all();
+			JobPost.all().success(function(response){
+				//console.log("JobPost: " + angular.toJson(response))
+				$scope.job_posts = response
+			})
 		}
 
 		$scope.openModal = function(){
@@ -339,8 +349,8 @@ angular.module('jobPortl.controllers', [])
 				});
 				JobPost.getAllCategories().success(function(response){
 					$ionicLoading.hide()
-					$scope.categories = response
-					console.log($scope.categories)
+					$scope.new_job_post.categories = response
+					console.log($scope.new_job_post.categories)
 					if(!response)
 						alert("Couldn't get categories.")
 					else{

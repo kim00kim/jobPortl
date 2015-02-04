@@ -1,0 +1,35 @@
+[
+	{
+		"job_id": 0,
+		"title": "Sewer Cleaner",
+		"description": "In need of house sewer cleaner.",
+		"location": "Naga City",
+		"category": "Plumbing Services",
+		"employer": "John Doe",
+		"required_applicant": "3",
+		"photo" : "img/avatar4.png",
+		"datetime_posted": "5 Jan 2015 at 8:00pm"
+	},
+	{
+		"job_id": 1,
+		"title": "Doorman",
+		"description": "Someone who can build 5 house doors.",
+		"location": "Nabua",
+		"category": "Construction",
+		"employer": "Anna Smith",
+		"required_applicant": "5",
+		"photo" : "img/avatar6.png",
+		"datetime_posted": "1 Feb 2015 4:00pm"
+	},
+	{
+		"job_id": 2,
+		"title": "Laptop Reformat and Install Software",
+		"description": "In need of a laptop or computer technician that can reformat and install software for windows 8 laptop.",
+		"location": "Iriga City",
+		"category": "Electronics Technician",
+		"employer": "Juan dela Cruz",
+		"required_applicant": "1",
+		"photo" : "img/avatar8.jpg",
+		"datetime_posted": "22 Dec 2015 1:00pm"
+	}
+]
