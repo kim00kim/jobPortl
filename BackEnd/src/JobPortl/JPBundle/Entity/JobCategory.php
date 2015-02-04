@@ -41,6 +41,10 @@ class JobCategory
 	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="jobCategory", fetch="EXTRA_LAZY")
 	 */
 	protected $skills;
+	/**
+	 * @ORM\OneToMany(targetEntity="Job", mappedBy="job", fetch="EXTRA_LAZY")
+	 */
+	protected $jobs;
 
 	/**
 	 * Get categoryId
@@ -138,4 +142,37 @@ class JobCategory
 	{
 		return $this->skills;
 	}
+
+    /**
+     * Add jobs
+     *
+     * @param \JobPortl\JPBundle\Entity\Job $jobs
+     * @return JobCategory
+     */
+    public function addJob(\JobPortl\JPBundle\Entity\Job $jobs)
+    {
+        $this->jobs[] = $jobs;
+
+        return $this;
+    }
+
+    /**
+     * Remove jobs
+     *
+     * @param \JobPortl\JPBundle\Entity\Job $jobs
+     */
+    public function removeJob(\JobPortl\JPBundle\Entity\Job $jobs)
+    {
+        $this->jobs->removeElement($jobs);
+    }
+
+    /**
+     * Get jobs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJobs()
+    {
+        return $this->jobs;
+    }
 }

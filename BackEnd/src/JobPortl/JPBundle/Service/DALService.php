@@ -11,6 +11,8 @@ class DALService
 	private $userAccountRepo;
 	private $categoryRepo;
 	private $skillRepo;
+	private $userRepo;
+	private $postingRepo;
 
 	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger)
 	{
@@ -20,6 +22,8 @@ class DALService
 		$this->userAccountRepo = $entityManager->getRepository('JobPortlJPBundle:UserAccount');
 		$this->categoryRepo = $entityManager->getRepository('JobPortlJPBundle:JobCategory');
 		$this->skillRepo = $entityManager->getRepository('JobPortlJPBundle:Skill');
+		$this->userRepo = $entityManager->getRepository('JobPortlJPBundle:UserJ');
+		$this->postingRepo = $entityManager->getRepository('JobPortlJPBundle:Posting');
 	}
 
 	public function getAdmin($adminId)
@@ -54,6 +58,12 @@ class DALService
 	public function saveSkill($skill){
 		return $this->_persistFlush($skill);
 	}
+	public function saveJob($job){
+		return $this->_persistFlush($job);
+	}
+	public function savePosting($posting){
+		return $this->_persistFlush($posting);
+	}
 
 	public function getAllCategories()
 	{
@@ -64,10 +74,20 @@ class DALService
 	{
 		return $this->categoryRepo->find($id);
 	}
+	public function getUser($id)
+	{
+		return $this->userRepo->find($id);
+	}
 
 	public function getAllSkills()
 	{
 		return $this->skillRepo->findAll();
+	}
+	public function getPosting($user)
+	{
+		return $this->postingRepo->findBy(array('userId' => $user[0]));
+//		return $this->userRepo->find($id);
+
 	}
 
 	private function _persistFlush($object)
@@ -77,4 +97,5 @@ class DALService
 
 		return $object;
 	}
+
 }

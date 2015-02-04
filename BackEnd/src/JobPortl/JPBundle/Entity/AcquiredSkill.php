@@ -22,12 +22,12 @@ class AcquiredSkill
 	private $asId;
 	/**
 	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="acquiredSkills")
-	 * @ORM\JoinColumn(name="skillId", referencedColumnName="skillId", nullable=FALSE)
+	 * @ORM\JoinColumn(name="skillId", referencedColumnName="skillId", nullable=true)
 	 */
 	protected $skill;
 	/**
 	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="acquiredSkills")
-	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId")
+	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;
 

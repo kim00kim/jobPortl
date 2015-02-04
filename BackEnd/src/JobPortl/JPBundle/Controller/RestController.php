@@ -32,7 +32,7 @@ class RestController extends Controller
 		$user->setCityMun($post->get('city'));
 		$user->setZipCode($post->get('zipcode'));
 		$user->setGender($post->get('gender'));
-		$user->setBirthdate(\DateTime::createFromFormat('Y-m-d', $post->get('birthdate')));;
+		$user->setBirthdate(\DateTime::createFromFormat('Y-m-d', $post->get('birthdate')));
 		$user->setCpNo($post->get('cpno'));
 		$user->setPhoto($post->get('photo'));
 
@@ -60,8 +60,6 @@ class RestController extends Controller
 	{
 		$logger = $this->get('logger');
 		$post = $request->request;
-		$userAccount = new Entity\UserAccount();
-
 		$dal = $this->get('jpdal.dal');
 		$dal->validateUser($post->get('email_add'));
 		$logger->debug("Email: " . $post->get('email_add'));
@@ -71,13 +69,9 @@ class RestController extends Controller
 		if (count($userAccount) != 1) {
 			return $userAccount;
 		} else {
-//			$userAccount = $result;
 			$encoder = $this->container->get('security.encoder_factory')
 				->getEncoder($userAccount);
-			$password = $encoder->encodePassword($post->get('password'), $userAccount->getSalt());
-//			$logger->debug("Pass:" . strlen($password));
 			$isValid = $encoder->isPasswordValid($userAccount->getPassword(), $post->get('password'), $userAccount->getSalt());
-//			$logger->debug("Result: " .$isValid . " encoded: " . $userAccount->getPassword() . " raw: ".$post->get('password'). " salt: " .$userAccount->getSalt());
 			if (!$isValid)
 				return null;
 			else
@@ -129,27 +123,60 @@ class RestController extends Controller
 	public function postAddskillAction(Request $request)
 	{
 		$skill = new Entity\Skill();
-		$category = new Entity\JobCategory();
-
-		$logger = $this->get('logger');
 		$post = $request->request;
 		$dal = $this->get('jpdal.dal');
 
 		$skill->setSkillName($post->get('skill_name'));
 		$skill->setJobCategory($dal->getJobCategory($post->get('category_id')));
 
-//		$logger->debug("Category: " . $category);
-
 		$dal->saveSkill($skill);
 		return $skill;
 	}
 	public function getAllskillsAction()
 	{
-		$logger = $this->get('logger');
 		$dal = $this->get('jpdal.dal');
-		$res = $dal->getAllSkills();
-		$logger->debug("Skills: " . json_encode($res));
 		return $dal->getAllSkills();
 	}
+	public function postAddjobpostAction(Request $request)
+	{
+		$post = $request->request;
+		$dal = $this->get('jpdal.dal');
+
+		$job = new Entity\Job();
+		$job->setTitle($post->get('title'));
+		$job->setDescription($post->get('description'));
+		$job->setLocation($post->get('location'));
+		$job->setDescription($post->get('description'));
+		$job->setRequiredApplicant($post->get('required_applicant'));
+		$job->setJobCategory($dal->getJobCategory($post->get('category_id')));
+		$job->setStatus(1);
+
+		$posting = new Entity\Posting();
+		$posting->setUser($dal->getUser($post->get('user_id')));
+		$posting->setJob($job);
+
+		$dal->saveJob($job);
+		$dal->savePosting($posting);
+
+		return $job;
+	}
+	public function getJobpostbyuserAction($user_id)
+	{
+		$dal = $this->get('jpdal.dal');
+		$posting = new Entity\Posting();
+
+		$user = $dal->getUser($user_id);
+		$user->getPostings();
+		$posting->getUser($dal->getPosting($user));
+
+		/*
+		$logger = $this->get('logger');
+		$logger->debug("User_id: " . $user_id);*/
+		return $posting;
+//		return "HEy";
+
+
+	}
+
 
 }

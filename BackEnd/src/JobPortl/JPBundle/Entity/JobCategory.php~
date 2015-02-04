@@ -41,6 +41,10 @@ class JobCategory
 	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="jobCategory", fetch="EXTRA_LAZY")
 	 */
 	protected $skills;
+	/**
+	 * @ORM\OneToMany(targetEntity="Job", mappedBy="job", fetch="EXTRA_LAZY")
+	 */
+	protected $jobs;
 
 	/**
 	 * Get categoryId

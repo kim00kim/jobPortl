@@ -29,18 +29,18 @@ class Certification
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=100)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 */
 	private $controlNo;
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", options={"default"=false})
 	 */
-	private $isValid = false;
+	private $isValid;
 	/**
 	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="certifications")
-	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId")
+	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;
 

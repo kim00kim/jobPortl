@@ -47,12 +47,12 @@ class Job
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"default"=1})
 	 */
 	private $status;
 	/**
-	 * @ORM\OneToOne(targetEntity="JobCategory")
-	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=FALSE)
+	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="jobs")
+	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=true)
 	 */
 	protected $jobCategory;
 

@@ -33,7 +33,7 @@ class Posting
 	protected $user;
 	/**
 	 * @ORM\OneToOne(targetEntity="Job")
-	 * @ORM\JoinColumn(name="jobId", referencedColumnName="jobId", nullable=false)
+	 * @ORM\JoinColumn(name="jobId", referencedColumnName="jobId", nullable=true)
 	 */
 	protected $job;
 	/**
@@ -47,6 +47,7 @@ class Posting
 	public function __construct()
 	{
 		$this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->setDatetimePosted(new \DateTime());
 	}
 
 	/**

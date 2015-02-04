@@ -23,7 +23,7 @@ class Application
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"default"="2"})
 	 */
 	private $status;
 	/**
@@ -34,17 +34,17 @@ class Application
 	private $datetimeApplied;
 	/**
 	 * @ORM\ManyToOne(targetEntity="Posting", inversedBy="applications")
-	 * @ORM\JoinColumn(name="postingId", referencedColumnName="postingId", nullable=FALSE)
+	 * @ORM\JoinColumn(name="postingId", referencedColumnName="postingId", nullable=true)
 	 */
 	protected $posting;
 	/**
 	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="applications")
-	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=FALSE)
+	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;
 	/**
 	 * @ORM\ManyToOne(targetEntity="Evaluation", inversedBy="applications")
-	 * @ORM\JoinColumn(name="evaluationId", referencedColumnName="evaluationId", nullable=FALSE)
+	 * @ORM\JoinColumn(name="evaluationId", referencedColumnName="evaluationId", nullable=true)
 	 */
 	protected $evaluation;
 
