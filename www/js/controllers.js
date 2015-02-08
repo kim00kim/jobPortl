@@ -113,6 +113,29 @@ angular.module('jobPortl.controllers', [])
 		}
 
 		//for facebook login
+
+		var refresh = function() {
+			facebookConnectPlugin.api('/me', null,
+				function (info) {
+					//console.log(response);
+					facebookConnectPlugin.api('/me?fields=picture.width(100).height(100)', null,
+						function (photo) {
+							var user_input = {email_add:info.email,password:'', user_acc_type:0}
+							info['photo'] = photo.picture.data.url
+							console.log(user_input)
+							login(user_input,info)
+						},
+						function (error) {
+							console.log(error);
+						}
+					);
+				},
+				function (error) {
+					console.log(error);
+				}
+			);
+		}
+
 		var fbLogged = new Parse.Promise();
 		var fbLoginSuccess = function (response) {
 			if (!response.authResponse) {
@@ -137,27 +160,6 @@ angular.module('jobPortl.controllers', [])
 			fbLogged.reject(error);
 		};
 
-		var refresh = function() {
-			facebookConnectPlugin.api('/me', null,
-				function (info) {
-					//console.log(response);
-					facebookConnectPlugin.api('/me?fields=picture.width(100).height(100)', null,
-						function (photo) {
-							var user_input = {email_add:info.email,password:'', user_acc_type:0}
-							info['photo'] = photo.picture.data.url
-							console.log(user_input)
-							login(user_input,info)
-						},
-						function (error) {
-							console.log(error);
-						}
-					);
-				},
-				function (error) {
-					console.log(error);
-				}
-			);
-		}
 		$scope.fblogin = function () {
 			console.log('Login');
 			if (!window.cordova) {
