@@ -49,14 +49,14 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_stalker = 'ng-hide'
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, $facebook,UserAccount, UserService, User) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, $facebook,$ionicPlatform,UserAccount, UserService, User) {
 
 		/*console.log("Test.......")
 		var first = {email: "kiM@gmail.com", pass:"qwerty"}
 		console.log("first" + JSON.stringify(first))
 		first['user_type'] = 1
 		console.log("After first" + JSON.stringify(first))*/
-
+		$ionicPlatform.ready(function() {
 		$scope.$on('fb.auth.authResponseChange', function() {
 			$scope.status = $facebook.isConnected();
 /*			if($scope.status) {
@@ -222,6 +222,8 @@ angular.module('jobPortl.controllers', [])
 				)
 			}
 		}
+
+		});
 	})
 
 
