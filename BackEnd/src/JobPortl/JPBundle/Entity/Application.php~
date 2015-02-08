@@ -43,10 +43,9 @@ class Application
 	 */
 	protected $user;
 	/**
-	 * @ORM\ManyToOne(targetEntity="Evaluation", inversedBy="applications")
-	 * @ORM\JoinColumn(name="evaluationId", referencedColumnName="evaluationId", nullable=true)
+	 * @ORM\OneToMany(targetEntity="Evaluation", mappedBy="application", fetch="EXTRA_LAZY")
 	 */
-	protected $evaluation;
+	protected $evaluations;
 
 	/**
 	 * Constructor
@@ -213,4 +212,37 @@ class Application
 	{
 		return $this->user;
 	}
+
+    /**
+     * Add evaluations
+     *
+     * @param \JobPortl\JPBundle\Entity\Evaluation $evaluations
+     * @return Application
+     */
+    public function addEvaluation(\JobPortl\JPBundle\Entity\Evaluation $evaluations)
+    {
+        $this->evaluations[] = $evaluations;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluations
+     *
+     * @param \JobPortl\JPBundle\Entity\Evaluation $evaluations
+     */
+    public function removeEvaluation(\JobPortl\JPBundle\Entity\Evaluation $evaluations)
+    {
+        $this->evaluations->removeElement($evaluations);
+    }
+
+    /**
+     * Get evaluations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvaluations()
+    {
+        return $this->evaluations;
+    }
 }

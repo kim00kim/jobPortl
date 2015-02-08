@@ -27,19 +27,54 @@ class Posting
 	 */
 	private $datetimePosted;
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $description;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $location;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 */
+	private $requiredApplicant;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer", options={"default"=1})
+	 */
+	private $status;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 */
+	private $available;
+	/**
 	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="postings")
-	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId")
+	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;
 	/**
-	 * @ORM\OneToOne(targetEntity="Job")
-	 * @ORM\JoinColumn(name="jobId", referencedColumnName="jobId", nullable=true)
+	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="postings")
+	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=true)
 	 */
-	protected $job;
+	protected $jobCategory;
 	/**
 	 * @ORM\OneToMany(targetEntity="Application", mappedBy="posting", fetch="EXTRA_LAZY")
 	 */
 	protected $applications;
+	/**
+	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="postings")
+	 * @ORM\JoinColumn(name="skillId", referencedColumnName="skillId", nullable=true)
+	 */
+	protected $skill;
 
 	/**
 	 * Constructor
@@ -161,4 +196,142 @@ class Posting
 	{
 		return $this->postingId;
 	}
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Posting
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return Posting
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set requiredApplicant
+     *
+     * @param integer $requiredApplicant
+     * @return Posting
+     */
+    public function setRequiredApplicant($requiredApplicant)
+    {
+        $this->requiredApplicant = $requiredApplicant;
+
+        return $this;
+    }
+
+    /**
+     * Get requiredApplicant
+     *
+     * @return integer 
+     */
+    public function getRequiredApplicant()
+    {
+        return $this->requiredApplicant;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Posting
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set available
+     *
+     * @param integer $available
+     * @return Posting
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+
+        return $this;
+    }
+
+    /**
+     * Get available
+     *
+     * @return integer 
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
+     * Set jobCategory
+     *
+     * @param \JobPortl\JPBundle\Entity\JobCategory $jobCategory
+     * @return Posting
+     */
+    public function setJobCategory(\JobPortl\JPBundle\Entity\JobCategory $jobCategory = null)
+    {
+        $this->jobCategory = $jobCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get jobCategory
+     *
+     * @return \JobPortl\JPBundle\Entity\JobCategory 
+     */
+    public function getJobCategory()
+    {
+        return $this->jobCategory;
+    }
 }

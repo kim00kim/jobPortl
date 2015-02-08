@@ -27,14 +27,13 @@ class Skill
 	 */
 	private $skillName;
 	/**
-	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="skills")
-	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=FALSE)
-	 */
-	protected $jobCategory;
-	/**
 	 * @ORM\OneToMany(targetEntity="AcquiredSkill", mappedBy="skill", fetch="EXTRA_LAZY")
 	 */
 	protected $acquiredSkills;
+	/**
+	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="skill", fetch="EXTRA_LAZY")
+	 */
+	protected $postings;
 
 	/**
 	 * Get skillId
@@ -142,4 +141,37 @@ class Skill
 	{
 		return $this->acquiredSkills;
 	}
+
+    /**
+     * Add postings
+     *
+     * @param \JobPortl\JPBundle\Entity\Posting $postings
+     * @return Skill
+     */
+    public function addPosting(\JobPortl\JPBundle\Entity\Posting $postings)
+    {
+        $this->postings[] = $postings;
+
+        return $this;
+    }
+
+    /**
+     * Remove postings
+     *
+     * @param \JobPortl\JPBundle\Entity\Posting $postings
+     */
+    public function removePosting(\JobPortl\JPBundle\Entity\Posting $postings)
+    {
+        $this->postings->removeElement($postings);
+    }
+
+    /**
+     * Get postings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostings()
+    {
+        return $this->postings;
+    }
 }

@@ -48,7 +48,7 @@ class UserJ
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=1)
+	 * @ORM\Column(type="string", length=6)
 	 */
 	private $gender;
 	/**
@@ -66,9 +66,9 @@ class UserJ
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", options={"default"=false})
 	 */
-	private $hasVerifiedNumber = false;
+	private $hasVerifiedNumber;
 	/**
 	 * @var string
 	 *
@@ -105,6 +105,10 @@ class UserJ
 	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user")
 	 */
 	protected $schedules;
+	/**
+	 * @ORM\OneToMany(targetEntity="Evaluation", mappedBy="user", fetch="EXTRA_LAZY")
+	 */
+	protected $evaluations;
 
 	/**
 	 * Get userId
@@ -573,5 +577,38 @@ class UserJ
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Add evaluations
+     *
+     * @param \JobPortl\JPBundle\Entity\Evaluation $evaluations
+     * @return UserJ
+     */
+    public function addEvaluation(\JobPortl\JPBundle\Entity\Evaluation $evaluations)
+    {
+        $this->evaluations[] = $evaluations;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluations
+     *
+     * @param \JobPortl\JPBundle\Entity\Evaluation $evaluations
+     */
+    public function removeEvaluation(\JobPortl\JPBundle\Entity\Evaluation $evaluations)
+    {
+        $this->evaluations->removeElement($evaluations);
+    }
+
+    /**
+     * Get evaluations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvaluations()
+    {
+        return $this->evaluations;
     }
 }

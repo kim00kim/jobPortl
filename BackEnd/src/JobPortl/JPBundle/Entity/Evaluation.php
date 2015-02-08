@@ -39,9 +39,15 @@ class Evaluation
 	 */
 	private $datetimeEvaluated;
 	/**
-	 * @ORM\OneToMany(targetEntity="Application", mappedBy="evaluation")
+	 * @ORM\ManyToOne(targetEntity="Application", inversedBy="evaluations")
+	 * @ORM\JoinColumn(name="appId", referencedColumnName="appId", nullable=true)
 	 */
-	protected $applications;
+	protected $application;
+	/**
+	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="evaluations")
+	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
+	 */
+	protected $user;
 
 	/**
 	 * Constructor
@@ -162,4 +168,50 @@ class Evaluation
 	{
 		return $this->applications;
 	}
+
+    /**
+     * Set application
+     *
+     * @param \JobPortl\JPBundle\Entity\Application $application
+     * @return Evaluation
+     */
+    public function setApplication(\JobPortl\JPBundle\Entity\Application $application = null)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \JobPortl\JPBundle\Entity\Application 
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \JobPortl\JPBundle\Entity\UserJ $user
+     * @return Evaluation
+     */
+    public function setUser(\JobPortl\JPBundle\Entity\UserJ $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \JobPortl\JPBundle\Entity\UserJ 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

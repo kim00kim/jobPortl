@@ -56,11 +56,6 @@ class Job
 	 * @ORM\Column(type="integer")
 	 */
 	private $available;
-	/**
-	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="jobs")
-	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=true)
-	 */
-	protected $jobCategory;
 
 	/**
 	 * Get jobId

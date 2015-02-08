@@ -27,14 +27,13 @@ class Skill
 	 */
 	private $skillName;
 	/**
-	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="skills")
-	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=FALSE)
-	 */
-	protected $jobCategory;
-	/**
 	 * @ORM\OneToMany(targetEntity="AcquiredSkill", mappedBy="skill", fetch="EXTRA_LAZY")
 	 */
 	protected $acquiredSkills;
+	/**
+	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="skill", fetch="EXTRA_LAZY")
+	 */
+	protected $postings;
 
 	/**
 	 * Get skillId

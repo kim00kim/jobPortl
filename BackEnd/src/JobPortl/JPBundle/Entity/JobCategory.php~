@@ -38,13 +38,9 @@ class JobCategory
 	 */
 	private $description;
 	/**
-	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="jobCategory", fetch="EXTRA_LAZY")
+	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="jobCategory", fetch="EXTRA_LAZY")
 	 */
-	protected $skills;
-	/**
-	 * @ORM\OneToMany(targetEntity="Job", mappedBy="job", fetch="EXTRA_LAZY")
-	 */
-	protected $jobs;
+	protected $postings;
 
 	/**
 	 * Get categoryId
@@ -174,5 +170,38 @@ class JobCategory
     public function getJobs()
     {
         return $this->jobs;
+    }
+
+    /**
+     * Add postings
+     *
+     * @param \JobPortl\JPBundle\Entity\Posting $postings
+     * @return JobCategory
+     */
+    public function addPosting(\JobPortl\JPBundle\Entity\Posting $postings)
+    {
+        $this->postings[] = $postings;
+
+        return $this;
+    }
+
+    /**
+     * Remove postings
+     *
+     * @param \JobPortl\JPBundle\Entity\Posting $postings
+     */
+    public function removePosting(\JobPortl\JPBundle\Entity\Posting $postings)
+    {
+        $this->postings->removeElement($postings);
+    }
+
+    /**
+     * Get postings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostings()
+    {
+        return $this->postings;
     }
 }
