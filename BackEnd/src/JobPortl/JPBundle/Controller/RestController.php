@@ -30,7 +30,6 @@ class RestController extends Controller
 		$user->setLastName($post->get('last_name'));
 		$user->setAddress($post->get('address'));
 		$user->setCityMun($post->get('city'));
-		$user->setZipCode($post->get('zipcode'));
 		$user->setGender($post->get('gender'));
 		$user->setBirthdate(\DateTime::createFromFormat('Y-m-d', $post->get('birthdate')));
 		$user->setCpNo($post->get('cpno'));

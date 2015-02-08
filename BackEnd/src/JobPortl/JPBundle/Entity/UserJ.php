@@ -44,16 +44,11 @@ class UserJ
 	 * @ORM\Column(type="string", length=30)
 	 */
 	private $cityMun;
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 */
-	private $zipCode;
+
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=6)
+	 * @ORM\Column(type="string", length=1)
 	 */
 	private $gender;
 	/**
@@ -77,7 +72,7 @@ class UserJ
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @ORM\Column(type="string", length=255, options={"default"="blank.png"})
 	 */
 	private $photo;
 	/**
@@ -211,29 +206,6 @@ class UserJ
 	public function getCityMun()
 	{
 		return $this->cityMun;
-	}
-
-	/**
-	 * Set zipCode
-	 *
-	 * @param integer $zipCode
-	 * @return UserJ
-	 */
-	public function setZipCode($zipCode)
-	{
-		$this->zipCode = $zipCode;
-
-		return $this;
-	}
-
-	/**
-	 * Get zipCode
-	 *
-	 * @return integer
-	 */
-	public function getZipCode()
-	{
-		return $this->zipCode;
 	}
 
 	/**
