@@ -62,7 +62,7 @@
 					<select ng-options="city for city in cities" ng-model="new_user.city" name="city">
 					</select>
 				</label>
-				<label class="item item-input item-floating-label "
+				<!--<label class="item item-input item-floating-label "
 					   ng-class="{'has-error' : registerform.zipcode.$dirty && registerform.zipcode.$invalid, 'no-error' : registerform.zipcode.$dirty && registerform.zipcode.$valid}">
 					<span class="input-label">Zip Code</span>
 
@@ -74,7 +74,7 @@
 						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
 							  ng-show="registerform.zipcode.$dirty && registerform.zipcode.$valid"></span>
 					</div>
-				</label>
+				</label>-->
 			</div>
 			<div class="list">
 				<label class="item item-input item-select" ng-class="{'no-error' : registerform.gender.$dirty}">
@@ -82,8 +82,8 @@
 						Gender
 					</div>
 					<select ng-model="new_user.gender" name="gender">
-						<option value="m">Male</option>
-						<option value="f">Female</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
 					</select>
 				</label>
 			</div>
@@ -93,7 +93,6 @@
 				<span class="input-label">Birth date</span>
 				<input type="date" name="birthdate" ng-model="new_user.birthdate" class="form-control" required>
 			</label>
-
 
 			<div class="list">
 				<label class="item item-input "
@@ -128,11 +127,11 @@
 							type="submit">Create Account
 					</button>
 				</div>
-				<div class="col">
-					<button class="button button-assertive button-block" ng-click="cancel()">Cancel</button>
-				</div>
 			</div>
 		</form>
+		<div class="col">
+			<button class="button button-assertive button-block" ng-click="cancel()">Cancel</button>
+		</div>
 
 	</ion-content>
 </ion-view>

@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://191.11.1.61/jobportl/web/api/')
+	.constant('baseUrl', 'http://192.168.1.7/jobportl/web/api/')
 
 	.factory('$localstorage', ['$window', function ($window) {
 		return {
@@ -76,10 +76,9 @@ angular.module('jobPortl.services', [])
 
 	.factory('UserAccount', function ($http, baseUrl) {
 		var user_account = new Object();
-
 		return {
 			checkUser: function (user_input) {
-				console.log("Email & password: " + user_input.email_add + user_input.password)
+				console.log("Email & password : " + user_input.email_add + user_input.password + " type: " + user_input.user_acc_type)
 				return $http({method: "POST", url: baseUrl + 'users', data: user_input})
 			},
 			setUserAccount: function (user_acc) {
@@ -93,11 +92,20 @@ angular.module('jobPortl.services', [])
 	})
 
 	.factory('User', function ($http, baseUrl) {
+		var fb_info = new Object()
+
 		return {
 			addUser: function (user) {
 				console.log(user)
 				return $http({method: "POST", url: baseUrl + 'addusers', data: user})
+			},
+			setFbInfo : function (info){
+				fb_info= info
+			},
+			getFbInfo: function () {
+				return fb_info
 			}
+
 		}
 	})
 

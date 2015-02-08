@@ -49,7 +49,27 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_stalker = 'ng-hide'
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, $facebook,UserAccount, UserService, User) {
+
+		/*console.log("Test.......")
+		var first = {email: "kiM@gmail.com", pass:"qwerty"}
+		console.log("first" + JSON.stringify(first))
+		first['user_type'] = 1
+		console.log("After first" + JSON.stringify(first))*/
+
+		$scope.$on('fb.auth.authResponseChange', function() {
+			$scope.status = $facebook.isConnected();
+/*			if($scope.status) {
+				$facebook.api('/me').then(function(user) {
+					$scope.user = user;
+				});
+			}*/
+			console.log("Status:" +$scope.status)
+		});
+
+		/*$facebook.getLoginStatus().then(function (success) {
+			console.log("$facebook.getLoginStatus: " + JSON.stringify(success))
+		})*/
 		$scope.user_input = {}
 
 		console.log("User: " + JSON.stringify(UserService.getUser))
@@ -65,19 +85,25 @@ angular.module('jobPortl.controllers', [])
 			$state.go('registerLogin');
 		}
 
-		$scope.login = function (user_input) {
+		var login = function (user_input, fb_info) {
 			$ionicLoading.show({
 				content: 'Loading...',
 				animation: 'fade-in',
 				showBackdrop: true,
-				maxWidth: 500,
-				showDelay: 0
+				maxWidth: 10,
+				showDelay: 20
 			});
 			UserAccount.checkUser(user_input).success(function (response) {
 				$ionicLoading.hide();
-				console.log((response))
+				//console.log((response))
 				if (!response) {
-					alert("Incorrect email and password!")
+					if(user_input.user_acc_type==1)
+						alert("Incorrect email and password!")
+					else{
+						console.log("LOGIN: " +fb_info)
+						User.setFbInfo(fb_info)
+						$state.go('registerDetails')
+					}
 				}
 				else {
 					//alert("Logged in successfully!")
@@ -88,16 +114,25 @@ angular.module('jobPortl.controllers', [])
 					navigate(UserService.getUserType())
 				}
 			})
-
-			var navigate = function (user_type) {
-				if (user_type == 0)
-					$state.go('tab.skilled-laborer')
-				else
-					$state.go('tab.job-post')
-			}
 		}
 
-		//for facebook login
+		var navigate = function (user_type) {
+			if (user_type == 0)
+				$state.go('tab.skilled-laborer')
+			else
+				$state.go('tab.job-post')
+		}
+
+
+		$scope.login = function (user_input) {
+			user_input['user_acc_type'] = 1
+			//console.log("Typical: " + JSON.stringify(user_input))
+			user_input['user_acc_type']= 1
+			console.log(user_input)
+			login(user_input, 0)
+		}
+
+		/*//for facebook login
 		var fbLogged = new Parse.Promise();
 		var fbLoginSuccess = function (response) {
 			if (!response.authResponse) {
@@ -157,25 +192,81 @@ angular.module('jobPortl.controllers', [])
 				}, function (error) {
 					console.log(error);
 				});
-		};
+		};*/
+		$scope.fblogin = function () {
+			var fb_info
+			$scope.isLoggedIn = false;
+			$facebook.login().then(function() {
+				refresh();
+			});
+			var refresh = function() {
+				$facebook.api("/me").then(
+					function(info) {
+						$facebook.api("/me?fields=picture.width(100).height(100)").then(
+							function(photo) {
+								var user_input = {email_add:info.email,password:'', user_acc_type:0}
+								info['photo'] = photo.picture.data.url
+								console.log(user_input)
+								login(user_input,info)
+							},
+							function(err) {
+								//$scope.welcomeMsg = "Please log in";
+								console.log(err)
+							}
+						);
+					},
+					function(err) {
+						//$scope.welcomeMsg = "Please log in";
+						console.log(err)
+					}
+				)
+			}
+		}
 	})
 
 
 	.controller('RegisterCtrl', function ($scope, $state, $window, $ionicLoading,UserAccount, User, $ionicViewService) {
+		var acc_type=1
+
 		$scope.new_user = {}
 		$scope.new_user_account = {}
 
-		$scope.cities = ['Baao', 'Balatan', 'Bato', 'Bombon', 'Buhi', 'Bula', 'Cabusao', 'Calabanga', 'Camaligan', 'Canaman', 'Caramoan', 'Del Gallego', 'Gainza',
-			'Garchitorena', 'Goa', 'Iriga City', 'Lagonoy', 'Libmanan', 'Lupi', 'Magarao', 'Milaor', 'Minalabac', 'Nabua', 'Naga City', 'Ocampo',
-			'Pamplona', 'Pasacao', 'Pili', 'Presentacion', 'Ragay', 'Sagñay', 'San Fernando', 'San Jose', 'Sipocot', 'Siruma', 'Tigaon', 'Tinambac'];
 
-		$scope.new_user.city = $scope.cities[0];
-		$scope.new_user.user_type = 0
-		$scope.new_user.gender = "m"
+		console.log(JSON.stringify(User.getFbInfo()))
+
+		//initialize inputs
+		var initialize = function (){
+			$scope.new_user.first_name = User.getFbInfo().first_name
+			$scope.new_user.last_name = User.getFbInfo().last_name
+			$scope.new_user.photo = User.getFbInfo().photo
+			$scope.new_user.gender = User.getFbInfo().gender || "male"
+			$scope.new_user.user_type = 0
+
+
+			$scope.cities = ['Baao', 'Balatan', 'Bato', 'Bombon', 'Buhi', 'Bula', 'Cabusao', 'Calabanga', 'Camaligan', 'Canaman', 'Caramoan', 'Del Gallego', 'Gainza',
+				'Garchitorena', 'Goa', 'Iriga City', 'Lagonoy', 'Libmanan', 'Lupi', 'Magarao', 'Milaor', 'Minalabac', 'Nabua', 'Naga City', 'Ocampo',
+				'Pamplona', 'Pasacao', 'Pili', 'Presentacion', 'Ragay', 'Sagñay', 'San Fernando', 'San Jose', 'Sipocot', 'Siruma', 'Tigaon', 'Tinambac'];
+			$scope.new_user.city = $scope.cities[0];
+
+			if(angular.equals({},User.getFbInfo()))
+				$scope.new_user.user_acc_type = 1 //typical
+			else{
+				$scope.new_user.user_acc_type = 0 //FB
+				acc_type = 0
+			}
+
+		}
+
+		$scope.addUserAccount = function (user_acc) {
+			user_acc.user_acc_type = 1
+			UserAccount.setUserAccount(user_acc)
+			console.log("ASDSDSA: " + JSON.stringify(user_acc))
+			$state.go('registerDetails');
+		}
 
 		$scope.addUser = function () {
-			var photo = "blank.png"
 			var user_account = UserAccount.getUserAccount()
+			var fb_info = User.getFbInfo()
 
 			$ionicLoading.show({
 				content: 'Loading...',
@@ -183,51 +274,42 @@ angular.module('jobPortl.controllers', [])
 				showBackdrop: true,
 				maxWidth: 200,
 				showDelay: 0
-			});
+			})
 
-			$scope.new_user.email = user_account.email
-			$scope.new_user.password = user_account.confirm
-			$scope.new_user.user_acc_type = user_account.user_acc_type
-			$scope.new_user.photo = photo
-			User.addUser($scope.new_user).success(function () {
+			if(acc_type==1){
+				$scope.new_user.email =  user_account.email
+				$scope.new_user.password = user_account.confirm
+				//$scope.new_user.user_acc_type = user_account.user_acc_type
+			}
+			else{
+				$scope.new_user.email =  fb_info.email
+				//$scope.new_user.password = user_account.confirm
+				//$scope.new_user.user_acc_type = user_account.user_acc_type
+			}
+			console.log(JSON.stringify($scope.new_user))
 
+			User.addUser($scope.new_user).success(function (response) {
+				console.log(response)
 				//disable back button
 				$ionicViewService.nextViewOptions({
 					disableBack: true
 				});
 				$ionicLoading.hide();
 				$state.go('login')
-			});
+			})
 		}
-		$scope.addUserAccount = function (user_acc) {
-			user_acc.user_acc_type = 1
-			UserAccount.setUserAccount(user_acc)
-			$state.go('registerDetails');
 
-		}
 		$scope.cancel = function () {
 			$window.history.back();
 		}
 
 		$scope.fbRegister = function () {
-			user_acc.user_acc_type = 0
-			facebookConnectPlugin.api('/me', null,
-				function (response) {
-					console.log(response);
-				},
-				function (error) {
-					console.log(error);
-				}
-			);
-			facebookConnectPlugin.api('/me/picture', null,
-				function (response) {
-//					UserService.user_profile = response.data.url;
-				},
-				function (error) {
-					console.log(error);
-				}
-			);
+			$scope.new_user.user_acc_type = 0
 		}
+
+		//execute function
+		initialize()
+
 	})
 
 	.controller('EditProfileCtrl', function ($scope) {

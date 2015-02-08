@@ -36,11 +36,11 @@
 
     <!-- Phonegap plugins -->
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
-        <param name="APP_ID" value="569148046553676"/>
+        <param name="APP_ID" value="578995458902268"/>
         <param name="APP_NAME" value="JobPortl"/>
     </gap:plugin>
     <resources>
-        <string name="fb_app_id">569148046553676</string>
+        <string name="fb_app_id">578995458902268</string>
         <string name="fb_app_name">JobPortl</string>
     </resources>
 
