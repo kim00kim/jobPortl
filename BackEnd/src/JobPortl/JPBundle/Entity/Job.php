@@ -51,6 +51,12 @@ class Job
 	 */
 	private $status;
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 */
+	private $available;
+	/**
 	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="jobs")
 	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=true)
 	 */
@@ -203,4 +209,27 @@ class Job
 	{
 		return $this->jobCategory;
 	}
+
+    /**
+     * Set available
+     *
+     * @param integer $available
+     * @return Job
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+
+        return $this;
+    }
+
+    /**
+     * Get available
+     *
+     * @return integer 
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
 }
