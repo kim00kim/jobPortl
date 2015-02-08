@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'ngFacebook'])
+angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'ngFacebook', 'ngCordova'])
 
 	//})
 	/*.config(function($compileProvider){
@@ -23,6 +23,8 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				// org.apache.cordova.statusbar required
 				StatusBar.styleDefault();
 			}
+
+
 
 			(function(d, s, id){
 				var js, fjs = d.getElementsByTagName(s)[0];

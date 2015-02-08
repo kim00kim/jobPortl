@@ -94,6 +94,16 @@
 				<input type="date" name="birthdate" ng-model="new_user.birthdate" class="form-control" required>
 			</label>
 
+			<label class="item item-input">
+				<span class="input-label">Date</span>
+				<input type="date">
+			</label>
+
+			<label class="item item-input">
+				<span class="input-label">Month</span>
+				<input type="month">
+			</label>
+
 			<div class="list">
 				<label class="item item-input "
 					   ng-class="{'has-error' : registerform.cpno.$dirty && registerform.cpno.$invalid, 'no-error' : registerform.cpno.$dirty && registerform.cpno.$valid}">
