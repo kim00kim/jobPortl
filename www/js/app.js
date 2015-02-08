@@ -5,14 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives', 'ngFacebook', 'ngCordova'])
+angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives'])
 
 	//})
 	/*.config(function($compileProvider){
 	 $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 	 })*/
 
-	.run(function ($ionicPlatform, $rootScope, $window) {
+	.run(function ($ionicPlatform, $rootScope, $state) {
 		$ionicPlatform.ready(function () {
 			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 			// for form inputs)
@@ -23,36 +23,19 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				// org.apache.cordova.statusbar required
 				StatusBar.styleDefault();
 			}
-
-
-
-			(function(d, s, id){
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {return;}
-				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/en_US/sdk.js";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-			$rootScope.$on('fb.load', function() {
-				$window.dispatchEvent(new Event('fb.load'));
-			});
-
 		});
 		// UI Router Authentication Check
-		/*$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+		$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
 			if (toState.data.authenticate && !Parse.User.current()) {
 				// User isn�t authenticated
 				$state.transitionTo("login");
 				event.preventDefault();
 			}
-		})*/
+		})
 		//localStorage.clear()
 	})
 
-	.config(function ($stateProvider, $urlRouterProvider, $facebookProvider) {
-
-		$facebookProvider.setAppId('578995458902268').setPermissions(['email','user_birthday']);
-
+	.config(function ($stateProvider, $urlRouterProvider) {
 
 		// Ionic uses AngularUI Router which uses the concept of states
 		// Learn more here: https://github.com/angular-ui/ui-router

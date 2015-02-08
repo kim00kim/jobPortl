@@ -49,27 +49,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_stalker = 'ng-hide'
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, $facebook,$ionicPlatform,UserAccount, UserService, User) {
-
-		/*console.log("Test.......")
-		var first = {email: "kiM@gmail.com", pass:"qwerty"}
-		console.log("first" + JSON.stringify(first))
-		first['user_type'] = 1
-		console.log("After first" + JSON.stringify(first))*/
-		$ionicPlatform.ready(function() {
-		$scope.$on('fb.auth.authResponseChange', function() {
-			$scope.status = $facebook.isConnected();
-/*			if($scope.status) {
-				$facebook.api('/me').then(function(user) {
-					$scope.user = user;
-				});
-			}*/
-			console.log("Status:" +$scope.status)
-		});
-
-		/*$facebook.getLoginStatus().then(function (success) {
-			console.log("$facebook.getLoginStatus: " + JSON.stringify(success))
-		})*/
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService) {
 		$scope.user_input = {}
 
 		console.log("User: " + JSON.stringify(UserService.getUser))
@@ -132,7 +112,7 @@ angular.module('jobPortl.controllers', [])
 			login(user_input, 0)
 		}
 
-		/*//for facebook login
+		//for facebook login
 		var fbLogged = new Parse.Promise();
 		var fbLoginSuccess = function (response) {
 			if (!response.authResponse) {
@@ -157,10 +137,31 @@ angular.module('jobPortl.controllers', [])
 			fbLogged.reject(error);
 		};
 
+		var refresh = function() {
+			facebookConnectPlugin.api('/me', null,
+				function (info) {
+					//console.log(response);
+					facebookConnectPlugin.api('/me?fields=picture.width(100).height(100)', null,
+						function (photo) {
+							var user_input = {email_add:info.email,password:'', user_acc_type:0}
+							info['photo'] = photo.picture.data.url
+							console.log(user_input)
+							login(user_input,info)
+						},
+						function (error) {
+							console.log(error);
+						}
+					);
+				},
+				function (error) {
+					console.log(error);
+				}
+			);
+		}
 		$scope.fblogin = function () {
 			console.log('Login');
 			if (!window.cordova) {
-				facebookConnectPlugin.browserInit('569148046553676');
+				facebookConnectPlugin.browserInit('578995458902268');
 			}
 			facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
@@ -170,30 +171,12 @@ angular.module('jobPortl.controllers', [])
 			})
 				.then(function (userObject) {
 					var authData = userObject.get('authData');
-					facebookConnectPlugin.api('/me', null,
-						function (response) {
-							console.log(response);
-						},
-						function (error) {
-							console.log(error);
-						}
-					);
-					facebookConnectPlugin.api('/me/picture', null,
-						function (response) {
-//                            UserService.user_profile = response.data.url;
-						},
-						function (error) {
-							console.log(error);
-						}
-					);
-					alert("logged in successfully")
-
-					$state.go('tab.job-post');
+					refresh()
 				}, function (error) {
 					console.log(error);
 				});
-		};*/
-		$scope.fblogin = function () {
+		};
+		/*$scope.fblogin = function () {
 			var fb_info
 			$scope.isLoggedIn = false;
 			$facebook.login().then(function() {
@@ -221,9 +204,7 @@ angular.module('jobPortl.controllers', [])
 					}
 				)
 			}
-		}
-
-		});
+		}*/
 	})
 
 
