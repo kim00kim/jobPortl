@@ -15,15 +15,16 @@ angular.module('jobPortl.controllers', [])
 				$scope.toggle_sl = 'ng-hide'
 
 			var user = UserService.getUser()
-			$scope.id = user.user_id;
-			$scope.status = user.is_logged_in;
-			$scope.user_acc_type = user.user_acc_type,
-			$scope.user_type = user.user_type,
-			$scope.email = user.email,
-			$scope.first_name = user.first_name,
-			$scope.last_name = user.last_name,
-			$scope.photo = "img/" + user.photo
+			$scope.id = user.user_id
+			$scope.status = user.is_logged_in
+			$scope.user_acc_type = user.user_acc_type
+			$scope.user_type = user.user_type
+			$scope.email = user.email
+			$scope.first_name = user.first_name
+			$scope.last_name = user.last_name
+			$scope.photo = (user.user_acc_type==1 ?  "img/" + user.photo : user.photo)
 			console.log("Response: " + JSON.stringify(user))
+
 		}
 		$scope.logOut = function () {
 			// A confirm log out dialog
@@ -49,7 +50,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.toggle_stalker = 'ng-hide'
 	})
 
-	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService) {
+	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService, User) {
 		$scope.user_input = {}
 
 		console.log("User: " + JSON.stringify(UserService.getUser))
