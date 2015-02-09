@@ -33,7 +33,7 @@ class RestController extends Controller
 		$user->setGender($post->get('gender'));
 		$user->setBirthdate(\DateTime::createFromFormat('Y-m-d', $post->get('birthdate')));
 		$user->setCpNo($post->get('cpno'));
-		$user->setPhoto($post->get('photo'));
+		$user->setPhoto(($post->get('photo') == NULL ? 'img/blank.png': $post->get('photo')));
 
 		$userAccount = new Entity\UserAccount();
 		$userAccount->setEmail($post->get('email'));
@@ -97,7 +97,7 @@ class RestController extends Controller
 
 	public function postAddcategoryAction(Request $request)
 	{
-		$category = new Entity\JobCategory();
+		$category = new Entity\Category();
 		$logger = $this->get('logger');
 		$post = $request->request;
 //		$logger->debug("Category : " . $request);
@@ -126,7 +126,7 @@ class RestController extends Controller
 		$dal = $this->get('jpdal.dal');
 
 		$skill->setSkillName($post->get('skill_name'));
-		$skill->setJobCategory($dal->getJobCategory($post->get('category_id')));
+		$skill->setCategory($dal->getCategory($post->get('category_id')));
 
 		$dal->saveSkill($skill);
 		return $skill;
@@ -141,41 +141,46 @@ class RestController extends Controller
 		$post = $request->request;
 		$dal = $this->get('jpdal.dal');
 
-		$job = new Entity\Job();
-		$job->setTitle($post->get('title'));
-		$job->setDescription($post->get('description'));
-		$job->setLocation($post->get('location'));
-		$job->setDescription($post->get('description'));
-		$job->setRequiredApplicant($post->get('required_applicant'));
-		$job->setJobCategory($dal->getJobCategory($post->get('category_id')));
-		$job->setStatus(1);
-
 		$posting = new Entity\Posting();
+		$posting->setDescription($post->get('description'));
+		$posting->setLocation($post->get('location'));
+		$posting->setRequiredApplicant($post->get('required_applicant'));
+		$posting->setAvailable($post->get('required_applicant'));
+		$posting->setStatus(1);
 		$posting->setUser($dal->getUser($post->get('user_id')));
-		$posting->setJob($job);
+		$posting->setSkill($dal->getSkill($post->get('skill_id')));
 
-		$dal->saveJob($job);
-		$dal->savePosting($posting);
-
-		return $job;
+		return $dal->savePosting($posting);
 	}
-	public function getJobpostbyuserAction($user_id)
+	public function getJobpostbyuserAction($userId)
 	{
 		$dal = $this->get('jpdal.dal');
-		$posting = new Entity\Posting();
-
-		$user = $dal->getUser($user_id);
-		$user->getPostings();
-		$posting->getUser($dal->getPosting($user));
-
-		/*
-		$logger = $this->get('logger');
-		$logger->debug("User_id: " . $user_id);*/
-		return $posting;
-//		return "HEy";
-
-
+		return $dal->getPostingByUser($userId);
 	}
+	public function getAlljobpostAction()
+	{
+		$logger = $this->get('logger');
+		$logger->debug("In controller");
+		$dal = $this->get('jpdal.dal');
+		return $dal->getAllJobPost();
+	}
+	public function deleteDeletecategoryAction($categoryId)
+	{
+		$logger = $this->get('logger');
+		$logger->debug("Passed: " . $categoryId);
+		$dal = $this->get('jpdal.dal');
+		return $dal->deleteCategory($categoryId);
+//		return $categoryId;
+	}
+	public function deleteDeleteskillAction($skillId)
+	{
+		$logger = $this->get('logger');
+		$logger->debug("Passed: " . $skillId);
+		$dal = $this->get('jpdal.dal');
+		return $dal->deleteSkill($skillId);
+//		return $categoryId;
+	}
+
 
 
 }

@@ -7,13 +7,13 @@
 	<ion-content class="padding">
 		<!--<h1>Job Posts</h1>-->
 		<div class="list card" ng-repeat="job_post in job_posts">
-			<div class="item bar bar-header bar-positive">
-				{{job_post.title}}
+			<div class="item bar bar-header bar-positive {{header}}">
+				{{job_post.skill.skill_name}}
 				<span class="datetime-posted"><i>Posted on {{job_post.datetime_posted}}</i></span>
 			</div>
 			<div class="item item-body job-post">
 				<div class="category">
-					<h3>Category: {{job_post.category}}</h3>
+					<h3>Category: {{job_post.skill.category.category_name}}</h3>
 				</div>
 				<div class="row row-center">
 					<div class="col col-75">
@@ -26,13 +26,13 @@
 								<p><label>Location:</label> {{job_post.location}}</p>
 							</div>
 							<div class="location">
-								<p><label>Required:</label> {{job_post.required_applicant}}</p>
+								<p><label>Required applicants:</label> {{job_post.required_applicant}} ----> Remaining applicants: {{job_post.available}}</p>
 							</div>
 						</div>
 					</div>
 					<div class="col avatar">
-						<img src={{job_post.photo}}>
-						<h4>{{job_post.employer}}</h4>
+						<img src={{job_post.user.photo}}>
+						<h4>{{job_post.user.first_name + " " + job_post.user.last_name}}</h4>
 					</div>
 				</div>
 			</div>

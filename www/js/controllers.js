@@ -22,7 +22,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.email = user.email
 			$scope.first_name = user.first_name
 			$scope.last_name = user.last_name
-			$scope.photo = (user.user_acc_type==1 ?  "img/" + user.photo : user.photo)
+			$scope.photo =  user.photo
 			console.log("Response: " + JSON.stringify(user))
 
 		}
@@ -368,37 +368,51 @@ angular.module('jobPortl.controllers', [])
 		var user_type = UserService.getUserType()
 		$scope.new_job_post = {};
 
-		var displayJobPost = function() {
-			$scope.job_posts = JobPost.getMyPost(UserService.getUser().user_id).success(function(response) {
-				//console.log(response)
-			})
+
+
+		var navigateViewByUserType = function (){
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 500,
+				showDelay: 0
+			});
+			if (user_type  == 0){ //employer
+				$scope.toggle_employer = 'ng-hide'
+				JobPost.getMyPost(UserService.getUser().user_id).success(function(response) {
+					displayJobPost(response)
+				})
+			}
+			else if (user_type  == 1){ //skilled-laborer
+				$scope.toggle_sl = 'ng-hide'
+				var job_post= JobPost.getAllJobPosts().success(function(response){
+					console.log(response)
+					displayJobPost(response)
+				}).
+				error(function(err){
+					console.log(err)
+				})
+			}
+			else{
+				$scope.toggle_stalker = 'ng-hide'
+				var job_post= JobPost.getAllJobPosts().success(function(response){
+					console.log(response)
+					displayJobPost(response)
+				}).
+				error(function(err){
+					console.log(err)
+				})
+			}
 		}
 
-		//get current date and time
-		var datenow = new Date();
-		datenow = $filter('date')(datenow, "EEE d MMM yyyy ") + "at" + $filter('date')(datenow, " hh:mm a");
-		if (user_type  == 0){ //employer
-			$scope.toggle_employer = 'ng-hide'
-//			console.log("User: " + UserService.getUser().user_id)
-//			displayJobPost()
-			JobPost.all().success(function(response){
-				//console.log("JobPost: " + angular.toJson(response))
-				$scope.job_posts = response
+		var displayJobPost = function(jobPosts){
+			$ionicLoading.hide()
+			angular.forEach(jobPosts, function(post){
+				post.datetime_posted= $filter('date')(post.datetime_posted, "EEE d MMM yyyy ") + "at" + $filter('date')(post.datetime_posted, " hh:mm a");
+//					$scope.header = post.status === 1 ? 'bar-positive' : 'bar-assertive'
 			})
-		}
-		else if (user_type  == 1){ //skilled-laborer
-			$scope.toggle_sl = 'ng-hide'
-			JobPost.all().success(function(response){
-				//console.log("JobPost: " + angular.toJson(response))
-				$scope.job_posts = response
-			})
-		}
-		else{
-			$scope.toggle_stalker = 'ng-hide'
-			JobPost.all().success(function(response){
-				//console.log("JobPost: " + angular.toJson(response))
-				$scope.job_posts = response
-			})
+			$scope.job_posts=jobPosts
 		}
 
 		$scope.openModal = function(){
@@ -417,18 +431,26 @@ angular.module('jobPortl.controllers', [])
 				});
 				JobPost.getAllCategories().success(function(response){
 					$ionicLoading.hide()
-					$scope.new_job_post.categories = response
-					console.log($scope.new_job_post.categories)
+					console.log("categories: " + JSON.stringify(response))
 					if(!response)
 						alert("Couldn't get categories.")
 					else{
-						$scope.predicate = 'category_name'
 						$scope.categories = response
+//						console.log(response[0].skills)
 						$scope.new_job_post.category = $scope.categories[0];
+						$scope.skills = $scope.new_job_post.category.skills
+						$scope.predicate = 'category_name'
+						$scope.new_job_post.skill = $scope.skills[0];
 					}
 				})
 				$scope.createJobPost.show()
 			})
+
+			$scope.change = function(){
+				console.log("CHANGE")
+				$scope.skills = $scope.new_job_post.category.skills
+				$scope.new_job_post.skill = $scope.skills[0];
+			}
 
 		}
 		//add job post in service
@@ -436,13 +458,13 @@ angular.module('jobPortl.controllers', [])
 		$scope.createNewJobPost = function (new_job_post) {
 			var user = UserService.getUser()
 			var job_post = {
-				title: new_job_post.title,
 				description: new_job_post.description,
 				location: new_job_post.location,
-				category_id: new_job_post.category.category_id,
+				skill_id: new_job_post.skill.skill_id,
 				user_id: user.user_id,
 				required_applicant: new_job_post.required_applicant
 			}
+			console.log(job_post)
 
 			$ionicLoading.show({
 				content: 'Loading...',
@@ -458,22 +480,11 @@ angular.module('jobPortl.controllers', [])
 				//clean form input
 				$scope.new_job_post = {};
 				$scope.new_job_post.category = $scope.categories[0];
-//				alert("New job post successfully created!")
-				/*$scope.new_job_post.push({
-
-				})*/
+				$scope.job_posts.unshift(response)
 			})
-//			console.log(job_post)
-				/*$scope.job_posts = ({
-					title: new_job_post.title,
-					description: new_job_post.description,
-					location: new_job_post.location,
-					category: new_job_post.category.category_id,
-					employer: user.first_name + " " + user.last_name,
-					photo: user.photo,
-					datetime_posted: datenow
-				});*/
-
 		};
+
+		//execute on load
+		navigateViewByUserType()
 	})
 

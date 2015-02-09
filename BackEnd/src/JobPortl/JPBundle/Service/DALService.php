@@ -20,7 +20,7 @@ class DALService
 
 		$this->adminRepo = $entityManager->getRepository('JobPortlJPBundle:Admin');
 		$this->userAccountRepo = $entityManager->getRepository('JobPortlJPBundle:UserAccount');
-		$this->categoryRepo = $entityManager->getRepository('JobPortlJPBundle:JobCategory');
+		$this->categoryRepo = $entityManager->getRepository('JobPortlJPBundle:Category');
 		$this->skillRepo = $entityManager->getRepository('JobPortlJPBundle:Skill');
 		$this->userRepo = $entityManager->getRepository('JobPortlJPBundle:UserJ');
 		$this->postingRepo = $entityManager->getRepository('JobPortlJPBundle:Posting');
@@ -58,9 +58,6 @@ class DALService
 	public function saveSkill($skill){
 		return $this->_persistFlush($skill);
 	}
-	public function saveJob($job){
-		return $this->_persistFlush($job);
-	}
 	public function savePosting($posting){
 		return $this->_persistFlush($posting);
 	}
@@ -70,9 +67,13 @@ class DALService
 		return $this->categoryRepo->findAll();
 	}
 
-	public  function getJobCategory($id)
+	public  function getCategory($id)
 	{
 		return $this->categoryRepo->find($id);
+	}
+	public  function getSkill($id)
+	{
+		return $this->skillRepo->find($id);
 	}
 	public function getUser($id)
 	{
@@ -83,13 +84,38 @@ class DALService
 	{
 		return $this->skillRepo->findAll();
 	}
-	public function getPosting($user)
+	public function getPostingByUser($userId)
 	{
-		return $this->postingRepo->findBy(array('userId' => $user[0]));
-//		return $this->userRepo->find($id);
-
+		return $this->postingRepo->createQueryBuilder('p')
+			->join('p.user','u')
+			->where('u.userId = :userId')
+			->setParameter('userId',$userId)
+			->orderBy('p.datetimePosted','DESC')
+			->getQuery()
+			->getResult();
 	}
-
+	public function getAllJobPost()
+	{
+		return $this->postingRepo->createQueryBuilder('p')
+			->join('p.user','u')
+			->orderBy('p.datetimePosted','DESC')
+			->getQuery()
+			->getResult();
+	}
+	public function getUserPosting($userId)
+	{
+		return $this->userRepo->find($userId);
+	}
+	public function deleteCategory($categoryId)
+	{
+		$category = $this->categoryRepo->find($categoryId);
+		return $this->_removeFlush($category);
+	}
+	public function deleteSkill($categoryId)
+	{
+		$skill = $this->skillRepo->find($categoryId);
+		return $this->_removeFlush($skill);
+	}
 	private function _persistFlush($object)
 	{
 		$this->manager->persist($object);
@@ -98,4 +124,11 @@ class DALService
 		return $object;
 	}
 
+	private function _removeFlush($object)
+	{
+		$this->manager->remove($object);
+		$this->manager->flush();
+
+		return $object;
+	}
 }

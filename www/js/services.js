@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://192.168.1.7/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	.factory('$localstorage', ['$window', function ($window) {
 		return {
@@ -111,15 +111,13 @@ angular.module('jobPortl.services', [])
 
 	.factory('JobPost', function ($http, baseUrl) {
 		return {
-			all: function () {
-				return $http.get('job_post.json');
+			getAllJobPosts: function () {
+				return $http({method: "GET", url: baseUrl + 'alljobpost'})
 			},
 			getAllCategories: function () {
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
 			},
 			getMyPost: function(user_id){
-				console.log(baseUrl + 'jobpostbyusers')
-//				return 1
 				return $http({method: "GET", url: baseUrl + 'jobpostbyusers/'+ user_id})
 			},
 			saveJobPost: function (job_post){
