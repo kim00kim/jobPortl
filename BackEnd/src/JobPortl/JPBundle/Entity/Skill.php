@@ -34,113 +34,85 @@ class Skill
 	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="skill", fetch="EXTRA_LAZY")
 	 */
 	protected $postings;
-
 	/**
-	 * Get skillId
-	 *
-	 * @return integer
+	 * @ORM\ManyToOne(targetEntity="Category", inversedBy="skills")
+	 * @ORM\JoinColumn(name="categoryId", referencedColumnName="categoryId", nullable=true, onDelete="CASCADE")
 	 */
-	public function getSkillId()
-	{
-		return $this->skillId;
-	}
+	protected $category;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->acquiredSkills = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
-	/**
-	 * Set skillName
-	 *
-	 * @param string $skillName
-	 * @return Skill
-	 */
-	public function setSkillName($skillName)
-	{
-		$this->skillName = $skillName;
+    /**
+     * Get skillId
+     *
+     * @return integer 
+     */
+    public function getSkillId()
+    {
+        return $this->skillId;
+    }
 
-		return $this;
-	}
+    /**
+     * Set skillName
+     *
+     * @param string $skillName
+     * @return Skill
+     */
+    public function setSkillName($skillName)
+    {
+        $this->skillName = $skillName;
 
-	/**
-	 * Get skillName
-	 *
-	 * @return string
-	 */
-	public function getSkillName()
-	{
-		return $this->skillName;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set jobCategory
-	 *
-	 * @param \JobPortl\JPBundle\Entity\JobCategory $jobCategory
-	 * @return Skill
-	 */
-	public function setJobCategory(\JobPortl\JPBundle\Entity\JobCategory $jobCategory = null)
-	{
-		$this->jobCategory = $jobCategory;
+    /**
+     * Get skillName
+     *
+     * @return string 
+     */
+    public function getSkillName()
+    {
+        return $this->skillName;
+    }
 
-		return $this;
-	}
+    /**
+     * Add acquiredSkills
+     *
+     * @param \JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkills
+     * @return Skill
+     */
+    public function addAcquiredSkill(\JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkills)
+    {
+        $this->acquiredSkills[] = $acquiredSkills;
 
-	/**
-	 * Get jobCategory
-	 *
-	 * @return \JobPortl\JPBundle\Entity\JobCategory
-	 */
-	public function getJobCategory()
-	{
-		return $this->jobCategory;
-	}
+        return $this;
+    }
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->acquiredSkill = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+    /**
+     * Remove acquiredSkills
+     *
+     * @param \JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkills
+     */
+    public function removeAcquiredSkill(\JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkills)
+    {
+        $this->acquiredSkills->removeElement($acquiredSkills);
+    }
 
-	/**
-	 * Add acquiredSkill
-	 *
-	 * @param \JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkill
-	 * @return Skill
-	 */
-	public function addAcquiredSkill(\JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkill)
-	{
-		$this->acquiredSkill[] = $acquiredSkill;
-
-		return $this;
-	}
-
-	/**
-	 * Remove acquiredSkill
-	 *
-	 * @param \JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkill
-	 */
-	public function removeAcquiredSkill(\JobPortl\JPBundle\Entity\AcquiredSkill $acquiredSkill)
-	{
-		$this->acquiredSkill->removeElement($acquiredSkill);
-	}
-
-	/**
-	 * Get acquiredSkill
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getAcquiredSkill()
-	{
-		return $this->acquiredSkill;
-	}
-
-	/**
-	 * Get acquiredSkills
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getAcquiredSkills()
-	{
-		return $this->acquiredSkills;
-	}
+    /**
+     * Get acquiredSkills
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAcquiredSkills()
+    {
+        return $this->acquiredSkills;
+    }
 
     /**
      * Add postings
@@ -173,5 +145,28 @@ class Skill
     public function getPostings()
     {
         return $this->postings;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \JobPortl\JPBundle\Entity\Category $category
+     * @return Skill
+     */
+    public function setCategory(\JobPortl\JPBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \JobPortl\JPBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

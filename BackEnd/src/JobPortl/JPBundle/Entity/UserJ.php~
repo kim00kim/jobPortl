@@ -68,7 +68,7 @@ class UserJ
 	 *
 	 * @ORM\Column(type="boolean", options={"default"=false})
 	 */
-	private $hasVerifiedNumber;
+	private $hasVerifiedNumber = false;
 	/**
 	 * @var string
 	 *

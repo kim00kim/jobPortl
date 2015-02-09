@@ -68,11 +68,11 @@ class UserJ
 	 *
 	 * @ORM\Column(type="boolean", options={"default"=false})
 	 */
-	private $hasVerifiedNumber;
+	private $hasVerifiedNumber = false;
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=255, options={"default"="blank.png"})
+	 * @ORM\Column(type="string", length=255, options={"default"="img/blank.png"})
 	 */
 	private $photo;
 	/**

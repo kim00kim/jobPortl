@@ -183,26 +183,26 @@ class Job
 	}
 
 	/**
-	 * Set jobCategory
+	 * Set category
 	 *
-	 * @param \JobPortl\JPBundle\Entity\JobCategory $jobCategory
+	 * @param \JobPortl\JPBundle\Entity\Category $category
 	 * @return Job
 	 */
-	public function setJobCategory(\JobPortl\JPBundle\Entity\JobCategory $jobCategory)
+	public function setCategory(\JobPortl\JPBundle\Entity\Category $category)
 	{
-		$this->jobCategory = $jobCategory;
+		$this->Category = $Category;
 
 		return $this;
 	}
 
 	/**
-	 * Get jobCategory
+	 * Get category
 	 *
-	 * @return \JobPortl\JPBundle\Entity\JobCategory
+	 * @return \JobPortl\JPBundle\Entity\Category
 	 */
-	public function getJobCategory()
+	public function getCategory()
 	{
-		return $this->jobCategory;
+		return $this->Category;
 	}
 
     /**

@@ -62,140 +62,55 @@ class Posting
 	 */
 	protected $user;
 	/**
-	 * @ORM\ManyToOne(targetEntity="JobCategory", inversedBy="postings")
-	 * @ORM\JoinColumn(name="jobCategoryId", referencedColumnName="categoryId", nullable=true)
-	 */
-	protected $jobCategory;
-	/**
 	 * @ORM\OneToMany(targetEntity="Application", mappedBy="posting", fetch="EXTRA_LAZY")
 	 */
 	protected $applications;
 	/**
 	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="postings")
-	 * @ORM\JoinColumn(name="skillId", referencedColumnName="skillId", nullable=true)
+	 * @ORM\JoinColumn(name="skillId", referencedColumnName="skillId", nullable=true, onDelete="SET NULL")
 	 */
 	protected $skill;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->setDatetimePosted(new \DateTime());
-	}
+    }
 
-	/**
-	 * Set datetimePosted
-	 *
-	 * @param \DateTime $datetimePosted
-	 * @return Posting
-	 */
-	public function setDatetimePosted($datetimePosted)
-	{
-		$this->datetimePosted = $datetimePosted;
+    /**
+     * Get postingId
+     *
+     * @return integer 
+     */
+    public function getPostingId()
+    {
+        return $this->postingId;
+    }
 
-		return $this;
-	}
+    /**
+     * Set datetimePosted
+     *
+     * @param \DateTime $datetimePosted
+     * @return Posting
+     */
+    public function setDatetimePosted($datetimePosted)
+    {
+        $this->datetimePosted = $datetimePosted;
 
-	/**
-	 * Get datetimePosted
-	 *
-	 * @return \DateTime
-	 */
-	public function getDatetimePosted()
-	{
-		return $this->datetimePosted;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set user
-	 *
-	 * @param \JobPortl\JPBundle\Entity\UserJ $user
-	 * @return Posting
-	 */
-	public function setUser(\JobPortl\JPBundle\Entity\UserJ $user)
-	{
-		$this->user = $user;
-
-		return $this;
-	}
-
-	/**
-	 * Get user
-	 *
-	 * @return \JobPortl\JPBundle\Entity\UserJ
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
-
-	/**
-	 * Set job
-	 *
-	 * @param \JobPortl\JPBundle\Entity\Job $job
-	 * @return Posting
-	 */
-	public function setJob(\JobPortl\JPBundle\Entity\Job $job)
-	{
-		$this->job = $job;
-
-		return $this;
-	}
-
-	/**
-	 * Get job
-	 *
-	 * @return \JobPortl\JPBundle\Entity\Job
-	 */
-	public function getJob()
-	{
-		return $this->job;
-	}
-
-	/**
-	 * Add applications
-	 *
-	 * @param \JobPortl\JPBundle\Entity\Application $applications
-	 * @return Posting
-	 */
-	public function addApplication(\JobPortl\JPBundle\Entity\Application $applications)
-	{
-		$this->applications[] = $applications;
-
-		return $this;
-	}
-
-	/**
-	 * Remove applications
-	 *
-	 * @param \JobPortl\JPBundle\Entity\Application $applications
-	 */
-	public function removeApplication(\JobPortl\JPBundle\Entity\Application $applications)
-	{
-		$this->applications->removeElement($applications);
-	}
-
-	/**
-	 * Get applications
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getApplications()
-	{
-		return $this->applications;
-	}
-
-	/**
-	 * Get postingId
-	 *
-	 * @return integer
-	 */
-	public function getPostingId()
-	{
-		return $this->postingId;
-	}
+    /**
+     * Get datetimePosted
+     *
+     * @return \DateTime 
+     */
+    public function getDatetimePosted()
+    {
+        return $this->datetimePosted;
+    }
 
     /**
      * Set description
@@ -313,26 +228,59 @@ class Posting
     }
 
     /**
-     * Set jobCategory
+     * Set user
      *
-     * @param \JobPortl\JPBundle\Entity\JobCategory $jobCategory
+     * @param \JobPortl\JPBundle\Entity\UserJ $user
      * @return Posting
      */
-    public function setJobCategory(\JobPortl\JPBundle\Entity\JobCategory $jobCategory = null)
+    public function setUser(\JobPortl\JPBundle\Entity\UserJ $user = null)
     {
-        $this->jobCategory = $jobCategory;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get jobCategory
+     * Get user
      *
-     * @return \JobPortl\JPBundle\Entity\JobCategory 
+     * @return \JobPortl\JPBundle\Entity\UserJ 
      */
-    public function getJobCategory()
+    public function getUser()
     {
-        return $this->jobCategory;
+        return $this->user;
+    }
+
+    /**
+     * Add applications
+     *
+     * @param \JobPortl\JPBundle\Entity\Application $applications
+     * @return Posting
+     */
+    public function addApplication(\JobPortl\JPBundle\Entity\Application $applications)
+    {
+        $this->applications[] = $applications;
+
+        return $this;
+    }
+
+    /**
+     * Remove applications
+     *
+     * @param \JobPortl\JPBundle\Entity\Application $applications
+     */
+    public function removeApplication(\JobPortl\JPBundle\Entity\Application $applications)
+    {
+        $this->applications->removeElement($applications);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 
     /**

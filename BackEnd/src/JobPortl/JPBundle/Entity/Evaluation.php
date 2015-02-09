@@ -55,6 +55,7 @@ class Evaluation
 	public function __construct()
 	{
 		$this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->setDatetimeEvaluated(new \DateTime("now"));
 	}
 
 	/**
