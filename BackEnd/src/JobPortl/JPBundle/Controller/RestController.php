@@ -172,6 +172,27 @@ class RestController extends Controller
 		return $dal->deleteCategory($categoryId);
 //		return $categoryId;
 	}
+	public function postUpdatecategoryAction(Request $request)
+	{
+		$post = $request->request;
+		$dal= $this->get('jpdal.dal');
+		$category = $dal->getCategory($post->get('category_id'));
+
+		$category->setCategoryName($post->get('category_name'));
+		$category->setDescription($post->get('description'));
+		return $dal->_flush($category);
+	}
+	public function postUpdateskillAction(Request $request)
+	{
+		$post = $request->request;
+		$dal= $this->get('jpdal.dal');
+		$skill = $dal->getSkill($post->get('skill_id'));
+
+		$skill->setSkillName($post->get('skill_name'));
+		$skill->setCategory($dal->getCategory($post->get('category_id')));
+		return $dal->_flush($skill);
+	}
+
 	public function deleteDeleteskillAction($skillId)
 	{
 		$logger = $this->get('logger');
@@ -180,7 +201,9 @@ class RestController extends Controller
 		return $dal->deleteSkill($skillId);
 //		return $categoryId;
 	}
-
-
-
+	public function getSkilledlaborerAction()
+	{
+		$dal = $this->get('jpdal.dal');
+		return $dal->getSkilledLaborers();
+	}
 }

@@ -2,11 +2,11 @@
 	<ion-content class="padding">
 		<div class="list card" ng-repeat="info in skilled_laborer_info">
 			<div class="item item-avatar">
-				<img src="img/SL.jpg">
+				<img src={{info.user.photo}}>
 
-				<h2 class="highlight">{{info.first_name + " " + info.last_name}} </h2>
+				<h2 class="highlight">{{info.user.first_name + " " + info.user.last_name}} </h2>
 
-				<h2 class="title">{{info.title}}</h2>
+				<h2 class="title">{{info.user.title}}</h2>
 			</div>
 			<div class="item item-body skilled-laborer">
 				<div class="button-bar buttons ">

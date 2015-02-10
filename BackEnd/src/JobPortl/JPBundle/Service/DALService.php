@@ -116,9 +116,24 @@ class DALService
 		$skill = $this->skillRepo->find($categoryId);
 		return $this->_removeFlush($skill);
 	}
+	public function getSkilledLaborers()
+	{
+		return $this->userAccountRepo->createQueryBuilder('u')
+//			->orderBy('p.datetimePosted','DESC')
+			->join('u.user','s')
+			->where('u.userType = 1')
+			->getQuery()
+			->getResult();
+	}
 	private function _persistFlush($object)
 	{
 		$this->manager->persist($object);
+		$this->manager->flush();
+
+		return $object;
+	}
+	public function _flush($object)
+	{
 		$this->manager->flush();
 
 		return $object;
