@@ -72,7 +72,7 @@ class UserJ
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=255, options={"default"="blank.png"})
+	 * @ORM\Column(type="string", length=255, options={"default"="img/blank.png"})
 	 */
 	private $photo;
 	/**
@@ -102,7 +102,7 @@ class UserJ
 	 */
 	protected $postings;
 	/**
-	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $schedules;
 	/**

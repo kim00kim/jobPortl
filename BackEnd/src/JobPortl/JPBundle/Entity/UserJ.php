@@ -102,7 +102,7 @@ class UserJ
 	 */
 	protected $postings;
 	/**
-	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $schedules;
 	/**

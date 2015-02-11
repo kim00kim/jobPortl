@@ -192,7 +192,6 @@ class RestController extends Controller
 		$skill->setCategory($dal->getCategory($post->get('category_id')));
 		return $dal->_flush($skill);
 	}
-
 	public function deleteDeleteskillAction($skillId)
 	{
 		$logger = $this->get('logger');
@@ -205,5 +204,22 @@ class RestController extends Controller
 	{
 		$dal = $this->get('jpdal.dal');
 		return $dal->getSkilledLaborers();
+	}
+	public function postAcquiredskillAction(Request $request)
+	{
+		$post = $request->request;
+		$dal = $this->get("jpdal.dal");
+		$acquiredSkill = new Entity\AcquiredSkill();
+
+		$user = $dal->getUser($post->get('user_id'));
+		$skill = $dal->getSkill($post->get('skill_id'));
+		$acquiredSkill->setSkill($skill);
+		$acquiredSkill->setUser($user);
+		return $dal->saveAcquiredSkill($acquiredSkill);
+	}
+	public function getUpdateduserinfoAction($userId)
+	{
+		$dal = $this->get("jpdal.dal");
+		return $dal->getUser($userId);
 	}
 }

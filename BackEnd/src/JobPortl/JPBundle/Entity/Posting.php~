@@ -76,6 +76,7 @@ class Posting
     public function __construct()
     {
         $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->setDatetimePosted(new \DateTime());
     }
 
     /**
