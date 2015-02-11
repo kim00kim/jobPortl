@@ -23,7 +23,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.first_name = user.first_name
 			$scope.last_name = user.last_name
 			$scope.photo =  user.photo
-			console.log("Response: " + JSON.stringify(user))
+//			console.log("Response: " + JSON.stringify(user))
 
 		}
 		$scope.logOut = function () {
@@ -53,16 +53,13 @@ angular.module('jobPortl.controllers', [])
 	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService, User) {
 		$scope.user_input = {}
 
-		console.log("User: " + JSON.stringify(UserService.getUser))
-		console.log("User_Type: " + UserService.getUserType())
 		$scope.skipLogin = function ($scope, $localstorage) {
 			UserService.setUserType(2)
 			$state.go('tab.job-post');
-			console.log("User: " + JSON.stringify(UserService.getUser))
-			console.log("User_Type: " + UserService.getUserType())
+//			console.log("User: " + JSON.stringify(UserService.getUser))
+//			console.log("User_Type: " + UserService.getUserType())
 		}
 		$scope.register = function () {
-
 			$state.go('registerLogin');
 		}
 
@@ -81,17 +78,16 @@ angular.module('jobPortl.controllers', [])
 					if(user_input.user_acc_type==1)
 						alert("Incorrect email and password!")
 					else{
-						console.log("LOGIN: " +fb_info)
+//						console.log("LOGIN: " +fb_info)
 						User.setFbInfo(fb_info)
 						$state.go('registerDetails')
 					}
 				}
 				else {
-					//alert("Logged in successfully!")
+					console.log(response)
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
-					console.log("LOGIN CTRL getUser: " + JSON.stringify(UserService.getUser()))
-					console.log("LOGIN CTRL getUserType: " + UserService.getUserType())
+//					console.log("LOGIN CTRL getUser: " + JSON.stringify(UserService.getUser()))
 					navigate(UserService.getUserType())
 				}
 			})
@@ -109,7 +105,7 @@ angular.module('jobPortl.controllers', [])
 			user_input['user_acc_type'] = 1
 			//console.log("Typical: " + JSON.stringify(user_input))
 			user_input['user_acc_type']= 1
-			console.log(user_input)
+//			console.log(user_input)
 			login(user_input, 0)
 		}
 
@@ -123,7 +119,7 @@ angular.module('jobPortl.controllers', [])
 						function (photo) {
 							var user_input = {email_add:info.email,password:'', user_acc_type:0}
 							info['photo'] = photo.picture.data.url
-							console.log(user_input)
+//							console.log(user_input)
 							login(user_input,info)
 						},
 						function (error) {
@@ -154,7 +150,7 @@ angular.module('jobPortl.controllers', [])
 			}
 			fbLogged.resolve(authData);
 			fbLoginSuccess = null;
-			console.log(response);
+//			console.log(response);
 		};
 
 		var fbLoginError = function (error) {
@@ -162,21 +158,21 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		$scope.fblogin = function () {
-			console.log('Login');
+//			console.log('Login');
 			if (!window.cordova) {
 				facebookConnectPlugin.browserInit('578995458902268');
 			}
 			facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
 			fbLogged.then(function (authData) {
-				console.log('Promised');
+//				console.log('Promised');
 				return Parse.FacebookUtils.logIn(authData);
 			})
 				.then(function (userObject) {
 					var authData = userObject.get('authData');
 					refresh()
 				}, function (error) {
-					console.log(error);
+//					console.log(error);
 				});
 		};
 		/*$scope.fblogin = function () {
@@ -218,7 +214,7 @@ angular.module('jobPortl.controllers', [])
 		$scope.new_user_account = {}
 
 
-		console.log(JSON.stringify(User.getFbInfo()))
+//		console.log(JSON.stringify(User.getFbInfo()))
 
 		//initialize inputs
 		var initialize = function (){
@@ -240,13 +236,11 @@ angular.module('jobPortl.controllers', [])
 				$scope.new_user.user_acc_type = 0 //FB
 				acc_type = 0
 			}
-
 		}
-
 		$scope.addUserAccount = function (user_acc) {
 			user_acc.user_acc_type = 1
 			UserAccount.setUserAccount(user_acc)
-			console.log("ASDSDSA: " + JSON.stringify(user_acc))
+//			console.log("ASDSDSA: " + JSON.stringify(user_acc))
 			$state.go('registerDetails');
 		}
 
@@ -272,10 +266,10 @@ angular.module('jobPortl.controllers', [])
 				//$scope.new_user.password = user_account.confirm
 				//$scope.new_user.user_acc_type = user_account.user_acc_type
 			}
-			console.log(JSON.stringify($scope.new_user))
+//			console.log(JSON.stringify($scope.new_user))
 
 			User.addUser($scope.new_user).success(function (response) {
-				console.log(response)
+//				console.log(response)
 				//disable back button
 				$ionicViewService.nextViewOptions({
 					disableBack: true
@@ -298,15 +292,12 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('EditProfileCtrl', function ($scope) {
-		//$scope.lastPhoto = "img/blank.png"
-		//$scope.myPicture = "img/blank.png"
-		$scope.$watch('myPicture', function(value) {
+	.controller('EditProfileCtrl', function ($scope,JobPost, $ionicModal, $ionicLoading, UserService, User) {
+		/*$scope.$watch('myPicture', function(value) {
 			if(value) {
 				$scope.myPicture = value
 			}
-		}, true);
-
+		}, true);*/
 		/*$scope.getPhoto = function () {
 			console.log('Getting camera');
 			Camera.getPicture().then(function (imageURI) {
@@ -321,12 +312,125 @@ angular.module('jobPortl.controllers', [])
 				saveToPhotoAlbum: false
 			});
 		}*/
+		//declare & initialize
+		var user;
+		var all_skills = []
+		var user_skills = []
+
+		var updateUserService = function(){
+			var info = []
+			User.getUpdatedUser(user_id).success(function(response){
+				info['user']= response
+				console.log(info)
+
+			})
+
+			user = UserService.getUser()
+			$scope.editable = false;
+			$scope.my_photo = user.photo
+			$scope.info = user
+			$scope.user_skill = user.acquired_skills
+
+			angular.forEach($scope.user_skill, function(skill){
+				user_skills.push(skill.skill.skill_id)
+			})
+		}
+
+//		console.log(UserService.getUser())
+		var getCategories = function(){
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 500,
+				showDelay: 0
+			});
+			JobPost.getAllCategories().success(function(response){
+				$ionicLoading.hide()
+				if(!response)
+					alert("Couldn't get categories.")
+				else
+					all_skills = response
+			})
+		}
+
+		//toggle editable for title
+		$scope.toggle= function(){
+			$scope.editable = !$scope.editable
+			console.log($scope.editable)
+			console.log($scope.info.title)
+		}
+
+		$scope.addSkill = function (){
+			$scope.acquired_skills = new Object()
+			$ionicModal.fromTemplateUrl('templates/skill-set-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
+			}).then(function (modal) {
+				$scope.skillsModal = modal;
+				console.log(all_skills)
+				$scope.categories = all_skills
+				$scope.acquired_skills.category = $scope.categories[0];
+				$scope.skillSet = compare($scope.acquired_skills.category.skills)
+				$scope.predicate = 'category_name'
+				console.log($scope.skillSet)
+				$scope.skillsModal.show()
+			})
+		}//end of addSkill
+
+		var compare = function(all_skills){
+			var user_skills = []
+			var skill_set=[]
+			angular.forEach($scope.user_skill, function(skill){
+				user_skills.push(skill.skill.skill_id)
+			})
+
+			angular.forEach(all_skills,function(skills,i){
+				var end = false
+				angular.forEach(user_skills, function(user_skill,j){
+					if(!angular.equals(user_skill, all_skills[i].skill_id)){
+						if(j == user_skills.length-1 && end ==false){
+							if(!skills.hasOwnProperty("checked"))
+								skills['checked']=false
+							skill_set.push(skills)
+						}
+					}
+					else
+						end = true
+				})
+			})
+			return skill_set
+		}
+
+		$scope.change = function(){
+			$scope.skillSet = compare($scope.acquired_skills.category.skills)
+			console.log($scope.skillSet)
+		}
+
+		$scope.as_skillSet = function(acquired_skills){
+			$scope.closeModal()
+			var acquired = []
+			angular.forEach($scope.skillSet, function(skill){
+				if(skill.checked)
+				acquired.push({'skill_id': skill.skill_id})
+			})
+			console.log(acquired)
+			var response = User.addSkill(acquired,user.user_id)
+			console.log(response)
+		}
+
+		$scope.closeModal = function(){
+			$scope.skillsModal.hide();
+		}
+
+		//on load
+		updateUserService();
+		getCategories()
 	})
 
 	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
 		$scope.skilled_laborer_info = {}
-
-
 		//call function
 		/*$scope.call = function (number) {
 			var call = "tel:" + number;
@@ -335,13 +439,13 @@ angular.module('jobPortl.controllers', [])
 
 		SkilledLaborer.getSkilledLaborers().
 			success(function (data, status, headers) {
-				console.log("Get Skilled Laborer Info: Success")
-				console.log("Status: " + status);
-				console.log("Length: " + headers("content-length"));
-				console.log(data)
+//				console.log("Get Skilled Laborer Info: Success")
+//				console.log("Status: " + status);
+//				console.log("Length: " + headers("content-length"));
+//				console.log(data)
 				$scope.skilled_laborer_info = data;
 			}).
-			error(function () {
+			error(function (err) {
 				alert("An error occurred. Cannot get skilled laborer info")
 			});
 
@@ -349,7 +453,7 @@ angular.module('jobPortl.controllers', [])
 		//view profile function
 		$scope.viewProfile = function (info) {
 			$scope.userInfo = info;
-			console.log(info.user_id);
+//			console.log(info.user_id);
 
 			$ionicModal.fromTemplateUrl('templates/profile-modal.html', {
 				scope: $scope,
@@ -358,8 +462,6 @@ angular.module('jobPortl.controllers', [])
 			}).then(function (modal) {
 				$scope.profileModal = modal;
 				$scope.profileModal.show();
-				$scope.rate = 4;
-				$scope.max = 5;
 			});
 		}
 	})
@@ -367,7 +469,6 @@ angular.module('jobPortl.controllers', [])
 	.controller('JobCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, JobPost, UserService) {
 		var user_type = UserService.getUserType()
 		$scope.new_job_post = {};
-
 
 
 		var navigateViewByUserType = function (){
@@ -447,7 +548,6 @@ angular.module('jobPortl.controllers', [])
 			})
 
 			$scope.change = function(){
-				console.log("CHANGE")
 				$scope.skills = $scope.new_job_post.category.skills
 				$scope.new_job_post.skill = $scope.skills[0];
 			}

@@ -1,0 +1,23 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-dark">
+		<h1 class="title">Addss Skills</h1>
+		<button class="button button-clear button-primary icon ion-close-circled"
+				ng-click="closeModal()"></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<form name="as" ng-submit="as_skillSet(acquired_skills)" novalidate>
+			<div class="list">
+				<label class="item item-input item-select" ng-class="{'no-error' : as.category.$dirty}">
+					<div class="input-label">
+						Choose a Category
+					</div>
+					<select ng-options="category.category_name for category in categories | orderBy:predicate"
+							ng-model="acquired_skills.category" name="category" ng-change="change()">
+					</select>
+				</label>
+				<ion-checkbox ng-repeat="skill in skillSet | orderBy: 'skill_name'" ng-model="skill.checked" ng-checked = "skill.checked">{{skill.skill_name}}</ion-checkbox>
+			</div>
+			<button class="button button-block button-positive" ng-disabled="as.$invalid" type="submit">Done</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

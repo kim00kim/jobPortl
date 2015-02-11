@@ -1,8 +1,8 @@
 <ion-view title="Edit Profile">
 	<ion-content class="padding">
+	<div class="list">
 		<div class="item image">
-			<img ng-src="{{myPicture}}">
-
+			<img src="{{my_photo}}">
 			<div class="inputs">
 				<button camera ng-model="myPicture" class="button button-small button-stable"><i
 						class="icon ion-ios7-camera"></i> Take Photo
@@ -12,5 +12,22 @@
 				</button>
 			</div>
 		</div>
+		<div class="item details">
+			<h2 class="item item-input item-icon-right ">
+					<span class="input-label"><strong>Title</strong></span>
+					<div class="title" contenteditable={{editable}} ng-model="info.title">{{info.title}}</div>
+					<i class="icon " ng-class="{'ion-edit': !editable, 'ion-checkmark-round': editable}" ng-click="toggle()"></i>
+			</h2>
+			<div class="item item-divider item-icon-right headers">Skill(s)<i class="icon ion-ios7-plus" ng-click="addSkill()"></i></div>
+			<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill">
+				{{skill.skill.skill_name}}
+				<i class="icon ion-ios7-minus-outline" ng-click=""></i>
+			</div>
+			<div class="item item-divider headers">Certification(s)</div>
+			<div class="item certification subList" ng-repeat="certification in user_info.certification">
+				{{certification.desc}}
+			</div>
+		</div>
+	</div>
 	</ion-content>
 </ion-view>

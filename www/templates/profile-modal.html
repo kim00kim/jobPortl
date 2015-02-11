@@ -7,21 +7,15 @@
 	<ion-content class="padding">
 		<div class="list">
 			<div class="item item-thumbnail-left">
-				<img src="img/SL.jpg">
-
+				<!--<img src="img/SL.jpg">-->
 				<h2 class="highlight">{{user_info.first_name + " " + user_info.last_name}}</h2>
 
 				<h2 class="title">{{user_info.title}}</h2>
 			</div>
 			<div class="item reviews">
-				<!--<rating ng-model="rate" max="max"></rating>-->
-				<h4><span class="comments"><a href="#">See Comments/Feedbacks</a></span></h4>
+				<!--<h4><span class="comments"><a href="#">See Comments/Feedbacks</a></span></h4>-->
 			</div>
 			<div class="item details">
-				<h2><strong>Overview</strong></h2>
-
-				<p>{{user_info.overview}}</p>
-
 				<div class="item item-divider headers">Language(s)</div>
 				<div class="item language subList" ng-repeat="language in user_info.language">
 					{{language.desc}}

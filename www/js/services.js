@@ -41,7 +41,12 @@ angular.module('jobPortl.services', [])
 						has_verified_num: response.user.has_verified_number,
 						photo: response.user.photo,
 						gender: response.user.gender,
-						zipcode: response.user.zipcode
+						acquired_skills: response.user.acquired_skills,
+						certifications: response.user.certifications,
+						evaluations: response.user.evaluations,
+						languages: response.user.languages,
+						schedules: response.user.schedules,
+						title: response.user.title
 					})
 			},
 			getUserType: function () {
@@ -104,8 +109,20 @@ angular.module('jobPortl.services', [])
 			},
 			getFbInfo: function () {
 				return fb_info
+			},
+			addSkill: function(skills, user_id){
+				var acquired_skills = []
+				console.log(skills)
+				console.log(user_id)
+				angular.forEach(skills,function(skill){
+					skill['user_id']=user_id
+					acquired_skills.push($http({method: "POST", url: baseUrl + 'acquiredskills', data: skill}))
+				})
+				return acquired_skills;
+			},
+			getUpdatedUser: function(user_id){
+				return $http({method: "GET", url: baseUrl + 'updateduserinfos/'+ user_id})
 			}
-
 		}
 	})
 
@@ -126,10 +143,10 @@ angular.module('jobPortl.services', [])
 		}
 	})
 
-	.factory('SkilledLaborer', function ($http) {
+	.factory('SkilledLaborer', function ($http, baseUrl) {
 		return {
 			getSkilledLaborers: function () {
-				return $http.get('skilled_laborer.json');
+				return $http({method: "GET", url: baseUrl + 'skilledlaborer'})
 			}
 		}
 	})
