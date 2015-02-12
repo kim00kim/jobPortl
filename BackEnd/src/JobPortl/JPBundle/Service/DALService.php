@@ -3,6 +3,8 @@
 namespace JobPortl\JPBundle\Service;
 
 use \Monolog\Logger;
+use Doctrine\Common\Collections\ExpressionBuilder;
+use Doctrine\Common\Collections\Criteria;
 
 class DALService
 {
@@ -89,11 +91,7 @@ class DALService
 	public function getPostingByUser($userId)
 	{
 		return $this->postingRepo->createQueryBuilder('p')
-			->select('p.postingId posting_id','p.datetimePosted datetime_posted','p.description','p.location','p.requiredApplicant required_applicant','p.status','p.available',
-				'u.userId', 'u.firstName first_name', 'u.lastName last_name, u.photo','s.skillId skill_id','s.skillName skill_name','c.categoryId category_id','c.categoryName category_name')
 			->join('p.user','u')
-			->join('p.skill','s')
-			->join('s.category','c')
 			->where('u.userId = :userId')
 			->setParameter('userId',$userId)
 			->orderBy('p.datetimePosted','DESC')
@@ -102,13 +100,8 @@ class DALService
 	}
 	public function getAllJobPost()
 	{
-		$fields = array('p',);
 		return $this->postingRepo->createQueryBuilder('p')
-			->select('p.postingId posting_id','p.datetimePosted datetime_posted','p.description','p.location','p.requiredApplicant required_applicant','p.status','p.available',
-					'u.userId', 'u.firstName first_name', 'u.lastName last_name, u.photo','s.skillId skill_id','s.skillName skill_name','c.categoryId category_id','c.categoryName category_name')
 			->join('p.user','u')
-			->join('p.skill','s')
-			->join('s.category','c')
 			->orderBy('p.datetimePosted','DESC')
 			->getQuery()
 			->getResult();
@@ -129,16 +122,22 @@ class DALService
 	}
 	public function getSkilledLaborers()
 	{
-		return $this->userAccountRepo->createQueryBuilder('u')
-//			->orderBy('p.datetimePosted','DESC')
-			->join('u.user','s')
-			->where('u.userType = 1')
-			->getQuery()
-			->getResult();
+		return $this->userAccountRepo->findBy(array('userType' => 1));
 	}
 	public function saveAcquiredSkill($newSkill)
 	{
 		return $this->_persistFlush($newSkill);
+	}
+	public function getAcquiredSkills($userId)
+	{
+		/*return $this->acquiredSkillRepo->createQueryBuilder('ac')
+			->select('ac')
+			->where('ac.userId = :userId')
+			->setParameter('userId', $userId)
+			->getQuery()
+			->getResult();*/
+		return $this->acquiredSkillRepo->find($userId);
+
 	}
 	private function _persistFlush($object)
 	{
