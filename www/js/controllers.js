@@ -6,6 +6,8 @@ angular.module('jobPortl.controllers', [])
 
 	.controller('AccountCtrl', function ($scope, $state, $ionicPopup, UserService) {
 		var user_type = UserService.getUserType()
+		console.log(UserService.getUser().user_id)
+
 		if (user_type == 2)
 			$state.go('login')
 		else {
@@ -87,7 +89,7 @@ angular.module('jobPortl.controllers', [])
 					console.log(response)
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
-//					console.log("LOGIN CTRL getUser: " + JSON.stringify(UserService.getUser()))
+//					console.log(UserService.getUser())
 					navigate(UserService.getUserType())
 				}
 			})
@@ -240,7 +242,6 @@ angular.module('jobPortl.controllers', [])
 		$scope.addUserAccount = function (user_acc) {
 			user_acc.user_acc_type = 1
 			UserAccount.setUserAccount(user_acc)
-//			console.log("ASDSDSA: " + JSON.stringify(user_acc))
 			$state.go('registerDetails');
 		}
 
@@ -292,7 +293,7 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('EditProfileCtrl', function ($scope,JobPost, $ionicModal, $ionicLoading, UserService, User) {
+	.controller('EditProfileCtrl', function ($scope,JobPost, $ionicModal, $ionicLoading, UserService, User,$cordovaCamera) {
 		/*$scope.$watch('myPicture', function(value) {
 			if(value) {
 				$scope.myPicture = value
@@ -312,6 +313,7 @@ angular.module('jobPortl.controllers', [])
 				saveToPhotoAlbum: false
 			});
 		}*/
+
 		//declare & initialize
 		var user;
 		var all_skills = []
@@ -319,9 +321,10 @@ angular.module('jobPortl.controllers', [])
 
 		var updateUserService = function(){
 			var info = []
-			User.getUpdatedUser(user_id).success(function(response){
-				info['user']= response
-				console.log(info)
+			console.log(UserService.getUser().user_id)
+			User.getUpdatedUser(UserService.getUser().user_id).success(function(response){
+//				UserService.setUser(info)
+				console.log(response)
 
 			})
 
@@ -352,6 +355,33 @@ angular.module('jobPortl.controllers', [])
 				else
 					all_skills = response
 			})
+		}
+
+		$scope.capture = function(){
+			document.addEventListener("deviceready", function () {
+
+				var options = {
+					quality: 50,
+					destinationType: Camera.DestinationType.DATA_URL,
+					sourceType: Camera.PictureSourceType.CAMERA,
+					allowEdit: true,
+					encodingType: Camera.EncodingType.JPEG,
+					targetWidth: 100,
+					targetHeight: 100,
+					popoverOptions: CameraPopoverOptions,
+					saveToPhotoAlbum: false
+				};
+
+				$cordovaCamera.getPicture(options).then(function(imageData) {
+					var image = document.getElementById('myImage');
+					image.src = "data:image/jpeg;base64," + imageData;
+					$scope.my_photo= image.src
+
+				}, function(err) {
+					alert(err)
+				});
+
+			}, false);
 		}
 
 		//toggle editable for title
@@ -429,7 +459,7 @@ angular.module('jobPortl.controllers', [])
 		getCategories()
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, SkilledLaborer) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, SkilledLaborer) {
 		$scope.skilled_laborer_info = {}
 		//call function
 		/*$scope.call = function (number) {
@@ -437,18 +467,24 @@ angular.module('jobPortl.controllers', [])
 			document.location.href = call;
 		}*/
 
-		SkilledLaborer.getSkilledLaborers().
-			success(function (data, status, headers) {
-//				console.log("Get Skilled Laborer Info: Success")
-//				console.log("Status: " + status);
-//				console.log("Length: " + headers("content-length"));
-//				console.log(data)
-				$scope.skilled_laborer_info = data;
-			}).
-			error(function (err) {
-				alert("An error occurred. Cannot get skilled laborer info")
+		var display = function(){
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 500,
+				showDelay: 0
 			});
-
+			SkilledLaborer.getSkilledLaborers().
+				success(function (data, status, headers) {
+					$ionicLoading.hide()
+					console.log(data)
+					$scope.skilled_laborer_info = data;
+				}).
+				error(function (err) {
+					alert("An error occurred. Cannot get skilled laborer info")
+				});
+		}
 
 		//view profile function
 		$scope.viewProfile = function (info) {
@@ -464,6 +500,7 @@ angular.module('jobPortl.controllers', [])
 				$scope.profileModal.show();
 			});
 		}
+		display()
 	})
 
 	.controller('JobCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, JobPost, UserService) {
@@ -488,6 +525,7 @@ angular.module('jobPortl.controllers', [])
 			else if (user_type  == 1){ //skilled-laborer
 				$scope.toggle_sl = 'ng-hide'
 				var job_post= JobPost.getAllJobPosts().success(function(response){
+					console.log("getAllJobPosts..")
 					console.log(response)
 					displayJobPost(response)
 				}).
@@ -532,7 +570,7 @@ angular.module('jobPortl.controllers', [])
 				});
 				JobPost.getAllCategories().success(function(response){
 					$ionicLoading.hide()
-					console.log("categories: " + JSON.stringify(response))
+					console.log(response)
 					if(!response)
 						alert("Couldn't get categories.")
 					else{

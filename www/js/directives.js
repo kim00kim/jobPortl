@@ -16,7 +16,7 @@ angular.module('jobPortl.directives', [])
 		};
 	})
 
-	.directive('camera', function(Camera) {
+	/*.directive('camera', function(Camera) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -44,7 +44,7 @@ angular.module('jobPortl.directives', [])
 				});
 			}
 		};
-	})
+	})*/
 
 	.directive("contenteditable", function() {
 		return {
