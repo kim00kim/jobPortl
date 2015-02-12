@@ -27,7 +27,7 @@ class Language
 	 */
 	private $name;
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="languages")
+	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="languages", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId")
 	 */
 	protected $user;

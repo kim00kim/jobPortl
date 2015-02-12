@@ -38,12 +38,12 @@ class Application
 	 */
 	protected $posting;
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="applications")
+	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="applications" ,fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;
 	/**
-	 * @ORM\OneToMany(targetEntity="Evaluation", mappedBy="application", fetch="EXTRA_LAZY")
+	 * @ORM\OneToMany(targetEntity="Evaluation", mappedBy="application", fetch="EXTRA_LAZY", fetch="EXTRA_LAZY")
 	 */
 	protected $evaluations;
 

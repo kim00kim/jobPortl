@@ -27,7 +27,7 @@ class Schedule
 	 */
 	private $datetimeUnavailable;
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="schedules")
+	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="schedules", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;

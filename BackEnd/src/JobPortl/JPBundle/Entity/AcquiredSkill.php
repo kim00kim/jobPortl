@@ -3,10 +3,12 @@
 namespace JobPortl\JPBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * AcquiredSkill
- *
+ * @ExclusionPolicy("none")
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="JobPortl\JPBundle\Entity\AcquiredSkillRepository")
  */
@@ -26,6 +28,7 @@ class AcquiredSkill
 	 */
 	protected $skill;
 	/**
+	 * @Exclude
 	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="acquiredSkills")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */

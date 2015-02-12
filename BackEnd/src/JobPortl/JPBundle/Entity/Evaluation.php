@@ -39,12 +39,12 @@ class Evaluation
 	 */
 	private $datetimeEvaluated;
 	/**
-	 * @ORM\ManyToOne(targetEntity="Application", inversedBy="evaluations")
+	 * @ORM\ManyToOne(targetEntity="Application", inversedBy="evaluations", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="appId", referencedColumnName="appId", nullable=true)
 	 */
 	protected $application;
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="evaluations")
+	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="evaluations", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;

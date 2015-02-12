@@ -98,7 +98,7 @@ class UserJ
 	 */
 	protected $applications;
 	/**
-	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $postings;
 	/**

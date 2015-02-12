@@ -52,9 +52,8 @@ class UserAccount
 	 */
 	private $salt;
 	/**
-	 * @ORM\OneToOne(targetEntity="UserJ")
+	 * @ORM\OneToOne(targetEntity="UserJ", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=FALSE)
-	 *
 	 */
 	protected $user;
 

@@ -3,10 +3,13 @@
 namespace JobPortl\JPBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * Skill
  *
+ * @ExclusionPolicy("none")
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="JobPortl\JPBundle\Entity\SkillRepository")
  */
@@ -27,15 +30,17 @@ class Skill
 	 */
 	private $skillName;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="AcquiredSkill", mappedBy="skill", fetch="EXTRA_LAZY")
 	 */
 	protected $acquiredSkills;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="skill", fetch="EXTRA_LAZY")
 	 */
 	protected $postings;
 	/**
-	 * @ORM\ManyToOne(targetEntity="Category", inversedBy="skills")
+	 * @ORM\ManyToOne(targetEntity="Category", inversedBy="skills", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="categoryId", referencedColumnName="categoryId", nullable=true, onDelete="CASCADE")
 	 */
 	protected $category;

@@ -39,7 +39,7 @@ class Certification
 	 */
 	private $isValid;
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="certifications")
+	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="certifications", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
 	protected $user;
