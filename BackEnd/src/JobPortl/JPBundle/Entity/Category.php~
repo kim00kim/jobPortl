@@ -38,7 +38,6 @@ class Category
 	 */
 	private $description;
 	/**
-	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="category", fetch="EXTRA_LAZY")
 	 */
 	protected $skills;
