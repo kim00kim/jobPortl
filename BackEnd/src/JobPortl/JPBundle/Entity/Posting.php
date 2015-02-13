@@ -59,6 +59,12 @@ class Posting
 	 */
 	private $available;
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer", options={"default"=0})
+	 */
+	private $type;
+	/**
 	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="postings", fetch="EXTRA_LAZY")
 	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
 	 */
@@ -307,5 +313,28 @@ class Posting
     public function getSkill()
     {
         return $this->skill;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Posting
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
