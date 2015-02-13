@@ -16,12 +16,14 @@
 			<h2 class="item item-input item-icon-right ">
 					<span class="input-label"><strong>Title</strong></span>
 					<div class="title" contenteditable={{editable}} ng-model="info.title">{{info.title}}</div>
-					<i class="icon " ng-class="{'ion-edit': !editable, 'ion-checkmark-round': editable}" ng-click="toggle()"></i>
+					<i class="icon " ng-class="{'ion-edit positive': !editable, 'ion-checkmark-round balanced': editable}" ng-click="toggle()"></i>
 			</h2>
-			<div class="item item-divider item-icon-right headers">Skill(s)<i class="icon ion-ios7-plus" ng-click="addSkill()"></i></div>
-			<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill">
+			<div class="item item-divider item-icon-right headers">Skill(s)<i class="icon ion-ios7-plus-empty positive" ng-click="addSkill()"></i></div>
+			<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill | orderBy: order">
+			<!--<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill | orderBy: order">-->
+				<!--{{skill.skill.category.category_name}}-->
 				{{skill.skill.skill_name}}
-				<i class="icon ion-ios7-minus-outline" ng-click=""></i>
+				<i class="icon ion-ios7-minus-outline assertive" ng-click="deleteSkill(skill.as_id)"></i>
 			</div>
 			<div class="item item-divider headers">Certification(s)</div>
 			<div class="item certification subList" ng-repeat="certification in user_info.certification">

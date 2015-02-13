@@ -207,19 +207,43 @@ class RestController extends Controller
 	}
 	public function postAcquiredskillAction(Request $request)
 	{
+		$returnArray = array();
 		$post = $request->request;
 		$dal = $this->get("jpdal.dal");
-		$acquiredSkill = new Entity\AcquiredSkill();
-
-		$user = $dal->getUser($post->get('user_id'));
-		$skill = $dal->getSkill($post->get('skill_id'));
-		$acquiredSkill->setSkill($skill);
-		$acquiredSkill->setUser($user);
-		return $dal->saveAcquiredSkill($acquiredSkill);
+		$logger = $this->get('logger');
+//		foreach($p)
+		foreach($post->get('skill_id') as $skillId){
+			$acquiredSkill = new Entity\AcquiredSkill();
+			$user = $dal->getUser($post->get('user_id'));
+			$acquiredSkill->setUser($user);
+			$logger->debug("skill_id: " . $skillId);
+			$skill = $dal->getSkill($skillId);
+			$acquiredSkill->setSkill($skill);
+			array_push($returnArray, $dal->saveAcquiredSkill($acquiredSkill));
+		}
+		return $returnArray;
 	}
-	public function getUpdateduserinfoAction($userId)
+	public function getUpdateduserinfoAction($userAccId)
 	{
 		$dal = $this->get("jpdal.dal");
-		return $dal->getUser($userId);
+		return $dal->getUserAccount($userAccId);
+
+	}
+	public function postUpdatetitleAction(Request $request)
+	{
+		$post = $request->request;
+		$dal= $this->get('jpdal.dal');
+		$user = $dal->getUser($post->get('user_id'));
+
+		$user->setTitle($post->get('title'));
+		return $dal->_flush($user);
+	}
+	public function deleteRemoveskillAction($asId)
+	{
+		$dal= $this->get('jpdal.dal');
+		return $dal->deleteAS($asId);
+
+
+
 	}
 }

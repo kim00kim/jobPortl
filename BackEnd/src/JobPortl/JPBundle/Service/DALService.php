@@ -83,7 +83,10 @@ class DALService
 	{
 		return $this->userRepo->find($id);
 	}
-
+	public function getUserAccount($id)
+	{
+		return $this->userAccountRepo->find($id);
+	}
 	public function getAllSkills()
 	{
 		return $this->skillRepo->findAll();
@@ -115,6 +118,11 @@ class DALService
 		$category = $this->categoryRepo->find($categoryId);
 		return $this->_removeFlush($category);
 	}
+	public function deleteAS($asId)
+	{
+		$as = $this->acquiredSkillRepo->find($asId);
+		return $this->_removeFlush($as);
+	}
 	public function deleteSkill($categoryId)
 	{
 		$skill = $this->skillRepo->find($categoryId);
@@ -128,16 +136,9 @@ class DALService
 	{
 		return $this->_persistFlush($newSkill);
 	}
-	public function getAcquiredSkills($userId)
+	public function getAcquiredSkillById($id)
 	{
-		/*return $this->acquiredSkillRepo->createQueryBuilder('ac')
-			->select('ac')
-			->where('ac.userId = :userId')
-			->setParameter('userId', $userId)
-			->getQuery()
-			->getResult();*/
-		return $this->acquiredSkillRepo->find($userId);
-
+		return $this->acquiredSkillRepo->find($id);
 	}
 	private function _persistFlush($object)
 	{

@@ -28,6 +28,7 @@ angular.module('jobPortl.services', [])
 				$localstorage.setObject('user',
 					{
 						user_id: response.user.user_id,
+						user_acc_id: response.user_acc_id,
 						is_logged_in: 1,
 						user_acc_type: response.user_acc_type,
 						email: response.email,
@@ -57,6 +58,9 @@ angular.module('jobPortl.services', [])
 			},
 			clearStorage: function () {
 				localStorage.clear()
+			},
+			removeKey: function(key){
+				$localstorage.removeItem(key)
 			}
 		}
 	})
@@ -110,18 +114,17 @@ angular.module('jobPortl.services', [])
 			getFbInfo: function () {
 				return fb_info
 			},
-			addSkill: function(skills, user_id){
-				var acquired_skills = []
-				console.log(skills)
-				console.log(user_id)
-				angular.forEach(skills,function(skill){
-					skill['user_id']=user_id
-					acquired_skills.push($http({method: "POST", url: baseUrl + 'acquiredskills', data: skill}))
-				})
-				return acquired_skills;
+			addSkill: function(acquired_skill){
+				return $http({method: "POST", url: baseUrl + 'acquiredskills', data: acquired_skill})
+			},
+			updateTitle: function(title){
+				return $http({method: "POST", url: baseUrl + 'updatetitles', data: title})
 			},
 			getUpdatedUser: function(user_id){
 				return $http({method: "GET", url: baseUrl + 'updateduserinfos/'+ user_id})
+			},
+			removeASkill: function(acquired_skill){
+				return $http({method: "DELETE", url: baseUrl + 'removeskills/'+ acquired_skill})
 			}
 		}
 	})

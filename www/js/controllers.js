@@ -86,7 +86,7 @@ angular.module('jobPortl.controllers', [])
 					}
 				}
 				else {
-					console.log(response)
+//					console.log(response)
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
 //					console.log(UserService.getUser())
@@ -319,40 +319,69 @@ angular.module('jobPortl.controllers', [])
 		var all_skills = []
 		var user_skills = []
 
-		var updateUserService = function(){
-			var info = []
-			console.log(UserService.getUser().user_id)
-			User.getUpdatedUser(UserService.getUser().user_id).success(function(response){
-//				UserService.setUser(info)
-				console.log(response)
-
-			})
-
+		var onLoad = function(){
 			user = UserService.getUser()
+
+			console.log('test')
+			console.log(user.acquired_skills)
+
+			/*var acq = []
+			var acq_id = []
+			acq.push(user.acquired_skills[0].skill.category)
+			acq_id.push(user.acquired_skills[0].skill.category.category_id)
+			console.log(acq_id)
+			angular.forEach(user.acquired_skills, function(acquired){
+				console.log(acquired.skill.category.category_id)
+				if(acq_id.indexOf(acquired.skill.category.category_id)<0){
+					acq_id.push(acquired.skill.category.category_id)
+					acq.push(acquired.skill.category)
+				}
+				console.log(acq)
+			})*/
+
 			$scope.editable = false;
 			$scope.my_photo = user.photo
 			$scope.info = user
 			$scope.user_skill = user.acquired_skills
+//			console.log($scope.user_skill)
+			$scope.order = 'skill.category.category_name'
 
 			angular.forEach($scope.user_skill, function(skill){
 				user_skills.push(skill.skill.skill_id)
+			})
+			getCategories()
+		}
+
+		//under observation
+		var updateUserService = function(){
+			var info = []
+//			console.log(user)
+//			console.log(UserService.getUser().user_acc_id)
+			User.getUpdatedUser(UserService.getUser().user_acc_id).success(function(response){
+				$ionicLoading.hide()
+//				console.log(UserService.getUser())
+//				UserService.clearStorage()
+//				console.log("after clear")
+//				console.log(UserService.getUser())
+//				UserService.setUser(response)
+//				UserService.setUserType(response.user_type)
+//				console.log(UserService.getUser())
+//				console.log('update:')
+//				console.log(response)
+				user = UserService.setUser(response)
+				onLoad()
+
 			})
 		}
 
 //		console.log(UserService.getUser())
 		var getCategories = function(){
-			$ionicLoading.show({
-				content: 'Loading...',
-				animation: 'fade-in',
-				showBackdrop: true,
-				maxWidth: 500,
-				showDelay: 0
-			});
 			JobPost.getAllCategories().success(function(response){
-				$ionicLoading.hide()
+//				$ionicLoading.hide()
 				if(!response)
 					alert("Couldn't get categories.")
 				else
+//				console.log(response)
 					all_skills = response
 			})
 		}
@@ -389,6 +418,11 @@ angular.module('jobPortl.controllers', [])
 			$scope.editable = !$scope.editable
 			console.log($scope.editable)
 			console.log($scope.info.title)
+			if(!$scope.editable){
+				User.updateTitle({'user_id' : user.user_id, 'title' : $scope.info.title}).success(function(){
+					updateUserService()
+				})
+			}
 		}
 
 		$scope.addSkill = function (){
@@ -399,12 +433,14 @@ angular.module('jobPortl.controllers', [])
 				focusFirstInput: true
 			}).then(function (modal) {
 				$scope.skillsModal = modal;
-				console.log(all_skills)
+//				console.log(all_skills)
 				$scope.categories = all_skills
 				$scope.acquired_skills.category = $scope.categories[0];
+
 				$scope.skillSet = compare($scope.acquired_skills.category.skills)
+//				console.log($scope.skillSet)
 				$scope.predicate = 'category_name'
-				console.log($scope.skillSet)
+//				console.log($scope.skillSet)
 				$scope.skillsModal.show()
 			})
 		}//end of addSkill
@@ -412,42 +448,79 @@ angular.module('jobPortl.controllers', [])
 		var compare = function(all_skills){
 			var user_skills = []
 			var skill_set=[]
-			angular.forEach($scope.user_skill, function(skill){
-				user_skills.push(skill.skill.skill_id)
-			})
-
-			angular.forEach(all_skills,function(skills,i){
-				var end = false
-				angular.forEach(user_skills, function(user_skill,j){
-					if(!angular.equals(user_skill, all_skills[i].skill_id)){
-						if(j == user_skills.length-1 && end ==false){
-							if(!skills.hasOwnProperty("checked"))
-								skills['checked']=false
-							skill_set.push(skills)
-						}
-					}
-					else
-						end = true
+			if(angular.equals($scope.user_skill.length,0)){
+				angular.forEach(all_skills,function(skills,i){
+					skills['checked']=false
+					console.log(skills)
+					skill_set.push(skills)
 				})
-			})
+			}
+			else{
+				angular.forEach($scope.user_skill, function(skill){
+					user_skills.push(skill.skill.skill_id)
+				})
+	//			console.log(all_skills)
+
+				angular.forEach(all_skills,function(skills,i){
+					var end = false
+					angular.forEach(user_skills, function(user_skill,j){
+						if(!angular.equals(user_skill, all_skills[i].skill_id)){
+							if(j == user_skills.length-1 && end ==false){
+	//							if(!skills.hasOwnProperty("checked"))
+									skills['checked']=false
+								skill_set.push(skills)
+							}
+						}
+						else
+							end = true
+					})
+				})
+			}
 			return skill_set
+		}
+
+		$scope.deleteSkill = function(as_id){
+			User.removeASkill(as_id).success(function(response){
+				console.log(response)
+				updateUserService()
+			})
 		}
 
 		$scope.change = function(){
 			$scope.skillSet = compare($scope.acquired_skills.category.skills)
+//			$scope.skillSet.checked=false
 			console.log($scope.skillSet)
 		}
 
-		$scope.as_skillSet = function(acquired_skills){
+		$scope.as_skillSet = function(){
 			$scope.closeModal()
 			var acquired = []
+			var data = {}
 			angular.forEach($scope.skillSet, function(skill){
-				if(skill.checked)
-				acquired.push({'skill_id': skill.skill_id})
+				if(skill.checked){
+					acquired.push(skill.skill_id)
+					skill.checked=false
+				}
 			})
-			console.log(acquired)
-			var response = User.addSkill(acquired,user.user_id)
-			console.log(response)
+			data= {'skill_id': acquired, 'user_id': user.user_id}
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 5,
+				showDelay: 0
+			});
+			User.addSkill(data).success(function(response){
+				console.log(response)
+//				updateUserService()
+				angular.forEach(response, function(new_skill){
+					$scope.user_skill.push(new_skill)
+				})
+
+				updateUserService()
+				$ionicLoading.hide()
+
+			})
 		}
 
 		$scope.closeModal = function(){
@@ -455,8 +528,8 @@ angular.module('jobPortl.controllers', [])
 		}
 
 		//on load
-		updateUserService();
-		getCategories()
+		onLoad()
+//		updateUserService();
 	})
 
 	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, SkilledLaborer) {
