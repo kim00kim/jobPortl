@@ -147,6 +147,7 @@ class RestController extends Controller
 		$posting->setRequiredApplicant($post->get('required_applicant'));
 		$posting->setAvailable($post->get('required_applicant'));
 		$posting->setStatus(1);
+//		$posting->setType($post->get(''))
 		$posting->setUser($dal->getUser($post->get('user_id')));
 		$posting->setSkill($dal->getSkill($post->get('skill_id')));
 
