@@ -9,7 +9,7 @@
 			<div class="list">
 				<label class="item item-input item-select" ng-class="{'no-error' : jobPost.category.$dirty}">
 					<div class="input-label">
-						Choose a Category
+						Category
 					</div>
 					<select ng-options="category.category_name for category in categories | orderBy:predicate"
 							ng-model="new_job_post.category" name="category" ng-change="change()">
@@ -18,7 +18,7 @@
 
 				<label class="item item-input item-select" ng-class="{'no-error' : jobPost.skill.$dirty}">
 					<div class="input-label">
-						Choose Skill
+						Skill
 					</div>
 					<select ng-options="skill.skill_name for skill in skills"
 							ng-model="new_job_post.skill" name="skill">

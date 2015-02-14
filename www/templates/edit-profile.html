@@ -22,8 +22,14 @@
 			<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill | orderBy: order">
 			<!--<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill | orderBy: order">-->
 				<!--{{skill.skill.category.category_name}}-->
-				{{skill.skill.skill_name}}
-				<i class="icon ion-ios7-minus-outline assertive" ng-click="deleteSkill(skill.as_id)"></i>
+				<div class="row">
+					<div class="col col-80">
+						{{skill.skill.skill_name}}
+					</div>
+					<div class="col col-20">
+						<i class="icon ion-ios7-minus-outline assertive" width="10px" ng-click="deleteSkill(skill.as_id)"></i>
+					</div>
+				</div>
 			</div>
 			<div class="item item-divider headers">Certification(s)</div>
 			<div class="item certification subList" ng-repeat="certification in user_info.certification">

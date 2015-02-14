@@ -38,6 +38,7 @@ angular.module('jobPortl.controllers', [])
 				if (res) {
 					UserService.clearStorage()
 					$state.go('login')
+					window.plugins.toast.showLongBottom('You are logged out.')
 				}
 			});
 		}
@@ -86,6 +87,7 @@ angular.module('jobPortl.controllers', [])
 					}
 				}
 				else {
+					window.plugins.toast.showLongBottom('Logged in successfully!')
 //					console.log(response)
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
@@ -275,7 +277,8 @@ angular.module('jobPortl.controllers', [])
 				$ionicViewService.nextViewOptions({
 					disableBack: true
 				});
-				$ionicLoading.hide();
+				//$ionicLoading.hide();
+				window.plugins.toast.showLongBottom('Registration successful! Please log in.')
 				$state.go('login')
 			})
 		}
@@ -343,7 +346,9 @@ angular.module('jobPortl.controllers', [])
 			$scope.my_photo = user.photo
 			$scope.info = user
 			$scope.user_skill = user.acquired_skills
-//			console.log($scope.user_skill)
+			if(angular.isUndefined(user.title))
+				$scope.info.title= "no title"
+			console.log($scope.info.title)
 			$scope.order = 'skill.category.category_name'
 
 			angular.forEach($scope.user_skill, function(skill){
@@ -669,6 +674,7 @@ angular.module('jobPortl.controllers', [])
 		$scope.createNewJobPost = function (new_job_post) {
 			var user = UserService.getUser()
 			var job_post = {
+				type: 0,
 				description: new_job_post.description,
 				location: new_job_post.location,
 				skill_id: new_job_post.skill.skill_id,
@@ -692,6 +698,7 @@ angular.module('jobPortl.controllers', [])
 				$scope.new_job_post = {};
 				$scope.new_job_post.category = $scope.categories[0];
 				$scope.job_posts.unshift(response)
+				navigateViewByUserType()
 			})
 		};
 

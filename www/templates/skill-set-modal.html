@@ -9,7 +9,7 @@
 			<div class="list">
 				<label class="item item-input item-select" ng-class="{'no-error' : as.category.$dirty}">
 					<div class="input-label">
-						Choose a Category
+						Category
 					</div>
 					<select ng-options="category.category_name for category in categories | orderBy:predicate"
 							ng-model="acquired_skills.category" name="category" ng-change="change()">
