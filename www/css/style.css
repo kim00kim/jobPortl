@@ -210,3 +210,15 @@ span.comments a {
 	display: block;
 	margin-top: 5px;
 }
+p.skill-set{
+	text-indent: 0px !important;
+}
+.item.skills.subList{
+	padding-right: 10px;
+}
+.icons.col.col-10{
+	text-align: right;
+}
+h2.item.item-input{
+	padding-right: 10px;
+}

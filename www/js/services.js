@@ -42,6 +42,7 @@ angular.module('jobPortl.services', [])
 						has_verified_num: response.user.has_verified_number,
 						photo: response.user.photo,
 						gender: response.user.gender,
+						applications: response.user.applications,
 						acquired_skills: response.user.acquired_skills,
 						certifications: response.user.certifications,
 						evaluations: response.user.evaluations,

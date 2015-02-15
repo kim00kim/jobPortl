@@ -38,7 +38,7 @@ angular.module('jobPortl.controllers', [])
 				if (res) {
 					UserService.clearStorage()
 					$state.go('login')
-					window.plugins.toast.showLongBottom('You are logged out.')
+					//window.plugins.toast.showLongCenter('You are logged out.')
 				}
 			});
 		}
@@ -87,8 +87,8 @@ angular.module('jobPortl.controllers', [])
 					}
 				}
 				else {
-					window.plugins.toast.showLongBottom('Logged in successfully!')
-//					console.log(response)
+					//window.plugins.toast.showShortCenter('Logged in successfully!')
+					console.log(response)
 					UserService.setUser(response)
 					UserService.setUserType(response.user_type)
 //					console.log(UserService.getUser())
@@ -278,7 +278,7 @@ angular.module('jobPortl.controllers', [])
 					disableBack: true
 				});
 				//$ionicLoading.hide();
-				window.plugins.toast.showLongBottom('Registration successful! Please log in.')
+				//window.plugins.toast.showShortCenter('Registration successful! Please log in.')
 				$state.go('login')
 			})
 		}
@@ -324,9 +324,9 @@ angular.module('jobPortl.controllers', [])
 
 		var onLoad = function(){
 			user = UserService.getUser()
-
-			console.log('test')
-			console.log(user.acquired_skills)
+			console.log(user)
+			//console.log('test')
+			//console.log(user.acquired_skills)
 
 			/*var acq = []
 			var acq_id = []
@@ -360,7 +360,7 @@ angular.module('jobPortl.controllers', [])
 		//under observation
 		var updateUserService = function(){
 			var info = []
-//			console.log(user)
+			console.log(user)
 //			console.log(UserService.getUser().user_acc_id)
 			User.getUpdatedUser(UserService.getUser().user_acc_id).success(function(response){
 				$ionicLoading.hide()
