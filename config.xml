@@ -42,7 +42,7 @@
     	<string name="fb_app_name">JobPortl</string>
   	</resources>
 
-	<!--iOS only-->
+	<!--IOS only-->
 	<gap:plugin name="com.phonegap.plugin.statusbar"/>
 	<feature name="StatusBar">
 		<param name="ios-package" value="CDVStatusBar" onload="true"/>
