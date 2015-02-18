@@ -1,0 +1,28 @@
+<ion-view title="{{applications.skill.skillName}} ({{applications.applications.pending}})">
+	<ion-content>
+		<div class="list card" ng-repeat="app in applications.applications">
+			<div class="item item-avatar">
+				<img src={{app.user.photo}} ng-click="viewProfile(app.user)">
+				<h2 class="highlight" ng-click="viewProfile(app.user)">{{app.user.firstName + " " + app.user.lastName}} </h2>
+				<h2 class="title">{{app.user.title}}</h2>
+			</div>
+
+			<div class="item item-body skilled-laborer">
+				<div class="button-bar">
+					<button class="button button-small button-balanced" ng-click="call(app.user.cpNo)">
+						<i class="icon ion-android-call"></i>
+						Call
+					</button>
+					<button class="button button-small button-positive {{toggleStalker}}" ng-click="acceptApp(app,applications.postingId)">
+						<i class="icon ion-thumbsup"></i>
+						Accept
+					</button>
+					<button class="button button-small button-assertive {{toggleStalker}}" ng-click="declineApp(app.appId,$index)">
+						<i class="icon ion-thumbsdown"></i>
+						Decline
+					</button>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
