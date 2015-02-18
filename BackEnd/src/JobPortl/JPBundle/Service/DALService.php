@@ -5,6 +5,7 @@ namespace JobPortl\JPBundle\Service;
 use \Monolog\Logger;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\DBAL\Query;
 
 class DALService
 {
@@ -16,6 +17,7 @@ class DALService
 	private $userRepo;
 	private $postingRepo;
 	private $acquiredSkillRepo;
+	private $applicationRepo;
 
 	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger)
 	{
@@ -28,6 +30,7 @@ class DALService
 		$this->userRepo = $entityManager->getRepository('JobPortlJPBundle:UserJ');
 		$this->postingRepo = $entityManager->getRepository('JobPortlJPBundle:Posting');
 		$this->acquiredSkillRepo = $entityManager->getRepository('JobPortlJPBundle:AcquiredSkill');
+		$this->applicationRepo = $entityManager->getRepository('JobPortlJPBundle:Application');
 	}
 
 	public function getAdmin($adminId)
@@ -82,6 +85,7 @@ class DALService
 	public function getUser($id)
 	{
 		return $this->userRepo->find($id);
+
 	}
 	public function getUserAccount($id)
 	{
@@ -94,20 +98,35 @@ class DALService
 	public function getPostingByUser($userId)
 	{
 		return $this->postingRepo->createQueryBuilder('p')
-			->join('p.user','u')
+			->innerJoin('p.user','u')
+			->innerJoin('p.skill','s')
+			->innerJoin('s.category', 'c')
+			->innerJoin('p.applications','a')
+			->innerJoin('a.user','au')
+			->addSelect('partial u.{userId,firstName,lastName,photo,cpNo}','partial s.{skillId,skillName}',
+				'partial c.{categoryId,categoryName}', 'partial a.{appId,status}','partial au.{userId,firstName,lastName,title,photo}')
+//			->join('p.user','u')
 			->where('u.userId = :userId')
 			->setParameter('userId',$userId)
 			->orderBy('p.datetimePosted','DESC')
 			->getQuery()
-			->getResult();
+			->getArrayResult();
 	}
 	public function getAllJobPost()
 	{
 		return $this->postingRepo->createQueryBuilder('p')
-			->join('p.user','u')
+			/*->addSelect('p.available','p.datetimePosted as datetime_posted','p.description','p.location','p.postingId',
+				'p.requiredApplicant required_applicant','p.status')*/
+			->innerJoin('p.user','u')
+			->innerJoin('p.skill','s')
+			->innerJoin('s.category', 'c')
+			->innerJoin('p.applications','a')
+			->innerJoin('a.user','au')
+			->addSelect('partial u.{userId,firstName,lastName,photo}','partial s.{skillId,skillName}',
+				'partial c.{categoryId,categoryName}', 'partial a.{appId,status}','partial au.{userId,firstName,lastName,title,photo}')
 			->orderBy('p.datetimePosted','DESC')
 			->getQuery()
-			->getResult();
+			->getArrayResult();
 	}
 	public function getUserPosting($userId)
 	{
@@ -123,6 +142,11 @@ class DALService
 		$as = $this->acquiredSkillRepo->find($asId);
 		return $this->_removeFlush($as);
 	}
+	public function deleteApplication($appId)
+	{
+		$app = $this->applicationRepo->find($appId);
+		return $this->_removeFlush($app);
+	}
 	public function deleteSkill($categoryId)
 	{
 		$skill = $this->skillRepo->find($categoryId);
@@ -130,16 +154,51 @@ class DALService
 	}
 	public function getSkilledLaborers()
 	{
-		return $this->userAccountRepo->findBy(array('userType' => 1));
+//		return $this->userAccountRepo->findBy(array('userType' => 1));
+		return $this->userAccountRepo->createQueryBuilder('ua')
+			->select('partial ua.{userAccId, userAccType,userType,user}')
+			->innerJoin('ua.user','u')
+//			->leftJoin('JobPortlJPBundle:AcquiredSkill','ac','With','IDENTITY(ac.user)= u.userId','ac.asId')
+			->addSelect('u')
+			->where('ua.userType = ?1')
+			->setParameters(array(1 => 1))
+//			->getDQL();
+			->getQuery()
+			->getArrayResult();
+	}
+	public function getSkilledLaborerById($userId)
+	{
+		return $this->userRepo->createQueryBuilder('u')
+			->where('u.userId = ?1')
+			->setParameters(array(1 => $userId))
+			->getQuery()
+			->getArrayResult();
 	}
 	public function saveAcquiredSkill($newSkill)
 	{
 		return $this->_persistFlush($newSkill);
 	}
-	public function getAcquiredSkillById($id)
+	public function getAcquiredSkillByUser($userId)
 	{
-		return $this->acquiredSkillRepo->find($id);
+		return $this->acquiredSkillRepo->createQueryBuilder('ac')
+			->innerJoin('ac.skill','s')
+			->innerJoin('s.category','c')
+			->innerJoin('ac.user','u')
+			->addSelect('s','c')
+			->where('IDENTITY(ac.user) = ?1')
+			->setParameters(array(1 => $userId))
+			->getQuery()
+			->getArrayResult();
 	}
+	public function getPostingById($id)
+	{
+		return $this->postingRepo->find($id);
+	}
+
+	public function saveApplication($application){
+		return $this->_persistFlush($application);
+	}
+
 	private function _persistFlush($object)
 	{
 		$this->manager->persist($object);
@@ -162,3 +221,18 @@ class DALService
 		return $object;
 	}
 }
+
+
+/*
+ * Some useful queries
+ *
+		 * getting the acquired skill of a specific user
+		 * return $this->acquiredSkillRepo->createQueryBuilder('ac')
+			->innerJoin('ac.skill','s')
+			->innerJoin('s.category','c')
+			->innerJoin('ac.user','u')
+			->addSelect('u','s','c')
+			->where('IDENTITY(ac.user) = 2')
+//			->setParameters(array(1 => 1))
+			->getQuery()
+			->getArrayResult();*/

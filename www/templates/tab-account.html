@@ -2,24 +2,24 @@
 	<ion-content>
 		<div class="list">
 			<div class="item item-thumbnail-left">
-				<img src="{{photo}}" alt="photo.png">
-				<h2 class="highlight">{{first_name + " " + last_name}}</h2>
-				<h2 class="title">{{title}}</h2>
+				<img src="{{user.photo}}" alt="photo.png">
+				<h2 class="highlight-thumbnail">{{user.firstName + " " + user.lastName}}</h2>
+				<h2 class="title-thumbnail">{{user.title}}</h2>
 			</div>
 		</div>
 		<div class="list">
 			<!--For Employer-->
-			<a class="item item-icon-left {{toggle_sl}}" ui-sref="tab.job-post">
+			<a class="item item-icon-left {{toggleSl}}" ui-sref="tab.job-post">
 				<i class="icon ion-clipboard"></i>Job Posts
 			</a>
-			<a class="item item-icon-left {{toggle_sl}}" ui-sref="tab.modify">
+			<a class="item item-icon-left {{toggleSl}}" ui-sref="tab.applicants">
 				<i class="icon ion-ios7-people"></i>Applicants
 			</a>
 			<!--For Skilled Laborer-->
-			<a class="item item-icon-left {{toggle_employer}}" ui-sref="tab.modify">
+			<a class="item item-icon-left {{toggleEmployer}}" ui-sref="tab.modify">
 				<i class="icon ion-filing"></i>Applications
 			</a>
-			<a class="item item-icon-left {{toggle_employer}}" ui-sref="tab.modify">
+			<a class="item item-icon-left {{toggleEmployer}}" ui-sref="tab.modify">
 				<i class="icon ion-calendar"></i>Manage Schedule
 			</a>
 			<a class="item item-icon-left" ui-sref="tab.modify">

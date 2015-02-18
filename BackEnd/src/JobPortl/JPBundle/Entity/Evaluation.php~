@@ -40,7 +40,7 @@ class Evaluation
 	private $datetimeEvaluated;
 	/**
 	 * @ORM\ManyToOne(targetEntity="Application", inversedBy="evaluations", fetch="EXTRA_LAZY")
-	 * @ORM\JoinColumn(name="appId", referencedColumnName="appId", nullable=true)
+	 * @ORM\JoinColumn(name="appId", referencedColumnName="appId", nullable=true, onDelete="CASCADE")
 	 */
 	protected $application;
 	/**

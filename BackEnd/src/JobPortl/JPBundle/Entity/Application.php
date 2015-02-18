@@ -23,7 +23,7 @@ class Application
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(type="integer", options={"default"="2"})
+	 * @ORM\Column(type="integer")
 	 */
 	private $status;
 	/**

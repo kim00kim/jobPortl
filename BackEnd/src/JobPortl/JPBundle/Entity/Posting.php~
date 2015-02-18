@@ -70,7 +70,6 @@ class Posting
 	 */
 	protected $user;
 	/**
-	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Application", mappedBy="posting", fetch="EXTRA_LAZY")
 	 */
 	protected $applications;

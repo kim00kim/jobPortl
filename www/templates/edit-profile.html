@@ -2,7 +2,7 @@
 	<ion-content class="padding">
 	<div class="list">
 		<div class="item image">
-			<img src="{{my_photo}}">
+			<img src="{{myPhoto}}">
 			<div class="inputs">
 				<button class="button button-small button-stable" ng-click= "capture()"><i
 						class="icon ion-ios7-camera"></i> Take Photo
@@ -12,34 +12,33 @@
 				</button>
 			</div>
 		</div>
-		<div class="item details">
+		<div class="item item-body details" ng-hide="divHide">
 			<div class="item item-divider headers">Title</div>
-			<h2 class="item item-input">
+			<h2 class="item-input title">
 				<div class="row">
 					<div class="col col-90">
 						<div class="title" contenteditable={{editable}} ng-model="info.title">{{info.title}}</div>
 					</div>
 					<div class="icons col col-10">
-						<i class="icon" ng-class="{'ion-edit positive': !editable, 'ion-checkmark-round balanced': editable}" ng-click="toggle()"></i>
+						<i class="icon" ng-class="{'ion-edit positive': !editable, 'ion-checkmark-round balanced': editable}" ng-click="toggleTitle()"></i>
 					</div>
 				</div>
-
 			</h2>
-			<div class="item item-divider item-icon-right headers">Skill(s)<i class="icon ion-ios7-plus-empty balanced" ng-click="addSkill()"></i></div>
-			<div class="item skills subList" ng-repeat="skill in user_skill | orderBy: order">
-			<!--<div class="item skills item-icon-right subList" ng-repeat="skill in user_skill | orderBy: order">-->
-				<!--{{skill.skill.category.category_name}}-->
+				<div class="item item-divider item-icon-right headers">Skill(s)	<i class="icon ion-ios7-plus-empty balanced" ng-click="addSkill()"></i>	</div>
+			<div class="skills sub-list" ng-repeat="skill in userSkill | orderBy: order">
+			<!--<div class="item skills item-icon-right subList" ng-repeat="skill in userSkill | orderBy: order">-->
+				<!--{{skill.skill.category.categoryName}}-->
 				<div class="row">
 					<div class="col col-90">
-						<p class="skill-set">{{skill.skill.skill_name}}</p>
+						<p class="skill-set">{{skill.skill.skillName}}</p>
 					</div>
 					<div class="icons col col-10">
-						<i class="icon ion-minus-round assertive" width="10px" ng-click="deleteSkill(skill.as_id)"></i>
+						<i class="icon ion-minus-round assertive" width="10px" ng-click="deleteSkill(skill)"></i>
 					</div>
 				</div>
 			</div>
 			<div class="item item-divider item-icon-right headers">Certification(s)<i class="icon ion-ios7-plus-empty balanced" ng-click="addSkill()"></i></div>
-			<div class="item certification subList" ng-repeat="certification in user_info.certification">
+			<div class="certification sub-list" ng-repeat="certification in userInfo.certification">
 				{{certification.desc}}
 			</div>
 		</div>

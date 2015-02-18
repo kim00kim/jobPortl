@@ -5,14 +5,14 @@
 					ng-click="fblogin()">
 				<i class="fa fa-facebook"></i> Log in with Facebook
 			</button>
-			<form name="loginForm" ng-submit="login(user_input)" novalidate>
+			<form name="loginForm" ng-submit="login(userInput)" novalidate>
 				<div class="list">
 					<label class="item item-input item-floating-label"
 						   ng-class="{'has-error' : loginForm.email.$dirty && loginForm.email.$invalid, 'no-error' : loginForm.email.$dirty && loginForm.email.$valid}">
 						<span class="input-label">Email Address</span>
 
 						<div class="row">
-							<input type="email" placeholder="Email Address" ng-model="user_input.email_add"
+							<input type="email" placeholder="Email Address" ng-model="userInput.email"
 								   class="form-control" name="email" required/>
 							<span class="error-handler col col-10 icon ion-alert-circled assertive"
 								  ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
@@ -26,7 +26,7 @@
 						<span class="input-label">Password</span>
 
 						<div class="row">
-							<input type="password" placeholder="Password" ng-model="user_input.password"
+							<input type="password" placeholder="Password" ng-model="userInput.password"
 								   class="form-control" name="password" required/>
 							<span class="error-handler col col-10 icon ion-alert-circled assertive"
 								  ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>

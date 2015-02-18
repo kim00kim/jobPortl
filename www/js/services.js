@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://192.168.1.7/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198./jobportl/web/api/')
 
 	.factory('$localstorage', ['$window', function ($window) {
 		return {
@@ -15,35 +15,47 @@ angular.module('jobPortl.services', [])
 			},
 			getObject: function (key) {
 				return JSON.parse($window.localStorage[key] || '{}');
-			}
+			},
+			updateObjectItem: function(obj, key, value) {
+//				console.log("OBJECT")
+//				console.log(key + " " + value)
+				var object = JSON.parse($window.localStorage[obj]);
+				object[key] = value
+//				console.log(object)
+				$window.localStorage[obj] = JSON.stringify(object);
+//				object[key] = value
+			}/*,
+			updateObjectItemObject: function(obj, key, value) {
+				$window.localStorage[obj][key] = JSON.stringify(value);
+			}*/
 		}
 	}])
 
 	.factory('UserService', function ($localstorage) {
 		return {
 			setUserType: function (response) {
-				$localstorage.set('user_type', response)
+				$localstorage.set('userType', response)
 			},
 			setUser: function (response) {
 				$localstorage.setObject('user',
 					{
-						user_id: response.user.user_id,
-						user_acc_id: response.user_acc_id,
-						is_logged_in: 1,
-						user_acc_type: response.user_acc_type,
+						userId: response.user.user_id,
+						userAccId: response.user_acc_id,
+						isLoggedIn: 1,
+						userAccType: response.user_acc_type,
 						email: response.email,
-						first_name: response.user.first_name,
-						last_name: response.user.last_name,
+						firstName: response.user.first_name,
+						lastName: response.user.last_name,
 						address: response.user.address,
-						city_mun: response.user.city_mun,
+						cityMun: response.user.city_mun,
 						gender: response.user.gender,
 						birthdate: response.user.birthdate,
 						cpno: response.user.cpno,
-						has_verified_num: response.user.has_verified_number,
+						hasVerifiedNum: response.user.has_verified_number,
 						photo: response.user.photo,
 						gender: response.user.gender,
 						applications: response.user.applications,
-						acquired_skills: response.user.acquired_skills,
+						acquiredSkills: response.user.acquired_skills,
 						certifications: response.user.certifications,
 						evaluations: response.user.evaluations,
 						languages: response.user.languages,
@@ -51,8 +63,14 @@ angular.module('jobPortl.services', [])
 						title: response.user.title
 					})
 			},
+			updateObjectItem: function(obj, key, value){
+				$localstorage.updateObjectItem(obj,key, value)
+			},
+			/*updateObjectItemObject: function (obj, key, value){
+				$localstorage.updateObjectItemObject(obj,key, value)
+			},*/
 			getUserType: function () {
-				return $localstorage.get('user_type')
+				return $localstorage.get('userType')
 			},
 			getUser: function () {
 				return $localstorage.getObject('user')
@@ -85,24 +103,24 @@ angular.module('jobPortl.services', [])
 	}])
 
 	.factory('UserAccount', function ($http, baseUrl) {
-		var user_account = new Object();
+		var userAccount = new Object();
 		return {
-			checkUser: function (user_input) {
-				console.log("Email & password : " + user_input.email_add + user_input.password + " type: " + user_input.user_acc_type)
-				return $http({method: "POST", url: baseUrl + 'users', data: user_input})
+			checkUser: function (userInput) {
+				console.log("Email & password : " + userInput.email + userInput.password + " type: " + userInput.userAccType)
+				return $http({method: "POST", url: baseUrl + 'users', data: userInput})
 			},
-			setUserAccount: function (user_acc) {
-				user_account = user_acc
+			setUserAccount: function (userAcc) {
+				userAccount = userAcc
 			},
 			getUserAccount: function () {
-				return user_account
+				return userAccount
 			}
 		}
 
 	})
 
 	.factory('User', function ($http, baseUrl) {
-		var fb_info = new Object()
+		var fbInfo = new Object()
 
 		return {
 			addUser: function (user) {
@@ -110,22 +128,22 @@ angular.module('jobPortl.services', [])
 				return $http({method: "POST", url: baseUrl + 'addusers', data: user})
 			},
 			setFbInfo : function (info){
-				fb_info= info
+				fbInfo= info
 			},
 			getFbInfo: function () {
-				return fb_info
+				return fbInfo
 			},
-			addSkill: function(acquired_skill){
-				return $http({method: "POST", url: baseUrl + 'acquiredskills', data: acquired_skill})
+			addSkill: function(acquiredSkill){
+				return $http({method: "POST", url: baseUrl + 'acquiredskills', data: acquiredSkill})
 			},
-			updateTitle: function(title){
-				return $http({method: "POST", url: baseUrl + 'updatetitles', data: title})
+			updateTitle: function(userInfo){
+				return $http({method: "POST", url: baseUrl + 'updatetitles', data: userInfo})
 			},
-			getUpdatedUser: function(user_id){
-				return $http({method: "GET", url: baseUrl + 'updateduserinfos/'+ user_id})
+			getUpdatedUser: function(userId){
+				return $http({method: "GET", url: baseUrl + 'updateduserinfos/'+ userId})
 			},
-			removeASkill: function(acquired_skill){
-				return $http({method: "DELETE", url: baseUrl + 'removeskills/'+ acquired_skill})
+			removeASkill: function(acquiredSkill){
+				return $http({method: "DELETE", url: baseUrl + 'removeskills/'+ acquiredSkill})
 			}
 		}
 	})
@@ -138,11 +156,14 @@ angular.module('jobPortl.services', [])
 			getAllCategories: function () {
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
 			},
-			getMyPost: function(user_id){
-				return $http({method: "GET", url: baseUrl + 'jobpostbyusers/'+ user_id})
+			getMyPost: function(userId){
+				return $http({method: "GET", url: baseUrl + 'jobpostbyusers/'+ userId})
 			},
-			saveJobPost: function (job_post){
-				return $http({method: "POST", url: baseUrl + 'addjobposts', data: job_post})
+			saveJobPost: function (jobPost){
+				return $http({method: "POST", url: baseUrl + 'addjobposts', data: jobPost})
+			},
+			applyPosting: function(appInfo){
+				return $http({method: "POST", url: baseUrl + 'applypostings', data: appInfo})
 			}
 		}
 	})
@@ -151,6 +172,28 @@ angular.module('jobPortl.services', [])
 		return {
 			getSkilledLaborers: function () {
 				return $http({method: "GET", url: baseUrl + 'skilledlaborer'})
+			},
+			getAcquiredSkillsByUser: function(userId){
+				return $http({method: "GET", url: baseUrl + 'acquiredskillbyusers/' + userId})
+			}
+		}
+	})
+
+	.factory('Application', function($http, baseUrl){
+		var application = []
+
+		return{
+			setApplication: function(jobPost){
+				application = jobPost
+			},
+			getApplication: function(){
+				return application;
+			},
+			getApplicant: function(userId){
+				return $http({method: "GET", url: baseUrl + 'skilledlaborerbyids/' + userId})
+			},
+			deleteApplication: function(appId){
+				return $http({method: "DELETE", url: baseUrl + 'declineapplications/' + appId})
 			}
 		}
 	})

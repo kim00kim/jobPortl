@@ -132,6 +132,25 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 						}
 					}
 				}
+			})
+			.state('tab.applicants', {
+				url: '/applicants',
+				views: {
+					/*'tab-account': {
+						templateUrl: 'templates/account-applicants.html',
+						controller: 'ApplicantCtrl',
+						data: {
+							authenticate: true
+						}
+					},*/
+					'tab-job-post': {
+						templateUrl: 'templates/account-applicants.html',
+						controller: 'ApplicantCtrl',
+						data: {
+							authenticate: true
+						}
+					}
+				}
 			});
 
 		// if none of the above states are matched, use this as the fallback

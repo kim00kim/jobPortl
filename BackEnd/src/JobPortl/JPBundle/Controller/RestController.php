@@ -26,8 +26,8 @@ class RestController extends Controller
 		$logger->debug("VALUES: " . $request);
 
 		$user = new Entity\UserJ();
-		$user->setFirstName($post->get('first_name'));
-		$user->setLastName($post->get('last_name'));
+		$user->setFirstName($post->get('firstName'));
+		$user->setLastName($post->get('lastName'));
 		$user->setAddress($post->get('address'));
 		$user->setCityMun($post->get('city'));
 		$user->setGender($post->get('gender'));
@@ -45,8 +45,8 @@ class RestController extends Controller
 		$password = $encoder->encodePassword($post->get('password'), $userAccount->getSalt());
 		$userAccount->setPassword($password);
 
-		$userAccount->setUserAccType($post->get('user_acc_type'));
-		$userAccount->setUserType($post->get('user_type'));
+		$userAccount->setUserAccType($post->get('userAccType'));
+		$userAccount->setUserType($post->get('userType'));
 		$userAccount->setUser($user);
 
 		$dal = $this->get('jpdal.dal');
@@ -60,10 +60,10 @@ class RestController extends Controller
 		$logger = $this->get('logger');
 		$post = $request->request;
 		$dal = $this->get('jpdal.dal');
-		$dal->validateUser($post->get('email_add'));
-		$logger->debug("Email: " . $post->get('email_add'));
+		$dal->validateUser($post->get('email'));
+		$logger->debug("Email: " . $post->get('email'));
 
-		$userAccount = $dal->validateUser($post->get('email_add'));
+		$userAccount = $dal->validateUser($post->get('email'));
 		$logger->debug("Result: " . json_encode($userAccount));
 		if (count($userAccount) != 1) {
 			return $userAccount;
@@ -206,6 +206,11 @@ class RestController extends Controller
 		$dal = $this->get('jpdal.dal');
 		return $dal->getSkilledLaborers();
 	}
+	public function getAcquiredskillbyuserAction($userId)
+	{
+		$dal = $this->get('jpdal.dal');
+		return $dal->getAcquiredSkillByUser($userId);
+	}
 	public function postAcquiredskillAction(Request $request)
 	{
 		$returnArray = array();
@@ -213,11 +218,11 @@ class RestController extends Controller
 		$dal = $this->get("jpdal.dal");
 		$logger = $this->get('logger');
 //		foreach($p)
-		foreach($post->get('skill_id') as $skillId){
+		foreach($post->get('skillId') as $skillId){
 			$acquiredSkill = new Entity\AcquiredSkill();
-			$user = $dal->getUser($post->get('user_id'));
+			$user = $dal->getUser($post->get('userId'));
 			$acquiredSkill->setUser($user);
-			$logger->debug("skill_id: " . $skillId);
+			$logger->debug("skillId: " . $skillId);
 			$skill = $dal->getSkill($skillId);
 			$acquiredSkill->setSkill($skill);
 			array_push($returnArray, $dal->saveAcquiredSkill($acquiredSkill));
@@ -234,7 +239,7 @@ class RestController extends Controller
 	{
 		$post = $request->request;
 		$dal= $this->get('jpdal.dal');
-		$user = $dal->getUser($post->get('user_id'));
+		$user = $dal->getUser($post->get('userId'));
 
 		$user->setTitle($post->get('title'));
 		return $dal->_flush($user);
@@ -243,8 +248,31 @@ class RestController extends Controller
 	{
 		$dal= $this->get('jpdal.dal');
 		return $dal->deleteAS($asId);
+	}
+	public function postApplypostingAction(Request $request)
+	{
+		$dal= $this->get('jpdal.dal');
+		$post = $request->request;
+		$application = new Entity\Application();
 
+		$logger = $this->get('logger');
+		$logger->debug($post->get('posting_id'));
+		$logger->debug($post->get('user_id'));
 
+		$application->setStatus(2);
+		$application->setPosting($dal->getPostingById($post->get('posting_id')));
+		$application->setUser($dal->getUser($post->get('user_id')));
 
+		return $dal->saveApplication($application);
+	}
+	public function getSkilledlaborerbyidAction($userId)
+	{
+		$dal= $this->get('jpdal.dal');
+		return $dal->getSkilledLaborerById($userId);
+	}
+	public function deleteDeclineapplicationAction($appId)
+	{
+		$dal= $this->get('jpdal.dal');
+		return $dal->deleteApplication($appId);
 	}
 }

@@ -1,22 +1,26 @@
 <ion-view title="Skilled Laborer">
 	<ion-content class="padding">
-		<div class="list card" ng-repeat="info in skilled_laborer_info">
+		<div class="list card" ng-repeat="info in skilledLaborerInfo">
 			<div class="item item-avatar">
 				<img src={{info.user.photo}}>
 
-				<h2 class="highlight">{{info.user.first_name + " " + info.user.last_name}} </h2>
+				<h2 class="highlight">{{info.user.firstName + " " + info.user.lastName}} </h2>
 
 				<h2 class="title">{{info.user.title}}</h2>
 			</div>
 			<div class="item item-body skilled-laborer">
-				<div class="button-bar buttons ">
+				<div class="button-bar">
 					<!--<rating ng-model="rate" max="max"></rating>-->
-					<button class="button button-light icon ion-ios7-eye-outline" ng-click="viewProfile(info)"> View
-						Profile
+					<button class="button button-small button-light " ng-click="viewProfile(info.user)">
+						<i class="icon ion-ios7-eye-outline"></i>
+						View Profile
 					</button>
-					<button class="button icon ion-ios7-paperplane-outline button-balanced {{toggle_stalker}}" ng-click="call(info.number)">
+					<button class="button button-small button-balanced {{toggleStalker}}" ng-click="call(info.number)">
+						<i class="icon ion-ios7-paperplane-outline"></i>
 						Send Job Offer
 					</button>
+					<!--icon ion-ios7-eye-outline-->
+					<!--ion-ios7-paperplane-outline-->
 				</div>
 			</div>
 		</div>
