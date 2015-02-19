@@ -140,30 +140,49 @@ class RestController extends Controller
 	{
 		$post = $request->request;
 		$dal = $this->get('jpdal.dal');
+		$logger = $this->get('logger');
 
 		$posting = new Entity\Posting();
 		$posting->setDescription($post->get('description'));
 		$posting->setLocation($post->get('location'));
-		$posting->setRequiredApplicant($post->get('required_applicant'));
-		$posting->setAvailable($post->get('required_applicant'));
+		$posting->setRequiredApplicant($post->get('requiredApplicant'));
+		$posting->setHired(0);
+		$logger->debug("requiredApplicant: " .$post->get('requiredApplicant'));
 		$posting->setStatus(1);
-//		$posting->setType($post->get(''))
-		$posting->setUser($dal->getUser($post->get('user_id')));
-		$posting->setSkill($dal->getSkill($post->get('skill_id')));
+		$posting->setType($post->get('type'));
+		$posting->setUser($dal->getUser($post->get('userId')));
+		$posting->setSkill($dal->getSkill($post->get('skillId')));
 
 		return $dal->savePosting($posting);
 	}
 	public function getJobpostbyuserAction($userId)
 	{
 		$dal = $this->get('jpdal.dal');
-		return $dal->getPostingByUser($userId);
+		$postings = $dal->getPostingByUser($userId);
+		$logger = $this->get('logger');
+		$logger->debug("Trial");
+//		$logger->debug(json_encode($postings));
+		foreach($postings as $key => $posting){
+			$logger->debug(json_encode($dal->getApplication($posting['postingId'])));
+			array_push($postings[$key],$dal->getApplication($posting['postingId']));
+			$postings[$key] ['applications'] = $postings[$key] [0];
+			unset($postings[$key][0]);
+		}
+		return $postings;
 	}
 	public function getAlljobpostAction()
 	{
 		$logger = $this->get('logger');
 		$logger->debug("In controller");
 		$dal = $this->get('jpdal.dal');
-		return $dal->getAllJobPost();
+		$postings= $dal->getAllJobPost();
+		foreach($postings as $key => $posting){
+			$logger->debug(json_encode($dal->getApplication($posting['postingId'])));
+			array_push($postings[$key],$dal->getApplication($posting['postingId']));
+			$postings[$key] ['applications'] = $postings[$key] [0];
+			unset($postings[$key][0]);
+		}
+		return $postings;
 	}
 	public function deleteDeletecategoryAction($categoryId)
 	{
@@ -192,6 +211,17 @@ class RestController extends Controller
 		$skill->setSkillName($post->get('skill_name'));
 		$skill->setCategory($dal->getCategory($post->get('category_id')));
 		return $dal->_flush($skill);
+	}
+	public function postAcceptapplicationAction($appId)
+	{
+		$dal= $this->get('jpdal.dal');
+		$application = $dal->getApplicationById($appId);
+		$application->setStatus(1);
+		$posting= $application->getPosting();
+		if($posting->getHired() + 1 == $posting->getRequiredApplicant())
+			$posting->setStatus(0);
+		$posting->setHired($posting->getHired() + 1);
+		return $dal->_flush($application);
 	}
 	public function deleteDeleteskillAction($skillId)
 	{
@@ -256,12 +286,12 @@ class RestController extends Controller
 		$application = new Entity\Application();
 
 		$logger = $this->get('logger');
-		$logger->debug($post->get('posting_id'));
-		$logger->debug($post->get('user_id'));
+		$logger->debug($post->get('postingId'));
+		$logger->debug($post->get('userId'));
 
 		$application->setStatus(2);
-		$application->setPosting($dal->getPostingById($post->get('posting_id')));
-		$application->setUser($dal->getUser($post->get('user_id')));
+		$application->setPosting($dal->getPostingById($post->get('postingId')));
+		$application->setUser($dal->getUser($post->get('userId')));
 
 		return $dal->saveApplication($application);
 	}

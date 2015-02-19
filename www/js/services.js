@@ -194,6 +194,9 @@ angular.module('jobPortl.services', [])
 			},
 			deleteApplication: function(appId){
 				return $http({method: "DELETE", url: baseUrl + 'declineapplications/' + appId})
+			},
+			acceptApplication: function(appId){
+				return $http({method: "POST", url: baseUrl + 'acceptapplications/' + appId})
 			}
 		}
 	})

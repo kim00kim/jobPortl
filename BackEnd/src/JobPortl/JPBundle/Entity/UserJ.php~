@@ -3,6 +3,8 @@
 namespace JobPortl\JPBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * UserJ
@@ -82,30 +84,37 @@ class UserJ
 	 */
 	private $title;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Certification", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $certifications;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Language", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $languages;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="AcquiredSkill", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $acquiredSkills;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Application", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $applications;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Posting", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $postings;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $schedules;
 	/**
+	 * @Exclude
 	 * @ORM\OneToMany(targetEntity="Evaluation", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $evaluations;

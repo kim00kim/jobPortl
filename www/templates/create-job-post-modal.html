@@ -5,14 +5,14 @@
 				ng-click="createJobPost.hide()"></button>
 	</ion-header-bar>
 	<ion-content class="padding">
-		<form name="jobPost" ng-submit="createNewJobPost(new_job_post)" novalidate>
+		<form name="jobPost" ng-submit="createNewJobPost(newJobPost)" novalidate>
 			<div class="list">
 				<label class="item item-input item-select" ng-class="{'no-error' : jobPost.category.$dirty}">
 					<div class="input-label">
 						Category
-					</div>
+					</div><br>
 					<select ng-options="category.category_name for category in categories | orderBy:predicate"
-							ng-model="new_job_post.category" name="category" ng-change="change()">
+							ng-model="newJobPost.category" name="category" ng-change="change()">
 					</select>
 				</label>
 
@@ -21,7 +21,7 @@
 						Skill
 					</div>
 					<select ng-options="skill.skill_name for skill in skills"
-							ng-model="new_job_post.skill" name="skill">
+							ng-model="newJobPost.skill" name="skill">
 					</select>
 				</label>
 
@@ -31,7 +31,7 @@
 
 					<div class="row">
 						<textarea placeholder="Description. . ." name="desc"
-								  ng-model="new_job_post.description"></textarea>
+								  ng-model="newJobPost.description" required></textarea>
 						<span class="error-handler col col-10 icon ion-alert-circled assertive"
 							  ng-show="jobPost.desc.$dirty && jobPost.desc.$invalid"></span>
 						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
@@ -43,7 +43,7 @@
 					<span class="input-label">Location</span>
 
 					<div class="row">
-						<input type="text" placeholder="Location. . ." name="location" ng-model="new_job_post.location">
+						<input type="text" placeholder="Location. . ." name="location" ng-model="newJobPost.location" required/>
 						<span class="error-handler col col-10 icon ion-alert-circled assertive"
 							  ng-show="jobPost.location.$dirty && jobPost.location.$invalid"></span>
 						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
@@ -55,7 +55,7 @@
 					<span class="input-label">Required Applicant</span>
 
 					<div class="row">
-						<input type="number" placeholder="Required Applicant . . ." name="required_applicant" ng-model="new_job_post.required_applicant"  ng-minlength=1 required>
+						<input type="number" placeholder="Required Applicant . . ." name="required_applicant" ng-model="newJobPost.required_applicant"  ng-minlength=1 required>
 						<span class="error-handler col col-10 icon ion-alert-circled assertive"
 							  ng-show="jobPost.required_applicant.$dirty && jobPost.required_applicant.$invalid"></span>
 						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"

@@ -57,7 +57,7 @@ class Posting
 	 *
 	 * @ORM\Column(type="integer")
 	 */
-	private $available;
+	private $hired;
 	/**
 	 * @var integer
 	 *
@@ -213,29 +213,6 @@ class Posting
     }
 
     /**
-     * Set available
-     *
-     * @param integer $available
-     * @return Posting
-     */
-    public function setAvailable($available)
-    {
-        $this->available = $available;
-
-        return $this;
-    }
-
-    /**
-     * Get available
-     *
-     * @return integer 
-     */
-    public function getAvailable()
-    {
-        return $this->available;
-    }
-
-    /**
      * Set user
      *
      * @param \JobPortl\JPBundle\Entity\UserJ $user
@@ -335,5 +312,28 @@ class Posting
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set hired
+     *
+     * @param integer $hired
+     * @return Posting
+     */
+    public function setHired($hired)
+    {
+        $this->hired = $hired;
+
+        return $this;
+    }
+
+    /**
+     * Get hired
+     *
+     * @return integer 
+     */
+    public function getHired()
+    {
+        return $this->hired;
     }
 }

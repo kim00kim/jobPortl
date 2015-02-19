@@ -6,6 +6,7 @@ use \Monolog\Logger;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Query;
+use Doctrine\ORM\EntityManager;
 
 class DALService
 {
@@ -101,32 +102,44 @@ class DALService
 			->innerJoin('p.user','u')
 			->innerJoin('p.skill','s')
 			->innerJoin('s.category', 'c')
-			->innerJoin('p.applications','a')
-			->innerJoin('a.user','au')
+//			->leftJoin('JobPortlJPBundle:Application','a', 'With', 'IDENTITY(a.posting) = p.postingId', 'a.appId')
+//			->innerJoin('a.user','au')
 			->addSelect('partial u.{userId,firstName,lastName,photo,cpNo}','partial s.{skillId,skillName}',
-				'partial c.{categoryId,categoryName}', 'partial a.{appId,status}','partial au.{userId,firstName,lastName,title,photo}')
+				'partial c.{categoryId,categoryName}')
 //			->join('p.user','u')
 			->where('u.userId = :userId')
 			->setParameter('userId',$userId)
 			->orderBy('p.datetimePosted','DESC')
+//			->getDQL();
 			->getQuery()
 			->getArrayResult();
 	}
+	public function getApplication($postingId)
+	{
+		return $this->applicationRepo->createQueryBuilder('a')
+			->innerJoin('a.posting','p')
+			->innerJoin('a.user','u')
+			->addSelect('u')
+			->where('p.postingId = ?1')
+		//fix tomorrow
+			->andWhere('a.status= ?2')
+			->setParameters(array(1 => $postingId, 2=> 2))
+			->getQuery()
+			->getArrayResult();
+	}
+
 	public function getAllJobPost()
 	{
 		return $this->postingRepo->createQueryBuilder('p')
-			/*->addSelect('p.available','p.datetimePosted as datetime_posted','p.description','p.location','p.postingId',
-				'p.requiredApplicant required_applicant','p.status')*/
 			->innerJoin('p.user','u')
 			->innerJoin('p.skill','s')
 			->innerJoin('s.category', 'c')
-			->innerJoin('p.applications','a')
-			->innerJoin('a.user','au')
-			->addSelect('partial u.{userId,firstName,lastName,photo}','partial s.{skillId,skillName}',
-				'partial c.{categoryId,categoryName}', 'partial a.{appId,status}','partial au.{userId,firstName,lastName,title,photo}')
+			->addSelect('partial u.{userId,firstName,lastName,photo,cpNo}','partial s.{skillId,skillName}',
+				'partial c.{categoryId,categoryName}')
 			->orderBy('p.datetimePosted','DESC')
 			->getQuery()
 			->getArrayResult();
+
 	}
 	public function getUserPosting($userId)
 	{
@@ -193,6 +206,15 @@ class DALService
 	public function getPostingById($id)
 	{
 		return $this->postingRepo->find($id);
+		/*return $this->createQuery('Select p FROM JobPortlJPBundle:Posting WHERE p.postingId = ?1')
+			->setParameter(1, $id)
+			->getQuery()
+			->getArrayResult;*/
+	}
+
+	public function getApplicationById($appId)
+	{
+		return $this->applicationRepo->find($appId);
 	}
 
 	public function saveApplication($application){

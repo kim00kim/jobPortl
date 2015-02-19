@@ -57,7 +57,7 @@ class Posting
 	 *
 	 * @ORM\Column(type="integer")
 	 */
-	private $available;
+	private $hired;
 	/**
 	 * @var integer
 	 *
@@ -210,29 +210,6 @@ class Posting
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set available
-     *
-     * @param integer $available
-     * @return Posting
-     */
-    public function setAvailable($available)
-    {
-        $this->available = $available;
-
-        return $this;
-    }
-
-    /**
-     * Get available
-     *
-     * @return integer 
-     */
-    public function getAvailable()
-    {
-        return $this->available;
     }
 
     /**

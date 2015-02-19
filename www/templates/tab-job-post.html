@@ -6,7 +6,7 @@
 <ion-view title="Job Post">
 	<ion-content class="padding">
 		<div class="list card" ng-repeat="jobPost in jobPosts">
-			<div class="item bar bar-header bar-positive {{header}}">
+			<div class="item bar bar-header {{jobPost.header}}">
 				{{jobPost.skill.skillName}}
 			</div>
 			<div class="item item-body job-post">
@@ -23,7 +23,7 @@
 								<p><label>Location:</label> {{jobPost.location}}</p>
 							</div>
 							<div class="location">
-								<p><label>Required applicant(s):</label> {{jobPost.requiredApplicant}}<br>Slot(s) left: {{jobPost.available}}</p>
+								<p><label>Required applicant(s):</label> {{jobPost.requiredApplicant}}<br>Slot(s) left: {{jobPost.requiredApplicant - jobPost.hired}}</p>
 							</div>
 						</div>
 					</div>
