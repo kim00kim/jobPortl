@@ -114,16 +114,23 @@ class DALService
 			->getQuery()
 			->getArrayResult();
 	}
-	public function getApplication($postingId)
+	public function getApplication($postingId, $where = 0)
 	{
+		if($where == 0){
+			$whereClause = 'a.status != 0';
+		}
+		else{
+			$whereClause = 'a.status = ' . $where;
+		}
 		return $this->applicationRepo->createQueryBuilder('a')
 			->innerJoin('a.posting','p')
 			->innerJoin('a.user','u')
 			->addSelect('u')
 			->where('p.postingId = ?1')
 		//fix tomorrow
-			->andWhere('a.status= ?2')
-			->setParameters(array(1 => $postingId, 2=> 2))
+			->andWhere($whereClause)
+			->andWhere('p.type = ?2' )
+			->setParameters(array(1 => $postingId, 2=>1))
 			->getQuery()
 			->getArrayResult();
 	}
@@ -136,6 +143,9 @@ class DALService
 			->innerJoin('s.category', 'c')
 			->addSelect('partial u.{userId,firstName,lastName,photo,cpNo}','partial s.{skillId,skillName}',
 				'partial c.{categoryId,categoryName}')
+			->where('p.status = ?1')
+			->andWhere('p.type = ?2')
+			->setParameters(array(1=> 1, 2=>1))
 			->orderBy('p.datetimePosted','DESC')
 			->getQuery()
 			->getArrayResult();
