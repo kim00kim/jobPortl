@@ -175,6 +175,9 @@ angular.module('jobPortl.services', [])
 			},
 			getAcquiredSkillsByUser: function(userId){
 				return $http({method: "GET", url: baseUrl + 'acquiredskillbyusers/' + userId})
+			},
+			sendJobOffer: function(jobOffer){
+				return $http({method: "POST", url: baseUrl + 'sendjoboffers', data: jobOffer})
 			}
 		}
 	})

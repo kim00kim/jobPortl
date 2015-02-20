@@ -554,7 +554,8 @@ angular.module('jobPortl.controllers', [])
 //		updateUserService();
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, SkilledLaborer) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, SkilledLaborer, JobPost, UserService) {
+
 		$scope.skilledLaborerInfo = {}
 		var display = function(){
 			$ionicLoading.show({
@@ -594,6 +595,58 @@ angular.module('jobPortl.controllers', [])
 					console.log($scope.info)
 				})
 			});
+		}
+
+		$scope.sendJobOffer = function(slId){
+			$scope.newJobPost = {};
+
+			$ionicModal.fromTemplateUrl('templates/send-job-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
+			}).then(function (modal) {
+				$scope.createJobPost = modal;
+				JobPost.getAllCategories().success(function(response){
+//					$ionicLoading.hide()
+					console.log(response)
+					if(!response)
+						alert("Couldn't get categories.")
+					else{
+						$scope.categories = response
+//						console.log(response[0].skills)
+						$scope.newJobPost.category = $scope.categories[0];
+						$scope.skills = $scope.newJobPost.category.skills
+						$scope.predicate = 'category_name'
+						$scope.newJobPost.skill = $scope.skills[0];
+					}
+				})
+				$scope.createJobPost.show()
+			})
+			$scope.newJobPost['slId'] = slId
+		}
+
+		$scope.sendToSl = function(jobOffer){
+			jobOffer['employerId']= UserService.getUser().userId
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: false,
+				maxWidth: 50,
+				showDelay: 0
+			});
+			jobOffer['skillId']= jobOffer.skill.skill_id
+			console.log(jobOffer)
+
+			SkilledLaborer.sendJobOffer(jobOffer).success(function(response){
+				$ionicLoading.hide()
+				console.log(response)
+				//window.plugins.toast.showShortCenter('Job Offer Sent!')
+			})
+			$scope.createJobPost.hide()
+		}
+		$scope.change = function(){
+			$scope.skills = $scope.newJobPost.category.skills
+			$scope.newJobPost.skill = $scope.skills[0];
 		}
 		display()
 	})
@@ -645,21 +698,29 @@ angular.module('jobPortl.controllers', [])
 			}
 		}
 
-		var displayJobPost = function(jobPosts){
-			console.log(jobPosts)
+		var displayJobPost = function(jobPost){
+			console.log(jobPost)
 			$ionicLoading.hide()
+			var jobPosts
+
+			if(userType == 0)
+				jobPosts=jobPost
+			else
+				jobPosts =  pushJobPost(jobPost)
 
 			angular.forEach(jobPosts, function(post){
 				pending=0
 				post['header'] = post.status == 0 ? "bar-assertive" : "bar-positive"
+				if(post.status == 0)
+					post['closed'] = 'ng-hide'
 				post.datetimePosted= $filter('date')(post.datetimePosted, "d MMM yyyy ") + $filter('date')(post.datetimePosted, " hh:mm a");
 				post['hasApplied']='Apply Job'
+
+				//for skilled laborer
 				angular.forEach(post.applications, function(application){
-//					console.log(application.user)
 					//toggle for button's label
-					if(application.user.userId==userId && application.status== 2)
+					if(application.user.userId==userId)
 						post.hasApplied = 'Applied'
-//					console.log(application.status)
 					else
 						$scope.status= "Apply Job"
 
@@ -667,11 +728,47 @@ angular.module('jobPortl.controllers', [])
 					if(application.status==2)
 						pending++
 				})
-				post.applications['pending']=pending
 
-//					$scope.header = post.status === 1 ? 'bar-positive' : 'bar-assertive'
+				//for employer
+				post.applications['pending']=pending
 			})
+			console.log(jobPosts)
 			$scope.jobPosts=jobPosts
+		}
+
+		var pushJobPost = function(jobPost){
+			var jobPosts = []
+			var push
+
+			for(var i=0; i<jobPost.length; i++){
+				push= false
+
+				if(jobPost[i].applications.length == 0){
+					jobPosts.push(jobPost[i])
+					continue
+				}
+				else{
+					for(var j=0; j<jobPost[i].applications.length;j++){
+						console.log("j: " + j )
+						if((jobPost[i].applications[j].user.userId==userId && jobPost[i].applications[j].status == 2)){
+							push= true
+							break
+						}
+						else if(jobPost[i].applications[j].user.userId != userId && j== jobPost[i].applications.length-1){
+							console.log('user is not in the applications')
+							push= true
+						}
+						else{
+							console.log("in else push=false")
+							push= false
+						}
+					}
+				}
+				if(push){
+					jobPosts.push(jobPost[i])
+				}
+			}
+			return jobPosts
 		}
 
 		$scope.openModal = function(){
@@ -681,13 +778,6 @@ angular.module('jobPortl.controllers', [])
 				focusFirstInput: true
 			}).then(function (modal) {
 				$scope.createJobPost = modal;
-				/*$ionicLoading.show({
-					content: 'Loading...',
-					animation: 'fade-in',
-					showBackdrop: false,
-					maxWidth: 50,
-					showDelay: 0
-				});*/
 				JobPost.getAllCategories().success(function(response){
 //					$ionicLoading.hide()
 					console.log(response)
@@ -763,7 +853,7 @@ angular.module('jobPortl.controllers', [])
 		//execute on load
 		navigateViewByUserType()
 	})
-	.controller('ApplicantCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
+	.controller('ApplicantCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
 		var application = []
 
 		var onLoad = function(){
@@ -799,7 +889,9 @@ angular.module('jobPortl.controllers', [])
 
 		$scope.acceptApp = function(appId, index){
 			console.log('Accepted!')
-//			console.log(postingId)
+			console.log(application.hired)
+			console.log(application.requiredApplicant)
+
 //			console.log(application)
 			//delete application
 //			Application.deleteApplication(appId).success(function(response){
@@ -807,6 +899,9 @@ angular.module('jobPortl.controllers', [])
 			Application.acceptApplication(appId).success(function(response){
 				console.log(response)
 				$scope.applications.applications.splice(index, 1);
+				$scope.applications.applications.pending -=1
+				if(application.hired+1 == application.requiredApplicant)
+					$window.history.back();
 			})
 
 //			}).
@@ -822,6 +917,7 @@ angular.module('jobPortl.controllers', [])
 			Application.deleteApplication(appId).success(function(response){
 				console.log(response)
 				$scope.applications.applications.splice(index, 1);
+				$scope.applications.applications.pending -=1
 			}).
 			error(function(err){
 					console.log(err)
