@@ -725,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "3473e6dc74014211e937f754b1009c53c51ecea9"
+                "reference": "6c016e3556c0e1a8418efda1be1f7da66df236ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/3473e6dc74014211e937f754b1009c53c51ecea9",
-                "reference": "3473e6dc74014211e937f754b1009c53c51ecea9",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/6c016e3556c0e1a8418efda1be1f7da66df236ad",
+                "reference": "6c016e3556c0e1a8418efda1be1f7da66df236ad",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +794,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-02-03 08:47:28"
+            "time": "2015-02-16 15:25:15"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2110,17 +2110,17 @@
     "packages-dev": [
         {
             "name": "sensio/generator-bundle",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "9e23fc3de265ae013690d84aab98e7a84f46edcd"
+                "reference": "4b09746520a826a7bf34a466ba31c7d8740fef7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/9e23fc3de265ae013690d84aab98e7a84f46edcd",
-                "reference": "9e23fc3de265ae013690d84aab98e7a84f46edcd",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/4b09746520a826a7bf34a466ba31c7d8740fef7e",
+                "reference": "4b09746520a826a7bf34a466ba31c7d8740fef7e",
                 "shasum": ""
             },
             "require": {
@@ -2154,7 +2154,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2015-01-13 07:33:46"
+            "time": "2015-02-11 07:21:23"
         }
     ],
     "aliases": [],
