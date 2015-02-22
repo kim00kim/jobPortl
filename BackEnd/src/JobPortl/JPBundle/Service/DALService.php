@@ -127,13 +127,29 @@ class DALService
 			->innerJoin('a.user','u')
 			->addSelect('u')
 			->where('p.postingId = ?1')
-		//fix tomorrow
 			->andWhere($whereClause)
 			->andWhere('p.type = ?2' )
-			->setParameters(array(1 => $postingId, 2=>1))
+			->setParameters(array(1 => $postingId, 2=>0))
 			->getQuery()
 			->getArrayResult();
 	}
+    public function getSlApplication($slId, $postingType, $appStatus)
+    {
+        $where = $appStatus== 1 ? 'a.status = 1' : 'a.status != 2'; // 1st - accepted app 2nd- private job offer
+        return $this->applicationRepo->createQueryBuilder('a')
+            ->innerJoin('a.posting','p')
+            ->innerJoin('a.user','sl')
+            ->innerJoin('p.user', 'e')
+            ->addSelect('sl','e','p')
+//            ->where('p.postingId = ?1')
+            ->where('p.type = ?1' )
+            ->andWhere('IDENTITY(a.user) = ?2')
+            ->andWhere($where)
+            ->setParameters(array(1 => $postingType, 2=>$slId))
+//            ->getDQL()
+            ->getQuery()
+            ->getArrayResult();
+    }
 
 	public function getAllJobPost()
 	{
@@ -145,7 +161,7 @@ class DALService
 				'partial c.{categoryId,categoryName}')
 			->where('p.status = ?1')
 			->andWhere('p.type = ?2')
-			->setParameters(array(1=> 1, 2=>1))
+			->setParameters(array(1=> 1, 2=>0))
 			->orderBy('p.datetimePosted','DESC')
 			->getQuery()
 			->getArrayResult();

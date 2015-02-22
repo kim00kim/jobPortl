@@ -83,7 +83,7 @@ class RestController extends Controller
 		$post=$request->request;
 
 		$dal = $this->get('jpdal.dal');
-		return $dal->validateAdmin($post->get('username'), $post->get('password'));;
+		return $dal->validateAdmin($post->get('username'), $post->get('password'));
 	}
 
 	public function getAdminAction($id)
@@ -198,18 +198,25 @@ class RestController extends Controller
 	}
 	public function getAlljobpostAction()
 	{
-		$logger = $this->get('logger');
-		$logger->debug("In controller");
 		$dal = $this->get('jpdal.dal');
 		$postings= $dal->getAllJobPost();
 		foreach($postings as $key => $posting){
-			$logger->debug(json_encode($dal->getApplication($posting['postingId'])));
 			array_push($postings[$key],$dal->getApplication($posting['postingId']));
 			$postings[$key] ['applications'] = $postings[$key] [0];
 			unset($postings[$key][0]);
 		}
 		return $postings;
 	}
+    public function postSlapplicationAction(Request $request)
+    {
+        $post= $request->request;
+        $dal = $this->get('jpdal.dal');
+        $logger = $this->get('logger');
+        $logger->debug("userId: " . $post->get('userId'));
+        $logger->debug("type: " . $post->get('type'));
+        $logger->debug("status: " . $post->get('status'));
+        return $dal->getSlApplication($post->get('userId'),$post->get('type'),$post->get('status'));
+    }
 	public function deleteDeletecategoryAction($categoryId)
 	{
 		$logger = $this->get('logger');

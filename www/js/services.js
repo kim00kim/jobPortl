@@ -1,8 +1,8 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://10.20.1.198./jobportl/web/api/')
+	.constant('baseUrl', 'http://192.168.1.9/jobportl/web/api/')
 
-	.factory('$localstorage', ['$window', function ($window) {
+	.factory('$localStorage', ['$window', function ($window) {
 		return {
 			set: function (key, value) {
 				$window.localStorage[key] = value;
@@ -17,27 +17,21 @@ angular.module('jobPortl.services', [])
 				return JSON.parse($window.localStorage[key] || '{}');
 			},
 			updateObjectItem: function(obj, key, value) {
-//				console.log("OBJECT")
-//				console.log(key + " " + value)
 				var object = JSON.parse($window.localStorage[obj]);
-				object[key] = value
-//				console.log(object)
+				object[key] = value;
 				$window.localStorage[obj] = JSON.stringify(object);
-//				object[key] = value
-			}/*,
-			updateObjectItemObject: function(obj, key, value) {
-				$window.localStorage[obj][key] = JSON.stringify(value);
-			}*/
-		}
+			}
+		};
 	}])
 
-	.factory('UserService', function ($localstorage) {
+	.factory('UserService', function ($localStorage) {
+        var view; // if 0 = job post, if 1 = accepted app, if 2= sent job offer
 		return {
 			setUserType: function (response) {
-				$localstorage.set('userType', response)
+				$localStorage.set('userType', response)
 			},
 			setUser: function (response) {
-				$localstorage.setObject('user',
+				$localStorage.setObject('user',
 					{
 						userId: response.user.user_id,
 						userAccId: response.user_acc_id,
@@ -48,7 +42,6 @@ angular.module('jobPortl.services', [])
 						lastName: response.user.last_name,
 						address: response.user.address,
 						cityMun: response.user.city_mun,
-						gender: response.user.gender,
 						birthdate: response.user.birthdate,
 						cpno: response.user.cpno,
 						hasVerifiedNum: response.user.has_verified_number,
@@ -64,27 +57,30 @@ angular.module('jobPortl.services', [])
 					})
 			},
 			updateObjectItem: function(obj, key, value){
-				$localstorage.updateObjectItem(obj,key, value)
+				$localStorage.updateObjectItem(obj,key, value)
 			},
-			/*updateObjectItemObject: function (obj, key, value){
-				$localstorage.updateObjectItemObject(obj,key, value)
-			},*/
 			getUserType: function () {
-				return $localstorage.get('userType')
+				return $localStorage.get('userType')
 			},
 			getUser: function () {
-				return $localstorage.getObject('user')
+				return $localStorage.getObject('user')
 			},
 			clearStorage: function () {
 				localStorage.clear()
 			},
-			removeKey: function(key){
-				$localstorage.removeItem(key)
-			}
+			/*removeKey: function(key){
+				$localStorage.removeItem(key)
+			},*/
+            setView: function(userView){
+                view = userView
+            },
+            getView: function(){
+                return view
+            }
 		}
 	})
 
-	.factory('Camera', ['$q', function ($q) {
+	/*.factory('Camera', ['$q', function ($q) {
 
 		return {
 			getPicture: function (options) {
@@ -100,31 +96,31 @@ angular.module('jobPortl.services', [])
 				return q.promise;
 			}
 		}
-	}])
+	}])*/
 
-	.factory('UserAccount', function ($http, baseUrl) {
-		var userAccount = new Object();
+	.factory('UserAccount', function (baseUrl, $http) {
+		var userAccount = {};
 		return {
 			checkUser: function (userInput) {
-				console.log("Email & password : " + userInput.email + userInput.password + " type: " + userInput.userAccType)
-				return $http({method: "POST", url: baseUrl + 'users', data: userInput})
+				console.log("Email & password : " + userInput.email + userInput.password + " type: " + userInput.userAccType);
+				return $http({method: "POST", url: baseUrl + 'users', data: userInput});
 			},
 			setUserAccount: function (userAcc) {
-				userAccount = userAcc
+				userAccount = userAcc;
 			},
 			getUserAccount: function () {
-				return userAccount
+				return userAccount;
 			}
 		}
 
 	})
 
 	.factory('User', function ($http, baseUrl) {
-		var fbInfo = new Object()
+		var fbInfo ={};
 
 		return {
 			addUser: function (user) {
-				console.log(user)
+				console.log(user);
 				return $http({method: "POST", url: baseUrl + 'addusers', data: user})
 			},
 			setFbInfo : function (info){
@@ -139,9 +135,9 @@ angular.module('jobPortl.services', [])
 			updateTitle: function(userInfo){
 				return $http({method: "POST", url: baseUrl + 'updatetitles', data: userInfo})
 			},
-			getUpdatedUser: function(userId){
+			/*getUpdatedUser: function(userId){
 				return $http({method: "GET", url: baseUrl + 'updateduserinfos/'+ userId})
-			},
+			},*/
 			removeASkill: function(acquiredSkill){
 				return $http({method: "DELETE", url: baseUrl + 'removeskills/'+ acquiredSkill})
 			}
@@ -183,23 +179,26 @@ angular.module('jobPortl.services', [])
 	})
 
 	.factory('Application', function($http, baseUrl){
-		var application = []
+		var application = [];
 
 		return{
 			setApplication: function(jobPost){
-				application = jobPost
+				application = jobPost;
 			},
 			getApplication: function(){
 				return application;
 			},
 			getApplicant: function(userId){
-				return $http({method: "GET", url: baseUrl + 'skilledlaborerbyids/' + userId})
+				return $http({method: "GET", url: baseUrl + 'skilledlaborerbyids/' + userId});
 			},
 			deleteApplication: function(appId){
-				return $http({method: "DELETE", url: baseUrl + 'declineapplications/' + appId})
+				return $http({method: "DELETE", url: baseUrl + 'declineapplications/' + appId});
 			},
 			acceptApplication: function(appId){
-				return $http({method: "POST", url: baseUrl + 'acceptapplications/' + appId})
+				return $http({method: "POST", url: baseUrl + 'acceptapplications/' + appId});
+			},
+			getSLApplication: function(data){
+				return $http({method: "POST", url: baseUrl + 'slapplications', data: data});
 			}
 		}
-	})
+	});

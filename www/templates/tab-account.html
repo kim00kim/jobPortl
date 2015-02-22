@@ -16,9 +16,12 @@
 				<i class="icon ion-ios7-people"></i>Applicants
 			</a>
 			<!--For Skilled Laborer-->
-			<a class="item item-icon-left {{toggleEmployer}}" ui-sref="tab.modify">
-				<i class="icon ion-filing"></i>Applications
+			<a class="item item-icon-left {{toggleEmployer}}" ng-click="slAccount(0)">
+				<i class="icon ion-filing"></i>Accepted Application
 			</a>
+            <a class="item item-icon-left {{toggleEmployer}}" ng-click="slAccount(1)">
+                <i class="icon ion-ios7-paperplane-outline"></i>Private Job Offer
+            </a>
 			<a class="item item-icon-left {{toggleEmployer}}" ui-sref="tab.modify">
 				<i class="icon ion-calendar"></i>Manage Schedule
 			</a>

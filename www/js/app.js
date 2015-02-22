@@ -12,7 +12,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 	 $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 	 })*/
 
-	.run(function ($ionicPlatform, $rootScope, $state) {
+	.run(function ($ionicPlatform) {
 		$ionicPlatform.ready(function () {
 			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 			// for form inputs)
@@ -25,13 +25,13 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 			}
 		});
 		// UI Router Authentication Check
-		$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+		$rootScope.$on("$stateChangeStart", function (event, toState) {
 			if (toState.data.authenticate && !Parse.User.current()) {
 				// User isn�t authenticated
 				$state.transitionTo("login");
 				event.preventDefault();
 			}
-		})
+		});
 		//localStorage.clear()
 	})
 
@@ -146,6 +146,18 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 					'tab-job-post': {
 						templateUrl: 'templates/account-applicants.html',
 						controller: 'ApplicantCtrl',
+						data: {
+							authenticate: true
+						}
+					}
+				}
+			})
+			.state('tab.accepted-app', {
+				url: '/accepted-application',
+				views: {
+					'tab-account': {
+						templateUrl: 'templates/sl-application.html',
+						controller: 'SLApplicationCtrl',
 						data: {
 							authenticate: true
 						}
