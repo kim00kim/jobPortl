@@ -313,4 +313,27 @@ class Posting
     {
         return $this->type;
     }
+
+    /**
+     * Set hired
+     *
+     * @param integer $hired
+     * @return Posting
+     */
+    public function setHired($hired)
+    {
+        $this->hired = $hired;
+
+        return $this;
+    }
+
+    /**
+     * Get hired
+     *
+     * @return integer 
+     */
+    public function getHired()
+    {
+        return $this->hired;
+    }
 }
