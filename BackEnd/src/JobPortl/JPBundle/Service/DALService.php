@@ -116,12 +116,12 @@ class DALService
 	}
 	public function getApplication($postingId, $where = 0)
 	{
-		if($where == 0){
+//		if($where == 0){
 			$whereClause = 'a.status != 0';
-		}
+		/*}
 		else{
 			$whereClause = 'a.status = ' . $where;
-		}
+		}*/
 		return $this->applicationRepo->createQueryBuilder('a')
 			->innerJoin('a.posting','p')
 			->innerJoin('a.user','u')
@@ -140,7 +140,9 @@ class DALService
             ->innerJoin('a.posting','p')
             ->innerJoin('a.user','sl')
             ->innerJoin('p.user', 'e')
-            ->addSelect('sl','e','p')
+			->innerJoin('p.skill','s')
+			->innerJoin('s.category', 'c')
+            ->addSelect('sl','e','p','s','partial c.{categoryId, categoryName}')
 //            ->where('p.postingId = ?1')
             ->where('p.type = ?1' )
             ->andWhere('IDENTITY(a.user) = ?2')

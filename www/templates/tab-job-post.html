@@ -5,7 +5,6 @@
 <!--for skilled laborers' view-->
 <ion-view title="Job Post">
 	<ion-content class="padding">
-
 		<div class="list card" ng-repeat="jobPost in jobPosts">
 			<div class="item bar bar-header {{jobPost.header}}">
 				{{jobPost.skill.skillName}}
@@ -39,6 +38,8 @@
 				<button class="button button-block button-calm {{toggleStalker}} {{toggleEmployer}}" ng-click="applyUser(jobPost)" ng-disabled = "jobPost.hasApplied == 'Applied'"><i class="icon" ng-class="{'ion-alert': jobPost.hasApplied == 'Applied', 'ion-checkmark-round' : jobPost.hasApplied == 'Apply Job'}"></i> {{jobPost.hasApplied}}
 				</button>
 				<button class="button button-block button-positive button-outline {{toggleStalker}} {{toggleSl}} {{jobPost.closed}}" ng-disabled="jobPost.applications.pending==0" ng-click="viewApplicants(jobPost)"><i class="icon"></i> Applicants({{jobPost.applications.pending}})
+				</button>
+				<button class="button button-block button-positive button-outline {{toggleStalker}} {{toggleSl}} item-icon-right" ng-hide="jobPost.status==1" ng-click="evaluate(jobPost)">Details<i class="icon ion-chevron-right"></i>
 				</button>
 			</div>
 		</div>

@@ -3,44 +3,57 @@
     <button class="button button-clear icon ion-compose {{toggleSl}} {{toggleStalker}}" ng-click="openModal()"></button>
 </ion-nav-buttons>
 <!--for skilled laborers' view-->
-<ion-view title="Job Post">
+<ion-view title="{{title}}">
     <ion-content class="padding">
 
-        <div class="list card" ng-repeat="jobPost in jobPosts">
-            <div class="item bar bar-header {{jobPost.header}}">
-                {{jobPost.skill.skillName}}
+        <div class="list card" ng-repeat="job in jobs">
+            <div class="item bar bar-header bar-balanced" ng-if="job.status == 1 || job.clicked ">
+                {{job.posting.skill.skillName}}
             </div>
+			<div class="item bar bar-header bar-positive" ng-if="job.status == 0 && !job.clicked">
+				{{job.posting.skill.skillName}}
+			</div>
             <div class="item item-body job-post">
                 <div class="category">
-                    <h3>Category: {{jobPost.skill.category.categoryName}}</h3>
+                    <h3>Category: {{job.posting.skill.category.categoryName}}</h3>
                 </div>
                 <div class="row row-center">
                     <div class="col col-75">
                         <div class="job-info">
                             <div class="description">
-                                <p>{{jobPost.description}}</p>
+                                <p>{{job.posting.description}}</p>
                             </div>
                             <div class="location">
-                                <p><label>Location:</label> {{jobPost.location}}</p>
+                                <p><label>Location:</label> {{job.posting.location}}</p>
                             </div>
-                            <div class="location">
-                                <p><label>Required applicant(s):</label> {{jobPost.requiredApplicant}}<br>Slot(s) left: {{jobPost.requiredApplicant - jobPost.hired}}</p>
+                            <div class="required {{jobOffer}}">
+                                <p><label>Required applicant(s):</label> {{job.posting.requiredApplicant}}<br>Slot(s) left: {{job.posting.requiredApplicant - job.posting.hired}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col avatar">
-                        <img src={{jobPost.user.photo}}>
-                        <h4>{{jobPost.user.firstName + " " + jobPost.user.lastName}}</h4>
+                        <img src={{job.posting.user.photo}}>
+                        <h4>{{job.posting.user.firstName + " " + job.posting.user.lastName}}</h4>
                         <span class="datetime-posted"><i>{{jobPost.datetimePosted}}</i></span>
                     </div>
                 </div>
             </div>
-            <div class="item apply">
-                <button class="button button-block button-calm {{toggleStalker}} {{toggleEmployer}}" ng-click="applyUser(jobPost)" ng-disabled = "jobPost.hasApplied == 'Applied'"><i class="icon" ng-class="{'ion-alert': jobPost.hasApplied == 'Applied', 'ion-checkmark-round' : jobPost.hasApplied == 'Apply Job'}"></i> {{jobPost.hasApplied}}
-                </button>
-                <button class="button button-block button-positive button-outline {{toggleStalker}} {{toggleSl}} {{jobPost.closed}}" ng-disabled="jobPost.applications.pending==0" ng-click="viewApplicants(jobPost)"><i class="icon"></i> Applicants({{jobPost.applications.pending}})
-                </button>
-            </div>
+			<div class="item item-body skilled-laborer {{acceptedApp}}" ng-hide="job.clicked || job.status == 1">
+				<div class="button-bar">
+					<button class="button button-small button-balanced" ng-click="call(job.posting.user.cpNo)">
+						<i class="icon ion-android-call"></i>
+						Call
+					</button>
+					<button class="button button-small button-positive {{toggleStalker}} " ng-click="acceptOffer(job)">
+						<i class="icon ion-thumbsup"></i>
+						Accept
+					</button>
+					<button class="button button-small button-assertive {{toggleStalker}}" ng-click="declineOffer(job.appId,$index)">
+						<i class="icon ion-thumbsdown"></i>
+						Decline
+					</button>
+				</div>
+			</div>
         </div>
     </ion-content>
 </ion-view>

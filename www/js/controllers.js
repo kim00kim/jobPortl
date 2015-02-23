@@ -49,6 +49,7 @@ angular.module('jobPortl.controllers', [])
 	})
 
 	.controller('LoginCtrl', function ($scope, $state, $rootScope, $ionicLoading, UserAccount, UserService, User, SkilledLaborer) {
+		$scope.wrongInput = false;
 		$scope.skipLogin = function () {
 			UserService.setUserType(2);
 			$state.go('tab.job-post');
@@ -71,9 +72,11 @@ angular.module('jobPortl.controllers', [])
 				$ionicLoading.hide();
 				//console.log((response))
 				if (!response) {
-					if(userInput.userAccType==1)
-					//window.plugins.toast.showShortCenter('Incorrect email and password!')
-					 console.log("Incorrect email and password!");
+					if(userInput.userAccType==1){
+						//window.plugins.toast.showShortCenter('Incorrect email and password!')
+						console.log("Incorrect email and password!");
+					}
+
 					else{
 //						console.log("LOGIN: " +fb_info)
 						User.setFbInfo(fbInfo);
@@ -296,7 +299,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		$scope.cancel = function () {
-			$window.history.back();
+			$state.go('login');
 		};
 
 		$scope.fbRegister = function () {
@@ -708,6 +711,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		var displayJobPost = function(jobPost){
+			$scope.userType = userType;
 			console.log(jobPost);
 			$ionicLoading.hide();
 			var jobPosts;
@@ -720,8 +724,12 @@ angular.module('jobPortl.controllers', [])
 			angular.forEach(jobPosts, function(post){
 				pending=0;
 				post['header'] = post.status == 0 ? "bar-assertive" : "bar-positive";
-				if(post.status == 0)
+				if(post.status == 0)/*{*/
 					post['closed'] = 'ng-hide';
+				/*	post['evaluate'] = 'ng-show';
+				}
+				else
+					post['evaluate'] = 'ng-hide';*/
 				post.datetimePosted= $filter('date')(post.datetimePosted, "d MMM yyyy ") + $filter('date')(post.datetimePosted, " hh:mm a");
 				post['hasApplied']='Apply Job';
 
@@ -758,19 +766,14 @@ angular.module('jobPortl.controllers', [])
 				}
 				else{
 					for(var j=0; j<jobPost[i].applications.length;j++){
-						console.log("j: " + j );
 						if((jobPost[i].applications[j].user.userId==userId && jobPost[i].applications[j].status == 2)){
 							push= true;
 							break;
 						}
-						else if(jobPost[i].applications[j].user.userId != userId && j== jobPost[i].applications.length-1){
-							console.log('user is not in the applications');
+						else if(jobPost[i].applications[j].user.userId != userId && j== jobPost[i].applications.length-1)
 							push= true;
-						}
-						else{
-							console.log("in else push=false");
+						else
 							push= false;
-						}
 					}
 				}
 				if(push){
@@ -866,6 +869,13 @@ angular.module('jobPortl.controllers', [])
 			$state.go('tab.applicants');
 		};
 
+		$scope.evaluate = function(jobPost){
+//			console.log(jobPost);
+			Application.setApplication(jobPost);
+			$state.go('tab.applicants');
+
+		}
+
 		//execute on load
 		navigateViewByUserType();
 	})
@@ -874,7 +884,13 @@ angular.module('jobPortl.controllers', [])
 
 		var onLoad = function(){
 			application= Application.getApplication();
+			angular.forEach(application.applications, function(app){
+				app['clicked'] = false;
+			})
 			$scope.applications = application;
+
+//			$scope.applications.applications.clicked = false;
+			console.log('HERE')
 			console.log(application);
 		};
 
@@ -902,44 +918,56 @@ angular.module('jobPortl.controllers', [])
 			});
 		};
 
-		$scope.acceptApp = function(appId, index){
+		$scope.acceptApp = function(app, index){
+			/*$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: false,
+				maxWidth: 50,
+				showDelay: 0
+			});*/
 			console.log('Accepted!');
-			//console.log(application.hired);
-			console.log(application.requiredApplicant);
+			console.log(app);
+			var declinedApp = [];
+			var declinedAppId=[];
 
-//			console.log(application);
-			//delete application
-//			Application.deleteApplication(appId).success(function(response){
-//				console.log(response);
-			Application.acceptApplication(appId).success(function(response){
+			Application.acceptApplication(app.appId).success(function(response){
 				console.log(response);
-				$scope.applications.applications.splice(index, 1);
 				$scope.applications.applications.pending -=1;
-				if(application.hired+1 == application.requiredApplicant)
-					$window.history.back();
-			});
-
-//			}).
-//				error(function(err){
-//					console.log(err)
-//				})
+				app.clicked = true;
+				if(application.hired + 1 == application.requiredApplicant){
+					console.log(application)
+					angular.forEach(application.applications, function(apps){
+						if(apps.appId != app.appId && apps.status==2){
+							Application.deleteApplication(apps.appId).success(function(response){
+								console.log(response);
+								$scope.applications.applications.splice($scope.applications.applications.indexOf(apps), 1);
+							}).
+								error(function(err){
+									console.log(err)
+							});
+						}
+					})
+//					$ionicLoading.hide();
+//					$window.history.back();
+				}
+			}).
+				error(function(err){
+					console.log(err)
+				})
 		};
-		$scope.declineApp = function(appId,index){
+		$scope.declineApp = function(app,index){
 			console.log('Declined!');
-			console.log($scope.applications.applications);
-			console.log(index);
 			//delete application
-			Application.deleteApplication(appId).success(function(response){
+			Application.deleteApplication(app.appId).success(function(response){
 				console.log(response);
-				$scope.applications.applications.splice(index, 1);
+				$scope.applications.applications.splice(index+1, 1);
 				$scope.applications.applications.pending -=1;
 			}).
 			error(function(err){
 					console.log(err)
 			});
 		};
-
-
 		//display on load
 		onLoad();
 
@@ -948,22 +976,90 @@ angular.module('jobPortl.controllers', [])
 		var view = UserService.getView();
 		var data;
 		var userId = UserService.getUser().userId;
-		if(view ==0){
-			data = {userId: userId, type: 0, status:1};
-			//console.log(data);
-			Application.getSLApplication(data).success(function(response){
-				console.log(response);
+
+		var displayJob = function(jobs){
+			$ionicLoading.hide();
+			console.log("display job");
+			console.log(jobs);
+			$scope.jobs = jobs;
+		};
+
+		var toggleView = function(userView){
+			if(userView == 0)
+				$scope.acceptedApp = 'ng-hide';
+			else
+				$scope.jobOffer = 'ng-hide';
+		};
+
+		var navigateView = function(){
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: false,
+				maxWidth: 50,
+				showDelay: 0
 			});
-		}
-		else{
-			data = {userId: userId, type: 1, status:0};
-			//console.log(data)
-			Application.getSLApplication(data).success(function(response){
+			if(view ==0){
+				data = {userId: userId, type: 0, status:1};
+				$scope.title = "Accepted Application";
+				//console.log(data);
+				toggleView(view);
+				Application.getSLApplication(data).success(function(response){
+					displayJob(response);
+				});
+			}
+			else /*if(view ==1) */{
+				data = {userId: userId, type: 1, status:0};
+				$scope.title = "Job Offer";
+				//console.log(data)
+				toggleView(view);
+				Application.getSLApplication(data).success(function(response){
+					console.log(response);
+					displayJob(response);
+				});
+			}
+			/*else{
+				var vh = $ionicHistory.viewHistory();
+				console.log("ELSE");
+			}*/
+		};
+		$scope.call = function(cpNo){
+			document.location.href = "tel:" + cpNo;
+			console.log(cpNo)
+		};
+		$scope.acceptOffer = function(job){
+			console.log("Accepted");
+			job.clicked = true;
+
+			Application.acceptApplication(job.appId).success(function(response){
 				console.log(response);
+//				$scope.
+//				$scope.applications.applications.splice(index, 1);
+//				$scope.applications.applications.pending -=1;
+//				if(application.hired+1 == application.requiredApplicant)
+//					$window.history.back();
 			});
-		}
-	})
+//			$scope.accepted = "ng-hide"
+		};
+		$scope.declineOffer = function(job,index){
+			console.log("Decline");
+			console.log(job.appId);
+			job.clicked = true;
+//			console.log(index);
+			//delete application
+//			Application.deleteApplication(job.appId).success(function(response){
+//				console.log(response);
+				$scope.jobs.splice(index, 1);
+//				$scope.applications.applications.pending -=1;
+//			}).
+//				error(function(err){
+//					console.log(err)
+//				});
+		};
+
+		navigateView();
+	});/*
 	.controller('JobOfferCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
 
-	});
+	});*/
 
