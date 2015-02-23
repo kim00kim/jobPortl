@@ -13,7 +13,7 @@
 
 						<div class="row">
 							<input type="email" placeholder="Email Address" ng-model="userInput.email"
-								   class="form-control" name="email" required/>
+								   class="form-control" name="email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required/>
 							<span class="error-handler col col-10 icon ion-alert-circled assertive"
 								  ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
 							<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
