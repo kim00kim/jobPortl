@@ -113,11 +113,6 @@ class UserJ
 	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $schedules;
-	/**
-	 * @Exclude
-	 * @ORM\OneToMany(targetEntity="Evaluation", mappedBy="user", fetch="EXTRA_LAZY")
-	 */
-	protected $evaluations;
 
 	/**
 	 * Get userId
@@ -586,38 +581,5 @@ class UserJ
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Add evaluations
-     *
-     * @param \JobPortl\JPBundle\Entity\Evaluation $evaluations
-     * @return UserJ
-     */
-    public function addEvaluation(\JobPortl\JPBundle\Entity\Evaluation $evaluations)
-    {
-        $this->evaluations[] = $evaluations;
-
-        return $this;
-    }
-
-    /**
-     * Remove evaluations
-     *
-     * @param \JobPortl\JPBundle\Entity\Evaluation $evaluations
-     */
-    public function removeEvaluation(\JobPortl\JPBundle\Entity\Evaluation $evaluations)
-    {
-        $this->evaluations->removeElement($evaluations);
-    }
-
-    /**
-     * Get evaluations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEvaluations()
-    {
-        return $this->evaluations;
     }
 }

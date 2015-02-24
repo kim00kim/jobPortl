@@ -43,11 +43,6 @@ class Evaluation
 	 * @ORM\JoinColumn(name="appId", referencedColumnName="appId", nullable=true, onDelete="CASCADE")
 	 */
 	protected $application;
-	/**
-	 * @ORM\ManyToOne(targetEntity="UserJ", inversedBy="evaluations", fetch="EXTRA_LAZY")
-	 * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=true)
-	 */
-	protected $user;
 
 	/**
 	 * Constructor
@@ -191,28 +186,5 @@ class Evaluation
     public function getApplication()
     {
         return $this->application;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \JobPortl\JPBundle\Entity\UserJ $user
-     * @return Evaluation
-     */
-    public function setUser(\JobPortl\JPBundle\Entity\UserJ $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \JobPortl\JPBundle\Entity\UserJ 
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }
