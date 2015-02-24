@@ -33,6 +33,12 @@ class Application
 	 */
 	private $datetimeApplied;
 	/**
+	 * @var boolean;
+	 *
+	 * @ORM\Column(type="boolean", options={"default"=false})
+	 */
+	private $isEvaluated = false;
+	/**
 	 * @ORM\ManyToOne(targetEntity="Posting", inversedBy="applications")
 	 * @ORM\JoinColumn(name="postingId", referencedColumnName="postingId", nullable=true)
 	 */
@@ -245,5 +251,28 @@ class Application
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    /**
+     * Set isEvaluated
+     *
+     * @param boolean $isEvaluated
+     * @return Application
+     */
+    public function setIsEvaluated($isEvaluated)
+    {
+        $this->isEvaluated = $isEvaluated;
+
+        return $this;
+    }
+
+    /**
+     * Get isEvaluated
+     *
+     * @return boolean 
+     */
+    public function getIsEvaluated()
+    {
+        return $this->isEvaluated;
     }
 }
