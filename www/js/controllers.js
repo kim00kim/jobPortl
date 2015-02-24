@@ -29,7 +29,7 @@ angular.module('jobPortl.controllers', [])
 				if (res) {
 					UserService.clearStorage();
 					$state.go('login');
-					//window.plugins.toast.showLongCenter('You are logged out.')
+					window.plugins.toast.showLongCenter('You are logged out.')
 				}
 			});
 		};
@@ -73,7 +73,7 @@ angular.module('jobPortl.controllers', [])
 				//console.log((response))
 				if (!response) {
 					if(userInput.userAccType==1){
-						//window.plugins.toast.showShortCenter('Incorrect email and password!')
+						window.plugins.toast.showShortCenter('Incorrect email and password!')
 						console.log("Incorrect email and password!");
 					}
 
@@ -84,7 +84,7 @@ angular.module('jobPortl.controllers', [])
 					}
 				}
 				else {
-					//window.plugins.toast.showShortCenter('Logged in successfully!')
+					window.plugins.toast.showShortCenter('Logged in successfully!')
 
 //					console.log(response)
 					UserService.setUserType(response.user_type);
@@ -293,7 +293,7 @@ angular.module('jobPortl.controllers', [])
 					disableBack: true
 				});
 				$ionicLoading.hide();
-				//window.plugins.toast.showShortCenter('Registration successful! Please log in.')
+				window.plugins.toast.showShortCenter('Registration successful! Please log in.')
 				$state.go('login');
 			})
 		};
@@ -649,7 +649,7 @@ angular.module('jobPortl.controllers', [])
 			SkilledLaborer.sendJobOffer(jobOffer).success(function(response){
 				$ionicLoading.hide();
 				console.log(response);
-				//window.plugins.toast.showShortCenter('Job Offer Sent!');
+				window.plugins.toast.showShortCenter('Job Offer Sent!');
 			});
 			$scope.createJobPost.hide();
 		};
