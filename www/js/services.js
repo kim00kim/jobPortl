@@ -199,6 +199,12 @@ angular.module('jobPortl.services', [])
 			},
 			getSLApplication: function(data){
 				return $http({method: "POST", url: baseUrl + 'slapplications', data: data});
+			},
+			sendEvaluation: function(data){
+				return $http({method: "POST", url: baseUrl + 'saveevaluations', data: data});
+			},
+			getEvaluation: function(appId){
+				return $http({method: "GET", url: baseUrl + 'evaluations/' + appId });
 			}
 		}
 	});

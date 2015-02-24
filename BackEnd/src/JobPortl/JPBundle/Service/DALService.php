@@ -19,6 +19,7 @@ class DALService
 	private $postingRepo;
 	private $acquiredSkillRepo;
 	private $applicationRepo;
+	private $evaluationRepo;
 
 	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger)
 	{
@@ -32,6 +33,7 @@ class DALService
 		$this->postingRepo = $entityManager->getRepository('JobPortlJPBundle:Posting');
 		$this->acquiredSkillRepo = $entityManager->getRepository('JobPortlJPBundle:AcquiredSkill');
 		$this->applicationRepo = $entityManager->getRepository('JobPortlJPBundle:Application');
+		$this->evaluationRepo = $entityManager->getRepository('JobPortlJPBundle:Evaluation');
 	}
 
 	public function getAdmin($adminId)
@@ -219,6 +221,10 @@ class DALService
 	{
 		return $this->_persistFlush($newSkill);
 	}
+	public function saveEvaluation($evaluation)
+	{
+		return $this->_persistFlush($evaluation);
+	}
 	public function getAcquiredSkillByUser($userId)
 	{
 		return $this->acquiredSkillRepo->createQueryBuilder('ac')
@@ -228,6 +234,16 @@ class DALService
 			->addSelect('s','c')
 			->where('IDENTITY(ac.user) = ?1')
 			->setParameters(array(1 => $userId))
+			->getQuery()
+			->getArrayResult();
+	}
+	public function getEvaluation($appId)
+	{
+		return $this->evaluationRepo->createQueryBuilder('e')
+			->innerJoin('e.application','a')
+			->addSelect('a')
+			->where('IDENTITY(e.application) = ?1')
+			->setParameters(array(1 => $appId))
 			->getQuery()
 			->getArrayResult();
 	}

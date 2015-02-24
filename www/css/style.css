@@ -160,12 +160,59 @@ ul.rating li {
 	display: inline;
 	border: 0px;
 	background: none;
-	padding: 5px 10px;
+	padding: 6px 5px;
 }
 
 ul.rating li i {
-	font-size: 30px;
+	font-size: 25px;
 }
+
+/*for evaluation*/
+.item.evaluate{
+	border-top: none;
+}
+.item.evaluate.display{
+	padding-top: 0;
+}
+textarea.evaluate{
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 3px;
+}
+
+.row.evaluate, .col.evaluate, .col.col-33.evaluate{
+	/*padding: 5px 0;*/
+}
+
+.col.col-33.evaluate{
+	text-align: right;
+}
+
+textarea.evaluate.display{
+	resize:none;
+	overflow: scroll;
+}
+
+
+
+
+::-webkit-input-placeholder {
+	font-style: italic;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+	font-style: italic;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+	font-style: italic;
+}
+
+:-ms-input-placeholder {
+	font-style: italic;
+}
+
+
 
 /*reviews*/
 span.review {

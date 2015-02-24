@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'jobPortl.services' is found in services.js
 // 'jobPortl.controllers' is found in controllers.js
-angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives','ngCordova'])
+angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services', 'jobPortl.directives','ngCordova', 'ionic.rating'])
 
 	//})
 	/*.config(function($compileProvider){

@@ -186,10 +186,10 @@ class RestController extends Controller
 		$dal = $this->get('jpdal.dal');
 		$postings = $dal->getPostingByUser($userId);
 		$logger = $this->get('logger');
-		$logger->debug("Trial");
+//		$logger->debug("Trial");
 //		$logger->debug(json_encode($postings));
 		foreach($postings as $key => $posting){
-			$logger->debug(json_encode($dal->getApplication($posting['postingId'])));
+//			$logger->debug(json_encode($dal->getApplication($posting['postingId'])));
 			array_push($postings[$key],$dal->getApplication($posting['postingId'], 2));
 			$postings[$key] ['applications'] = $postings[$key] [0];
 			unset($postings[$key][0]);
@@ -217,6 +217,11 @@ class RestController extends Controller
         $logger->debug("status: " . $post->get('status'));
         return $dal->getSlApplication($post->get('userId'),$post->get('type'),$post->get('status'));
     }
+	public function getEvaluationAction($appId)
+	{
+		$dal = $this->get('jpdal.dal');
+		return $dal->getEvaluation($appId);
+	}
 	public function deleteDeletecategoryAction($categoryId)
 	{
 		$logger = $this->get('logger');
@@ -337,5 +342,22 @@ class RestController extends Controller
 	{
 		$dal= $this->get('jpdal.dal');
 		return $dal->deleteApplication($appId);
+	}
+	public function postSaveevaluationAction(Request $request)
+	{
+		$post = $request->request;
+		$dal= $this->get('jpdal.dal');
+
+		$application = $dal->getApplicationById($post->get('appId'));
+		$application->setIsEvaluated(true);
+		$logger = $this->get('logger');
+		$logger->debug("Evaluated? " .$application->getIsEvaluated());
+
+		$evaluation = new Entity\Evaluation();
+		$evaluation->setRating($post->get('rating'));
+		$evaluation->setComment($post->get('comment'));
+		$evaluation->setApplication($application);
+
+		return $dal->saveEvaluation($evaluation);
 	}
 }

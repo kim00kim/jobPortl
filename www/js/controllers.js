@@ -851,6 +851,7 @@ angular.module('jobPortl.controllers', [])
 			});
 		};
 
+		//skilled laborer application to a job post
 		$scope.applyUser = function(jobPost){
 			console.log(jobPost);
 			jobPost.hasApplied= 'Applied';
@@ -874,16 +875,20 @@ angular.module('jobPortl.controllers', [])
 			Application.setApplication(jobPost);
 			$state.go('tab.applicants');
 
-		}
+		};
 
 		//execute on load
 		navigateViewByUserType();
 	})
 	.controller('ApplicantCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
 		var application = [];
+		$scope.eval = false;
+		$scope.evaluate = {};
 
 		var onLoad = function(){
 			application= Application.getApplication();
+			console.log(application);
+
 			angular.forEach(application.applications, function(app){
 				app['clicked'] = false;
 			})
@@ -892,6 +897,54 @@ angular.module('jobPortl.controllers', [])
 //			$scope.applications.applications.clicked = false;
 			console.log('HERE')
 			console.log(application);
+//			if posting is closed and application status = 1
+			if(application.status == 0){
+				$scope.eval = true;
+				$scope.max = 5;
+				toggle();
+			}
+		};
+
+		//
+		var toggle = function(){
+			console.log(application)
+			//check if isEvaluated
+			for(var i = 0; i<application.applications.length;i++){
+				$scope.applications.applications[i].rating = 0;
+				$scope.applications.applications[i].buttonName="Evaluate";
+				$scope.applications.applications[i].readOnly=0;
+				$scope.applications.applications[i].display = "ng-show";
+				if(application.applications[i].isEvaluated){
+					Application.getEvaluation(application.applications[i].appId).success(function(response){
+						$scope.applications.applications[i]=response;
+						$scope.applications.applications[i].buttonName="Evaluated";
+						$scope.applications.applications[i].readOnly=1;
+						if(response.comment == null)
+							$scope.applications.applications[i].display = "ng-hide";
+					})
+				}
+			}
+		};
+
+		//has error
+		$scope.sendEvaluation = function(app,index){
+			console.log(app);
+			var comment;
+			app.isEvaluated = true;
+
+			if(angular.isUndefined(app.comment) || app.comment.length==0){
+				app.display = "ng-hide";
+				comment = null;
+			}
+			else{
+				app.display = "ng-show";
+				comment = app.comment.trim();
+			}
+			Application.sendEvaluation({appId: app.appId, rating: app.rating, comment: comment}).success(function(response){
+			 	console.log(response)
+				app.buttonName="Evaluated";
+				app.readOnly=1;
+			 })
 		};
 
 		//call function
@@ -936,7 +989,7 @@ angular.module('jobPortl.controllers', [])
 				$scope.applications.applications.pending -=1;
 				app.clicked = true;
 				if(application.hired + 1 == application.requiredApplicant){
-					console.log(application)
+					console.log(application);
 					angular.forEach(application.applications, function(apps){
 						if(apps.appId != app.appId && apps.status==2){
 							Application.deleteApplication(apps.appId).success(function(response){
@@ -947,7 +1000,7 @@ angular.module('jobPortl.controllers', [])
 									console.log(err)
 							});
 						}
-					})
+					});
 //					$ionicLoading.hide();
 //					$window.history.back();
 				}
@@ -956,6 +1009,7 @@ angular.module('jobPortl.controllers', [])
 					console.log(err)
 				})
 		};
+
 		$scope.declineApp = function(app,index){
 			console.log('Declined!');
 			//delete application

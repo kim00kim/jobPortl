@@ -28,7 +28,8 @@
 		<param name="APP_ID" value="578995458902268"/>
 		<param name="APP_NAME" value="JobPortl"/>
 	</gap:plugin>
-	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0"/>
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+
 	<gap:plugin name="org.apache.cordova.camera" version="0.3.2"/>
 	<gap:plugin name="org.apache.cordova.file" version="1.3.1"/>
 	<gap:plugin name="nl.x-services.plugins.toast" version="2.0"/>
@@ -49,6 +50,8 @@
 	</feature>
 	<preference name="StatusBarOverlaysWebView" value="false"/>
 	<preference name="StatusBarBackgroundColor" value="#000000"/>
+
+    <!--<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0"/>-->
 
 	<!--Android only-->
 	<preference name="android-installLocation" value="auto"/>

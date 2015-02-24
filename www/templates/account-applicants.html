@@ -1,11 +1,36 @@
 <ion-view title="{{applications.skill.skillName}}  {{'(' + applications.applications.pending + ')'}}">
 	<ion-content>
 		<div class="list card" ng-repeat="app in applications.applications | orderBy : '-status' ">
-			<div class="item item-avatar">
+			<div class="item item-avatar applicant">
 				<img src={{app.user.photo}} ng-click="viewProfile(app.user)">
 				<h2 class="highlight" ng-click="viewProfile(app.user)">{{app.user.firstName + " " + app.user.lastName}} </h2>
 				<h2 class="title">{{app.user.title}}</h2>
 			</div>
+			<div class="item evaluate" ng-hide="!eval">
+				<textarea class="evaluate {{app.display}}" placeholder="Comments (optional) . . ." ng-model="app.comment" ng-disabled="app.readOnly==1" ></textarea>
+				<div class="row evaluate">
+					<div class="col evaluate">
+						<rating ng-model="app.rating" max="max" class="energized" readonly="0" ng-hide="app.readOnly==1"></rating>
+						<rating ng-model="app.rating" max="max" class="energized" readonly="1" ng-hide="app.readOnly==0"></rating>
+					</div>
+					<div class="col col-33 evaluate">
+						<button class="button button-small button-outline button-stable" ng-click="sendEvaluation(app, $index)" ng-disabled="app.readOnly==1">
+							{{app.buttonName}}
+							<i class="icon ion-thumbsup"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="item evaluate" ng-hide="!eval">
+				<div class="row evaluate">
+					<div class="col evaluate">
+						<rating ng-model="evaluate.rate" max="max" class="energized" readonly="1"></rating>
+					</div>
+				</div>
+				<textarea class="evaluate" placeholder="Comments (optional) . . ." ng-model="evaluate.comment" ng-readonly="1" id="display"></textarea>
+			</div>-->
+
 
 			<div class="item item-body skilled-laborer" ng-hide="app.status==1 || app.clicked == true">
 				<div class="button-bar">
