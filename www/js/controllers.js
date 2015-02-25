@@ -29,14 +29,15 @@ angular.module('jobPortl.controllers', [])
 				if (res) {
 					UserService.clearStorage();
 					$state.go('login');
-					window.plugins.toast.showLongCenter('You are logged out.')
+					if(window.cordova)
+						window.plugins.toast.showLongCenter('You are logged out.')
 				}
 			});
 		};
         $scope.slAccount = function (account) {
             UserService.setView(account);
 			$state.go('tab.accepted-app');
-        }
+        };
 	})
 
 	.controller('ToggleUserCtrl', function ($scope, UserService) {
@@ -73,7 +74,8 @@ angular.module('jobPortl.controllers', [])
 				//console.log((response))
 				if (!response) {
 					if(userInput.userAccType==1){
-						window.plugins.toast.showShortCenter('Incorrect email and password!')
+						if(window.cordova)
+							window.plugins.toast.showShortCenter('Incorrect email and password!')
 						console.log("Incorrect email and password!");
 					}
 
@@ -84,7 +86,8 @@ angular.module('jobPortl.controllers', [])
 					}
 				}
 				else {
-					window.plugins.toast.showShortCenter('Logged in successfully!')
+					if(window.cordova)
+						window.plugins.toast.showShortCenter('Logged in successfully!')
 
 //					console.log(response)
 					UserService.setUserType(response.user_type);
@@ -293,7 +296,8 @@ angular.module('jobPortl.controllers', [])
 					disableBack: true
 				});
 				$ionicLoading.hide();
-				window.plugins.toast.showShortCenter('Registration successful! Please log in.')
+				if(window.cordova)
+					window.plugins.toast.showShortCenter('Registration successful! Please log in.')
 				$state.go('login');
 			})
 		};
@@ -649,7 +653,8 @@ angular.module('jobPortl.controllers', [])
 			SkilledLaborer.sendJobOffer(jobOffer).success(function(response){
 				$ionicLoading.hide();
 				console.log(response);
-				window.plugins.toast.showShortCenter('Job Offer Sent!');
+				if(window.cordova)
+					window.plugins.toast.showShortCenter('Job Offer Sent!');
 			});
 			$scope.createJobPost.hide();
 		};
@@ -895,7 +900,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.applications = application;
 
 //			$scope.applications.applications.clicked = false;
-			console.log('HERE')
+			console.log('HERE');
 			console.log(application);
 //			if posting is closed and application status = 1
 			if(application.status == 0){
@@ -927,7 +932,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		//has error
-		$scope.sendEvaluation = function(app,index){
+		$scope.sendEvaluation = function(app){
 			console.log(app);
 			var comment;
 			app.isEvaluated = true;
@@ -941,7 +946,7 @@ angular.module('jobPortl.controllers', [])
 				comment = app.comment.trim();
 			}
 			Application.sendEvaluation({appId: app.appId, rating: app.rating, comment: comment}).success(function(response){
-			 	console.log(response)
+			 	console.log(response);
 				app.buttonName="Evaluated";
 				app.readOnly=1;
 			 })
@@ -971,7 +976,7 @@ angular.module('jobPortl.controllers', [])
 			});
 		};
 
-		$scope.acceptApp = function(app, index){
+		$scope.acceptApp = function(app){
 			/*$ionicLoading.show({
 				content: 'Loading...',
 				animation: 'fade-in',
@@ -981,8 +986,6 @@ angular.module('jobPortl.controllers', [])
 			});*/
 			console.log('Accepted!');
 			console.log(app);
-			var declinedApp = [];
-			var declinedAppId=[];
 
 			Application.acceptApplication(app.appId).success(function(response){
 				console.log(response);
@@ -1002,7 +1005,7 @@ angular.module('jobPortl.controllers', [])
 						}
 					});
 //					$ionicLoading.hide();
-//					$window.history.back();
+					$window.history.back();
 				}
 			}).
 				error(function(err){
