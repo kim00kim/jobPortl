@@ -351,25 +351,32 @@ angular.module('jobPortl.controllers', [])
 					sourceType: Camera.PictureSourceType.CAMERA,
 					allowEdit: false,
 					encodingType: Camera.EncodingType.JPEG,
-					targetWidth: 100,
-					targetHeight: 100,
+					targetWidth: 800,
+					targetHeight: 800,
 					popoverOptions: CameraPopoverOptions,
 					saveToPhotoAlbum: false
 				};
 
-				navigator.camera.getPicture(onSuccess, onFail, options);
-
-				function onSuccess(imageURI) {
-					/*var image = document.getElementById('myImage');
-					image.src = imageURI;*/
-
+				var onSuccess = function(imageURI) {
+					alert('success');
 					// if working, save to database
-
 					$scope.myPhoto = imageURI;
-				}
-				function onFail(message) {
-					window.plugins.toast.showShortCenter('Failed because: ' + message)
-				}
+					$ionicLoading.hide();
+				};
+				var onFail = function(message) {
+					$ionicLoading.hide();
+					window.plugins.toast.showShortCenter(message)
+				};
+
+				navigator.camera.getPicture(onSuccess, onFail, options);
+				$ionicLoading.show({
+					content: 'Loading...',
+					animation: 'fade-in',
+					showBackdrop: false,
+					maxWidth: 50,
+					showDelay: 20
+				});
+
 			}
 
 		};
