@@ -89,7 +89,7 @@ angular.module('jobPortl.controllers', [])
 				}
 				else {
 					if(window.cordova)
-						window.plugins.toast.showShortCenter('Logged in successfully!')
+						window.plugins.toast.showShortBottom('Logged in successfully!')
 
 //					console.log(response)
 					UserService.setUserType(response.user_type);
@@ -346,10 +346,10 @@ angular.module('jobPortl.controllers', [])
 			if(window.cordova){
 				window.plugins.toast.showShortCenter('Loading Camera..')
 				var options = {
-					quality: 50,
+					quality: 75,
 					destinationType: Camera.DestinationType.FILE_URI,
 					sourceType: Camera.PictureSourceType.CAMERA,
-					allowEdit: true,
+					allowEdit: false,
 					encodingType: Camera.EncodingType.JPEG,
 					targetWidth: 100,
 					targetHeight: 100,
