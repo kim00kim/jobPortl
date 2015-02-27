@@ -351,8 +351,8 @@ angular.module('jobPortl.controllers', [])
 					sourceType: Camera.PictureSourceType.CAMERA,
 					allowEdit: false,
 					encodingType: Camera.EncodingType.JPEG,
-					targetWidth: 800,
-					targetHeight: 800,
+					targetWidth: 1024,
+					targetHeight: 1024,
 					popoverOptions: CameraPopoverOptions,
 					saveToPhotoAlbum: false
 				};
