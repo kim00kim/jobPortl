@@ -26,7 +26,7 @@
     <icon src="img/icon/drawable-xxxhdpi-icon.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <!--Splash Screen-->
-    <preference name="SplashScreen" value="screen"/>
+    <preference name="SplashScreen" value="splash"/>
     <preference name="SplashScreenDelay" value="10000"/>
 
     <platform name="android">
