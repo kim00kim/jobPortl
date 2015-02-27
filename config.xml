@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="ph.kim.jobportl" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-  <name>JobPortl</name>
-  <description>A Job Portal Application</description>
-  <author email="info@jobportl.com" href="http://www.jobportl.com">jobportl</author>
-  <content src="index.html"/>
-  <access origin="*"/>
-  <preference name="phonegap-version" value="3.6.3"/>
-  <preference name="orientation" value="portrait"/>
-  <preference name="fullscreen" value="false"/>
-  <preference name="webviewbounce" value="false"/>
-  <preference name="prerendered-icon" value="true"/>
-  <preference name="StatusBarOverlaysWebView" value="false"/>
-  <preference name="StatusBarBackgroundColor" value="#000000"/>
-  <preference name="android-installLocation" value="auto"/>
-  <preference name="SplashScreen" value="screen"/>
-  <preference name="SplashScreenDelay" value="3000"/>
-  <icon src="resources\icon.png" width="57" height="57"/>
-  <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
-  <platform name="android">
-    <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi"/>
-    <icon src="resources\android\icon\drawable-mdpi-icon.png" density="mdpi"/>
-    <icon src="resources\android\icon\drawable-hdpi-icon.png" density="hdpi"/>
-    <icon src="resources\android\icon\drawable-xhdpi-icon.png" density="xhdpi"/>
-    <icon src="resources\android\icon\drawable-xxhdpi-icon.png" density="xxhdpi"/>
-    <icon src="resources\android\icon\drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
-    <splash src="resources\android\splash\drawable-port-ldpi-screen.png" density="port-ldpi"/>
-    <splash src="resources\android\splash\drawable-port-mdpi-screen.png" density="port-mdpi"/>
-    <splash src="resources\android\splash\drawable-port-hdpi-screen.png" density="port-hdpi"/>
-    <splash src="resources\android\splash\drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
-    <splash src="resources\android\splash\drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
-    <splash src="resources\android\splash\drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
-  </platform>
-  <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
-    <param name="APP_ID" value="578995458902268"/>
-    <param name="APP_NAME" value="JobPortl"/>
-  </gap:plugin>
-  <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1"/>
-  <gap:plugin name="org.apache.cordova.camera" version="0.3.2"/>
-  <gap:plugin name="org.apache.cordova.file" version="1.3.1"/>
-  <gap:plugin name="nl.x-services.plugins.toast" version="2.0"/>
-  <gap:plugin name="com.phonegap.plugin.statusbar"/>
-  <feature name="Toast">
-    <param name="android-package" value="nl.xservices.plugins.Toast"/>
-  </feature>
-  <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
-  </feature>
-  <resources>
-    <string name="fb_app_id">578995458902268</string>
-    <string name="fb_app_name">JobPortl</string>
-  </resources>
+<widget id="ph.kim.jobportl" version="0.5.0" xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>JobPortl</name>
+    <description>A Job Portal Application</description>
+    <author email="info@jobportl.com" href="http://www.jobportl.com">jobportl</author>
+    <access origin="*"/>
+
+    <preference name="phonegap-version" value="3.6.3"/>
+    <preference name="orientation" value="portrait"/>
+    <preference name="fullscreen" value="false"/>
+    <preference name="webviewbounce" value="false"/>
+    <preference name="prerendered-icon" value="true"/>
+    <preference name="StatusBarOverlaysWebView" value="false"/>
+    <preference name="StatusBarBackgroundColor" value="#000000"/>
+    <preference name="android-installLocation" value="auto"/>
+    <preference name="SplashScreen" value="screen"/>
+    <preference name="SplashScreenDelay" value="3000"/>
+
+
+    <!--Icons-->
+    <icon src="icon.png" width="57" height="57"/>
+    <icon src="img/icon.png" width="57" height="57" />
+    <icon src="img/icon/drawable-ldpi-icon.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="img/icon/drawable-mdpi-icon.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="img/icon/drawable-hdpi-icon.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="img/icon/drawable-xhdpi-icon.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="img/icon/icon/drawable-xxhdpi-icon.png" gap:platform="android" gap:density="xxhdpi" />
+    <icon src="img/icon/drawable-xxxhdpi-icon.png" gap:platform="android" gap:density="xxxhdpi" />
+
+    <!--Splash Screen-->
+    <gap:splash src="splash.png" />
+    <gap:splash src="img/splash/drawable-port-ldpi-screen.png" gap:platform="android" density="port-ldpi"/>
+    <gap:splash src="img/splash/drawable-port-mdpi-screen.png" gap:platform="android" density="port-mdpi"/>
+    <gap:splash src="img/splash/drawable-port-hdpi-screen.png" gap:platform="android" gap:density="port-hdpi" />
+    <gap:splash src="img/splash/drawable-port-xhdpi-screen.png" gap:platform="android" gap:density="port-xhdpi" />
+    <gap:splash src="img/splash/drawable-port-xxhdpi-screen.png" gap:platform="android" gap:density="port-xxhdpi" />
+    <gap:splash src="img/splash/drawable-port-xxxhdpi-screen.png" gap:platform="android" gap:density="port-xxxhdpi" />
+
+    <!-- Phonegap plugins -->
+    <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+        <param name="APP_ID" value="578995458902268"/>
+        <param name="APP_NAME" value="JobPortl"/>
+    </gap:plugin>
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1"/>
+    <gap:plugin name="org.apache.cordova.camera" version="0.3.2"/>
+    <gap:plugin name="org.apache.cordova.file" version="1.3.1"/>
+    <gap:plugin name="nl.x-services.plugins.toast" version="2.0"/>
+    <gap:plugin name="com.phonegap.plugin.statusbar"/>
+    <feature name="Toast">
+        <param name="android-package" value="nl.xservices.plugins.Toast"/>
+    </feature>
+    <resources>
+        <string name="fb_app_id">578995458902268</string>
+        <string name="fb_app_name">JobPortl</string>
+    </resources>
 </widget>
