@@ -5,6 +5,7 @@
 <!--for skilled laborers' view-->
 <ion-view title="Job Post">
 	<ion-content class="padding">
+			<ion-refresher on-refresh="doRefresh()"></ion-refresher>
 		<div class="list card" ng-repeat="jobPost in jobPosts">
 			<div class="item bar bar-header {{jobPost.header}}">
 				{{jobPost.skill.skillName}}
