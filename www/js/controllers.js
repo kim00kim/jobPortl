@@ -446,43 +446,6 @@ angular.module('jobPortl.controllers', [])
 			$ionicLoading.hide();
 		};
 
-		//under observation
-		/*var updateUserService = function(){
-//			console.log(user);
-				$ionicLoading.hide();
-				onLoad();
-		};*/
-
-//		console.log(UserService.getUser())
-
-
-			/*$scope.capture = function(){
-				document.addEventListener("deviceready", function () {
-
-					var options = {
-						quality: 50,
-						destinationType: Camera.DestinationType.DATA_URL,
-						sourceType: Camera.PictureSourceType.CAMERA,
-						allowEdit: true,
-						encodingType: Camera.EncodingType.JPEG,
-						targetWidth: 100,
-						targetHeight: 100,
-						popoverOptions: CameraPopoverOptions,
-						saveToPhotoAlbum: false
-					};
-
-					$cordovaCamera.getPicture(options).then(function(imageData) {
-						var image = document.getElementById('myImage');
-						image.src = "data:image/jpeg;base64," + imageData;
-						$scope.my_photo= image.src;
-
-					}, function(err) {
-						alert(err);
-					});
-
-				}, false);
-			};*/
-
 		//toggle editable for title
 		$scope.toggleTitle= function(){
 			$scope.editable = !$scope.editable;
@@ -495,6 +458,7 @@ angular.module('jobPortl.controllers', [])
 			}
 		};
 
+		//Skills
 		$scope.addSkill = function (){
 			$scope.acquiredSkills = {};
 			$ionicModal.fromTemplateUrl('templates/skill-set-modal.html', {
@@ -503,14 +467,11 @@ angular.module('jobPortl.controllers', [])
 				focusFirstInput: true
 			}).then(function (modal) {
 				$scope.skillsModal = modal;
-//				console.log(allSkills);
 				$scope.categories = allSkills;
 				$scope.acquiredSkills.category = $scope.categories[0];
 
 				$scope.skillSet = compare($scope.acquiredSkills.category.skills);
-//				console.log($scope.skillSet)
 				$scope.predicate = 'categoryName';
-//				console.log($scope.skillSet)
 				$scope.skillsModal.show();
 			});
 		};//end of addSkill
@@ -569,7 +530,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		$scope.addSkillSet = function(){
-			$scope.closeModal();
+			$scope.closeSkillModal();
 			var acquired = [];
 			var data;
 //			console.log("skill set");
@@ -603,9 +564,38 @@ angular.module('jobPortl.controllers', [])
 			});
 		};
 
-		$scope.closeModal = function(){
+		$scope.closeSkillModal = function(){
 			$scope.skillsModal.hide();
 		};
+
+		//Certifications
+		$scope.addCertification = function(){
+			$scope.certification = {};
+			$ionicModal.fromTemplateUrl('templates/certification-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
+			}).then(function (modal) {
+				$scope.certificationsModal = modal;
+				$scope.certification.type="Certificate of Competency";
+				$scope.certificationsModal.show();
+			});
+		};
+
+		$scope.closeModal = function(){
+			$scope.certificationsModal.hide();
+		};
+
+		$scope.saveCertification = function(certification){
+			certification.userId = user.userId;
+			console.log(certification);
+			User.addCertification(certification).success(function(response){
+				console.log(response);
+				$scope.certification.push(response);
+			})
+			$scope.closeModal();
+
+		}
 
 		//on load
 		onLoad();
