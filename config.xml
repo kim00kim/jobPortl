@@ -26,13 +26,8 @@
     <icon src="img/icon/drawable-xxxhdpi-icon.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <!--Splash Screen-->
-    <gap:splash src="splash.png" />
-    <gap:splash src="img/splash/drawable-port-ldpi-screen.png" gap:platform="android" density="port-ldpi"/>
-    <gap:splash src="img/splash/drawable-port-mdpi-screen.png" gap:platform="android" density="port-mdpi"/>
-    <gap:splash src="img/splash/drawable-port-hdpi-screen.png" gap:platform="android" gap:density="port-hdpi" />
-    <gap:splash src="img/splash/drawable-port-xhdpi-screen.png" gap:platform="android" gap:density="port-xhdpi" />
-    <gap:splash src="img/splash/drawable-port-xxhdpi-screen.png" gap:platform="android" gap:density="port-xxhdpi" />
-    <gap:splash src="img/splash/drawable-port-xxxhdpi-screen.png" gap:platform="android" gap:density="port-xxxhdpi" />
+    <preference name="SplashScreen" value="screen"/>
+    <preference name="SplashScreenDelay" value="10000"/>
 
     <platform name="android">
         <!-- you can use any density that exists in the Android project -->
@@ -43,8 +38,6 @@
         <splash src="resources/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
         <splash src="resources/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
     </platform>
-
-    <preference name="SplashScreenDelay" value="10000" />
 
     <!-- Phonegap plugins -->
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
