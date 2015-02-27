@@ -8,8 +8,10 @@ angular.module('jobPortl.controllers', [])
 		console.log('In AccountCtrl..');
 		var userType = UserService.getUserType();
 
-		if (userType == 2)
+		if (userType == 2){
 			$state.go('login');
+			$scope.toggleStalker = 'ng-hide';
+		}
 		else {
 			if (userType == 0) //employer
 				$scope.toggleEmployer = 'ng-hide';
@@ -320,36 +322,17 @@ angular.module('jobPortl.controllers', [])
 
 	.controller('EditProfileCtrl', function ($scope,JobPost,$window, $state,$ionicModal, $ionicLoading, UserService, User, $cordovaCamera, SkilledLaborer) {
 		console.log('In EditProfileCtrl..');
-		/*$scope.$watch('myPicture', function(value) {
-			if(value) {
-				$scope.myPicture = value
-			}
-		}, true);*/
-		/*$scope.getPhoto = function () {
-			console.log('Getting camera');
-			Camera.getPicture().then(function (imageURI) {
-				console.log(imageURI);
-				$scope.lastPhoto = imageURI;
-			}, function (err) {
-				console.log(err);
-			}, {
-				quality: 75,
-				targetWidth: 100,
-				targetHeight: 100,
-				saveToPhotoAlbum: false
-			});
-		}*/
 
 		$scope.capture = function(){
 			console.log("Clicked!");
 
 			if(window.cordova){
-				window.plugins.toast.showShortCenter('Loading Camera..')
+				window.plugins.toast.showShortCenter('Getting Camera..')
 				var options = {
 					quality: 75,
 					destinationType: Camera.DestinationType.FILE_URI,
 					sourceType: Camera.PictureSourceType.CAMERA,
-					allowEdit: false,
+					allowEdit: true,
 					encodingType: Camera.EncodingType.JPEG,
 					targetWidth: 1024,
 					targetHeight: 1024,
@@ -358,29 +341,51 @@ angular.module('jobPortl.controllers', [])
 				};
 
 				var onSuccess = function(imageURI) {
-					alert('success');
 					// if working, save to database
 					$scope.myPhoto = imageURI;
-					$ionicLoading.hide();
 				};
 				var onFail = function(message) {
-					$ionicLoading.hide();
 					window.plugins.toast.showShortCenter(message)
 				};
 
 				navigator.camera.getPicture(onSuccess, onFail, options);
-				$ionicLoading.show({
-					content: 'Loading...',
-					animation: 'fade-in',
-					showBackdrop: false,
-					maxWidth: 50,
-					showDelay: 20
-				});
-
 			}
 
 		};
 
+		$scope.selectPhoto = function(){
+			console.log("Clicked!");
+
+			if(window.cordova){
+				window.plugins.toast.showShortCenter('Loading Camera..')
+				var options = {
+					quality: 75,
+					destinationType: Camera.DestinationType.FILE_URI,
+					sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+					allowEdit: true,
+					encodingType: Camera.EncodingType.JPEG,
+					targetWidth: 1024,
+					targetHeight: 1024,
+					saveToPhotoAlbum: false
+				};
+
+				var onSuccess = function(imageURI) {
+					alert('success');
+					// if working, save to database
+					$scope.myPhoto = imageURI;
+				};
+				var onFail = function(message) {
+					window.plugins.toast.showShortCenter(message)
+				};
+
+				var clearCache = function(){
+					navigator.camera.cleanup();
+				};
+
+				navigator.camera.getPicture(onSuccess, onFail, options);
+				clearCache();
+			}
+		};
 
 		//declare & initialize
 		var user;
@@ -607,10 +612,11 @@ angular.module('jobPortl.controllers', [])
 //		updateUserService();
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, SkilledLaborer, JobPost, UserService) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, $timeout, SkilledLaborer, JobPost, UserService) {
 		console.log('In SkilledLaborerCtrl..');
 		$scope.skilledLaborerInfo = {};
-		var display = function(){
+
+		var onLoad = function(){
 			$ionicLoading.show({
 				content: 'Loading...',
 				animation: 'fade-in',
@@ -618,10 +624,28 @@ angular.module('jobPortl.controllers', [])
 				maxWidth: 50,
 				showDelay: 0
 			});
+			display();
+//			$ionicLoading.hide();
+		};
+
+		//load page when pulled down
+		$scope.doRefresh = function() {
+			console.log('Refreshing!');
+			$timeout( function() {
+				//simulate async response
+				display();
+
+				//Stop the ion-refresher from spinning
+				$scope.$broadcast('scroll.refreshComplete');
+			}, 1000);
+
+		};
+
+		var display = function(){
 			SkilledLaborer.getSkilledLaborers().success(function (data) {
-					$ionicLoading.hide();
-					console.log(data);
-					$scope.skilledLaborerInfo = data;
+				$ionicLoading.hide();
+				console.log(data);
+				$scope.skilledLaborerInfo = data;
 			}).
 			error(function () {
 				alert("An error occurred. Cannot get skilled laborer info");
@@ -709,12 +733,10 @@ angular.module('jobPortl.controllers', [])
 			$scope.skills = $scope.newJobPost.category.skills;
 			$scope.newJobPost.skill = $scope.skills[0];
 		};
-
-
-		display();
+		onLoad();
 	})
 
-	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading, JobPost, UserService, Application) {
+	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading, $timeout, JobPost, UserService, Application) {
 		console.log('In JobCtrl..');
 		var userType = UserService.getUserType();
 		var userId = UserService.getUser().userId;
@@ -722,7 +744,7 @@ angular.module('jobPortl.controllers', [])
 
 		$scope.newJobPost = {};
 
-		var navigateViewByUserType = function (){
+		var onLoad = function(){
 			$ionicLoading.show({
 				content: 'Loading...',
 				animation: 'fade-in',
@@ -730,6 +752,23 @@ angular.module('jobPortl.controllers', [])
 				maxWidth: 50,
 				showDelay: 0
 			});
+			navigateViewByUserType();
+		}
+
+		//load page when pulled down
+		$scope.doRefresh = function() {
+			console.log('Refreshing!');
+			$timeout( function() {
+				//simulate async response
+				navigateViewByUserType();
+
+				//Stop the ion-refresher from spinning
+				$scope.$broadcast('scroll.refreshComplete');
+			}, 1000);
+
+		};
+
+		var navigateViewByUserType = function (){
 			if (userType  == 0){ //employer
 				$scope.toggleEmployer = 'ng-hide';
 				JobPost.getMyPost(userId).success(function(response) {
@@ -936,7 +975,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		//execute on load
-		navigateViewByUserType();
+		onLoad();
 	})
 	.controller('ApplicantCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
 		console.log('In ApplicantCtrl..');
