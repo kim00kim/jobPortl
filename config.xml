@@ -5,6 +5,7 @@
     <description>A Job Portal Application</description>
     <author email="info@jobportl.com" href="http://www.jobportl.com">jobportl</author>
     <access origin="*"/>
+    <content src="index.html" />
 
     <preference name="phonegap-version" value="3.6.3"/>
     <preference name="orientation" value="portrait"/>
@@ -16,7 +17,6 @@
     <preference name="android-installLocation" value="auto"/>
 
     <!--Icons-->
-    <icon src="icon.png" width="57" height="57"/>
     <icon src="img/icon.png" width="57" height="57" />
     <icon src="img/icon/drawable-ldpi-icon.png" gap:platform="android" gap:density="ldpi" />
     <icon src="img/icon/drawable-mdpi-icon.png" gap:platform="android" gap:density="mdpi" />
@@ -26,20 +26,20 @@
     <icon src="img/icon/drawable-xxxhdpi-icon.png" gap:platform="android" gap:density="xxxhdpi" />
 
     <!--Splash Screen-->
-    <preference name="SplashScreen" value="splash"/>
+    <preference name="SplashScreen" value="screen"/>
     <preference name="SplashScreenDelay" value="10000"/>
 
-    <platform name="android">
+    <!--<platform name="android">-->
         <!-- you can use any density that exists in the Android project -->
-        <splash src="splash.png"/>
-        <splash src="resources/splash.png"/>
-        <splash src="resources/splash/drawable-port-ldpi-screen.png" gap:platform="android" gap:density="port-ldpi"/>
-        <splash src="resources/splash/drawable-port-mdpi-screen.png" gap:platform="android" gap:density="port-mdpi"/>
-        <splash src="resources/splash/drawable-port-hdpi-screen.png" gap:platform="android" gap:density="port-hdpi"/>
-        <splash src="resources/splash/drawable-port-xhdpi-screen.png" gap:platform="android" gap:density="port-xhdpi"/>
-        <splash src="resources/splash/drawable-port-xxhdpi-screen.png" gap:platform="android" gap:density="port-xxhdpi"/>
-        <splash src="resources/splash/drawable-port-xxxhdpi-screen.png" gap:platform="android" gap:density="port-xxxhdpi"/>
-    </platform>
+        <gap:splash src="screen.png"/>
+        <gap:splash src="resources/screen.png"/>
+        <gap:splash src="resources/screen/ldpi/screen.png" gap:platform="android" density="port-ldpi"/>
+        <gap:splash src="resources/screen/mdpi/screen.png" gap:platform="android" density="port-mdpi"/>
+        <gap:splash src="resources/screen/hdpi/screen.png" gap:platform="android" density="port-hdpi"/>
+        <gap:splash src="resources/screen/xhdpi/screen.png" gap:platform="android" density="port-xhdpi"/>
+        <gap:splash src="resources/screen/xxhdpi/screen.png" gap:platform="android" density="port-xxhdpi"/>
+        <gap:splash src="resources/screen/xxxhdpi/screen.png" gap:platform="android" density="port-xxxhdpi"/>
+    <!--</platform>-->
 
     <!-- Phonegap plugins -->
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
