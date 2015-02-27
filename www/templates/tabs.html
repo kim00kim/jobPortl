@@ -16,7 +16,12 @@
 	</ion-tab>
 
 	<!-- Account Tab -->
-	<ion-tab title="Account" icon="icon ion-gear-b" href="#/tab/account">
+	<ion-tab title="Account" icon="icon ion-gear-b" href="#/tab/account" class="{{toggleStalker}}">
+		<ion-nav-view name="tab-account"></ion-nav-view>
+	</ion-tab>
+
+	<!--Return in login-->
+	<ion-tab title="Account" icon="icon ion-log-out" href="#/tab/account" class="{{toggleSl}} {{toggleEmployer}}" >
 		<ion-nav-view name="tab-account"></ion-nav-view>
 	</ion-tab>
 
