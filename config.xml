@@ -14,9 +14,6 @@
     <preference name="StatusBarOverlaysWebView" value="false"/>
     <preference name="StatusBarBackgroundColor" value="#000000"/>
     <preference name="android-installLocation" value="auto"/>
-    <preference name="SplashScreen" value="screen"/>
-    <preference name="SplashScreenDelay" value="3000"/>
-
 
     <!--Icons-->
     <icon src="icon.png" width="57" height="57"/>
@@ -36,6 +33,18 @@
     <gap:splash src="img/splash/drawable-port-xhdpi-screen.png" gap:platform="android" gap:density="port-xhdpi" />
     <gap:splash src="img/splash/drawable-port-xxhdpi-screen.png" gap:platform="android" gap:density="port-xxhdpi" />
     <gap:splash src="img/splash/drawable-port-xxxhdpi-screen.png" gap:platform="android" gap:density="port-xxxhdpi" />
+
+    <platform name="android">
+        <!-- you can use any density that exists in the Android project -->
+        <splash src="resources/splash/drawable-port-ldpi-screen.png" density="port-ldpi"/>
+        <splash src="resources/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
+        <splash src="resources/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
+        <splash src="resources/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
+        <splash src="resources/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
+        <splash src="resources/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
+    </platform>
+
+    <preference name="SplashScreenDelay" value="10000" />
 
     <!-- Phonegap plugins -->
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
