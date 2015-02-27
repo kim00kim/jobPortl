@@ -7,7 +7,7 @@
 				<button class="button button-small button-stable" ng-click= "capture()"><i
 						class="icon ion-ios7-camera"></i> Take Photo
 				</button>
-				<button ng-click="getPhoto()" class="button button-small"><i class="icon ion-ios7-photos-outline"></i>
+				<button ng-click="selectPhoto()" class="button button-small"><i class="icon ion-ios7-photos-outline"></i>
 					Select Photo
 				</button>
 			</div>
@@ -37,7 +37,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="item item-divider item-icon-right headers">Certification(s)<i class="icon ion-ios7-plus-empty balanced" ng-click="addSkill()"></i></div>
+			<div class="item item-divider item-icon-right headers">Certification(s)<i class="icon ion-ios7-plus-empty balanced" ng-click="addCertification()"></i></div>
 			<div class="certification sub-list" ng-repeat="certification in userInfo.certification">
 				{{certification.desc}}
 			</div>

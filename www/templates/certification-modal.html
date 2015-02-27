@@ -1,0 +1,40 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-dark">
+		<h1 class="title">Add Certification</h1>
+		<button class="button button-clear button-primary icon ion-close-circled"
+				ng-click="closeModal()"></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<form name="certificate" ng-submit="saveCertification(certification)" novalidate>
+			<div class="list">
+				<label class="item item-input item-select" ng-class="{'no-error' : certificate.category.$dirty}">
+					<div class="input-label">Type</div>
+					<select ng-model="certification.type">
+						<option value="Certificate of Competency">Certificate of Competency</option>
+						<option value="National Certificate I">National Certificate I</option>
+						<option value="National Certificate II">National Certificate II</option>
+						<option value="National Certificate III">National Certificate III</option>
+						<option value="National Certificate IV">National Certificate IV</option>
+					</select>
+				</label>
+			</div>
+			<div class="list">
+				<label class="item item-input item-floating-label">
+					<span class="input-label">Qualification</span>
+					<input type="text" placeholder="Qualification" ng-model="certification.qualification" class="form-control" required>
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label">Certificate Number</span>
+					<input type="number" placeholder="Certificate Number" ng-model="certification.control" class="form-control" required>
+				</label>
+			</div>
+
+			<label class="item item-input "
+				   ng-class="{'has-error' : certificate.datetimeIssued.$dirty && certificate.datetimeIssued.$invalid, 'no-error' : certificate.datetimeIssued.$dirty && certificate.datetimeIssued.$valid}">
+				<span class="input-label">Date of Issuance:</span>
+				<input type="date" name="datetimeIssued" ng-model="certification.issued" class="form-control" required>
+			</label>
+			<button class="button button-block button-positive" ng-disabled="certificate.$invalid" type="submit">Done</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

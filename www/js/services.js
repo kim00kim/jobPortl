@@ -140,6 +140,9 @@ angular.module('jobPortl.services', [])
 			},*/
 			removeASkill: function(acquiredSkill){
 				return $http({method: "DELETE", url: baseUrl + 'removeskills/'+ acquiredSkill})
+			},
+			addCertification: function(certification){
+				return $http({method: "POST", url: baseUrl + 'certifications', data: certification})
 			}
 		}
 	})

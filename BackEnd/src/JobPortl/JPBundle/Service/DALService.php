@@ -264,7 +264,9 @@ class DALService
 	public function saveApplication($application){
 		return $this->_persistFlush($application);
 	}
-
+	public function saveCertification($application){
+		return $this->_persistFlush($application);
+	}
 	private function _persistFlush($object)
 	{
 		$this->manager->persist($object);

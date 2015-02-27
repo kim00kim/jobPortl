@@ -113,6 +113,11 @@ class UserJ
 	 * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user", fetch="EXTRA_LAZY")
 	 */
 	protected $schedules;
+	/**
+	 * @Exclude
+	 * @ORM\OneToMany(targetEntity="UserConcern", mappedBy="user", fetch="EXTRA_LAZY")
+	 */
+	protected $concerns;
 
 	/**
 	 * Get userId
@@ -581,5 +586,38 @@ class UserJ
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Add concerns
+     *
+     * @param \JobPortl\JPBundle\Entity\UserConcern $concerns
+     * @return UserJ
+     */
+    public function addConcern(\JobPortl\JPBundle\Entity\UserConcern $concerns)
+    {
+        $this->concerns[] = $concerns;
+
+        return $this;
+    }
+
+    /**
+     * Remove concerns
+     *
+     * @param \JobPortl\JPBundle\Entity\UserConcern $concerns
+     */
+    public function removeConcern(\JobPortl\JPBundle\Entity\UserConcern $concerns)
+    {
+        $this->concerns->removeElement($concerns);
+    }
+
+    /**
+     * Get concerns
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConcerns()
+    {
+        return $this->concerns;
     }
 }

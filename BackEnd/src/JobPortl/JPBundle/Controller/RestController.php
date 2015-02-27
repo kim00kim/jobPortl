@@ -360,4 +360,19 @@ class RestController extends Controller
 
 		return $dal->saveEvaluation($evaluation);
 	}
+	public function postCertificationAction(Request $request)
+	{
+		$post = $request->request;
+		$dal = $this->get('jpdal.dal');
+
+		$user= $dal->getUser($post->get('userId'));
+		$certification = new Entity\Certification();
+		$certification->setQualification($post->get('qualification'));
+		$certification->setControl($post->get('control'));
+		$certification->setUser($user);
+		$certification->setValid(0);
+		$certification->setIssued(\DateTime::createFromFormat('Y-m-d', $post->get('issued'))	);
+		$certification->setType($post->get('type'));
+		return $dal->saveCertification($certification);
+	}
 }
