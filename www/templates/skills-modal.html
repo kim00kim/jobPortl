@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar bar-header bar-dark">
 		<h1 class="title">Add Skills</h1>
 		<button class="button button-clear button-primary icon ion-close-circled"
-				ng-click="closeModal()"></button>
+				ng-click="closeSkillModal()"></button>
 	</ion-header-bar>
 	<ion-content class="padding">
 		<form name="as" ng-submit="as_skillSet(acquired_skills)" novalidate>
@@ -15,14 +15,6 @@
 							ng-model="acquired_skills.category" name="category" ng-change="change()">
 					</select>
 				</label>
-				<!--<div class="item item-checkbox" ng-repeat="skill in skillSet"
-					ng-model="checked" name="skill">
-					<label class="checkbox">
-						<input type="checkbox">
-					</label>
-					{{skill.skill_name}}
-				</div>-->
-				<!--<ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox>-->
 			</div>
 			<button class="button button-block button-positive" ng-disabled="as.$invalid" type="submit">Done</button>
 		</form>
