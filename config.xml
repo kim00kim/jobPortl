@@ -31,6 +31,8 @@
 
     <platform name="android">
         <!-- you can use any density that exists in the Android project -->
+        <splash src="splash.png"/>
+        <splash src="resources/splash.png"/>
         <splash src="resources/splash/drawable-port-ldpi-screen.png" density="port-ldpi"/>
         <splash src="resources/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
         <splash src="resources/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
