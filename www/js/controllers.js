@@ -4,7 +4,7 @@ angular.module('jobPortl.controllers', [])
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 	})
 
-	.controller('AccountCtrl', function ($scope, $state, $ionicPopup, UserService) {
+	.controller('AccountCtrl', function ($scope, $state, $ionicPopup, UserService, CachedData) {
 		console.log('In AccountCtrl..');
 		var userType = UserService.getUserType();
 
@@ -31,6 +31,7 @@ angular.module('jobPortl.controllers', [])
 			confirmPopup.then(function (res) {
 				if (res) {
 					UserService.clearStorage();
+					CachedData.clearStorage();
 					$state.go('login');
 					if(window.cordova)
 					window.plugins.toast.showLongCenter('You are logged out.')
@@ -239,8 +240,6 @@ angular.module('jobPortl.controllers', [])
 		$scope.newUser = {};
 		$scope.newUserAccount = {};
 
-//		console.log(JSON.stringify(User.getFbInfo()));
-
 		//initialize inputs
 		var initialize = function (){
 			$scope.newUser.firstName = User.getFbInfo().firstName;
@@ -324,7 +323,7 @@ angular.module('jobPortl.controllers', [])
 		console.log('In EditProfileCtrl..');
 
 		$scope.capture = function(){
-			console.log("Clicked!");
+			console.log("Clicked!!");
 
 			if(window.cordova){
 				window.plugins.toast.showShortCenter('Getting Camera..')
@@ -336,28 +335,102 @@ angular.module('jobPortl.controllers', [])
 					encodingType: Camera.EncodingType.JPEG,
 					targetWidth: 1024,
 					targetHeight: 1024,
-					popoverOptions: CameraPopoverOptions,
 					saveToPhotoAlbum: false
 				};
 
-				var onSuccess = function(imageURI) {
+				/*var onSuccess = function(imageURI) {
 					// if working, save to database
-					$scope.myPhoto = imageURI;
+					$scope.$apply(function(){
+						$scope.myPhoto = imageURI;
+						console.log(imageURI);
+					})
 				};
 				var onFail = function(message) {
 					window.plugins.toast.showShortCenter(message)
-				};
+				};*/
 
 				navigator.camera.getPicture(onSuccess, onFail, options);
 			}
 
 		};
 
+		var clearCache = function(){
+			navigator.camera.cleanup();
+		};
+
+		var onSuccess = function(imageURI) {
+			/*var win = function (r) {
+				// if working, save to database
+				console.log(r);*/
+			$scope.$apply(function(){
+				$scope.myPhoto = imageURI;
+				console.log(imageURI);
+			});
+
+			//for upload
+			/*var options = new FileUploadOptions();
+			options.fileKey="ffile";
+			options.fileName=$scope.myPhoto.substr($scope.myPhoto.lastIndexOf('/')+1);
+			options.mimeType="image/jpeg";
+			var params = {};
+			params.other = obj.text; // some other POST fields
+			options.params = params;
+
+			//console.log("new imp: prepare upload now");
+			var ft = new FileTransfer();
+			ft.upload($scope.myPhoto, encodeURI($scope.data.uploadurl), uploadSuccess, uploadError, options);
+			function uploadSuccess(r) {
+				// handle success like a message to the user
+			}
+			function uploadError(error) {
+				//console.log("upload error source " + error.source);
+				//console.log("upload error target " + error.target);
+			}*/
+				//clearCache();
+
+				/*retries = 0;
+				alert('Done!');*/
+			//};
+
+			/*var fail = function (error) {
+				if (retries == 0) {
+					retries ++;
+					$timeout( function() {
+						//simulate async response
+						display();
+
+						//Stop the ion-refresher from spinning
+						$scope.$broadcast('scroll.refreshComplete');
+					}, 1000);
+					*//*setTimeout(function() {
+						onSuccess(imageURI)
+					}, 1000)*//*
+				} else {
+					retries = 0;
+					clearCache();
+					alert('Something went wrong!');
+				}*/
+			//};
+
+/*			var option = new FileUploadOptions();
+			option.fileKey = "file";
+			option.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+			option.mimeType = "image/jpeg";
+			option.params = {}; // if we need to send parameters to the server request
+			var ft = new FileTransfer();
+
+			ft.upload(imageURI, encodeURI("./img"), win, fail, option);*/
+		};
+		var onFail = function(message) {
+			window.plugins.toast.showShortCenter(message)
+		};
+
+
 		$scope.selectPhoto = function(){
 			console.log("Clicked!");
 
 			if(window.cordova){
-				window.plugins.toast.showShortCenter('Loading Camera..')
+				//window.plugins.toast.showShortCenter('Loading Camera..')
 				var options = {
 					quality: 75,
 					destinationType: Camera.DestinationType.FILE_URI,
@@ -368,22 +441,7 @@ angular.module('jobPortl.controllers', [])
 					targetHeight: 1024,
 					saveToPhotoAlbum: false
 				};
-
-				var onSuccess = function(imageURI) {
-					alert('success');
-					// if working, save to database
-					$scope.myPhoto = imageURI;
-				};
-				var onFail = function(message) {
-					window.plugins.toast.showShortCenter(message)
-				};
-
-				var clearCache = function(){
-					navigator.camera.cleanup();
-				};
-
 				navigator.camera.getPicture(onSuccess, onFail, options);
-				clearCache();
 			}
 		};
 
@@ -726,93 +784,122 @@ angular.module('jobPortl.controllers', [])
 		onLoad();
 	})
 
-	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading, $timeout, JobPost, UserService, Application) {
+	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading,$timeout, JobPost, UserService, Application, CachedData) {
 		console.log('In JobCtrl..');
 		var userType = UserService.getUserType();
 		var userId = UserService.getUser().userId;
-		var pending;
+		var pending, refreshed = 0;
 
 		$scope.newJobPost = {};
 
-		var onLoad = function(){
-			$ionicLoading.show({
-				content: 'Loading...',
-				animation: 'fade-in',
-				showBackdrop: false,
-				maxWidth: 50,
-				showDelay: 0
-			});
-			navigateViewByUserType();
-		}
+
+		var navigateViewByUserType = function (param) {
+			console.log("Param: " + param)
+			console.log("navigate: refreshed= " + refreshed)
+			if (userType  == 0){ //employer
+				console.log("employer")
+				$scope.toggleEmployer = 'ng-hide';
+
+
+				if((angular.equals({}, CachedData.getJobPost()) && param!= 1)){
+					console.log("IN")
+					$ionicLoading.show({
+						content: 'Loading...',
+						animation: 'fade-in',
+						showBackdrop: false,
+						maxWidth: 50,
+						showDelay: 0
+					});
+					JobPost.getMyPost(userId).success(function(response) {
+						$ionicLoading.hide();
+						console.log("getMyJobPosts..");
+						console.log(response);
+						CachedData.setJobPost(response);
+					});
+				}
+			}
+			else if (userType  == 1){ //skilled-laborer
+				$scope.toggleSl = 'ng-hide';
+
+				console.log(angular.equals({}, CachedData.getJobPost()));
+
+				if(angular.equals({}, CachedData.getJobPost())){
+					$ionicLoading.show({
+						content: 'Loading...',
+						animation: 'fade-in',
+						showBackdrop: false,
+						maxWidth: 50,
+						showDelay: 0
+					});
+					JobPost.getAllJobPosts().success(function(response){
+						console.log("getAllJobPosts..");
+						//console.log(response);
+						CachedData.setJobPost(response);
+						//displayJobPost(response);
+					}).
+						error(function(err){
+							console.log(err);
+
+						});
+				}
+			}
+			else{
+				$scope.toggleStalker = 'ng-hide';
+				if(angular.equals({}, CachedData.getJobPost())) {
+					$ionicLoading.show({
+						content: 'Loading...',
+						animation: 'fade-in',
+						showBackdrop: false,
+						maxWidth: 50,
+						showDelay: 0
+					});
+					JobPost.getAllJobPosts().success(function (response) {
+						console.log(response);
+						CachedData.setJobPost(response);
+					}).
+						error(function (err) {
+							console.log(err);
+						});
+				}
+			}
+			console.log("CachedData.getJobPost()");
+			console.log(CachedData.getJobPost())
+
+			displayJobPost(CachedData.getJobPost());
+		};
 
 		//load page when pulled down
 		$scope.doRefresh = function() {
 			console.log('Refreshing!');
 			$timeout( function() {
 				//simulate async response
-				navigateViewByUserType();
+				CachedData.setJobPost({})
+				refreshed=1;
+
+				navigateViewByUserType(1);
 
 				//Stop the ion-refresher from spinning
 				$scope.$broadcast('scroll.refreshComplete');
 			}, 1000);
-
+			console.log("doRefresh: refreshed= " + refreshed)
 		};
 
-		var navigateViewByUserType = function (){
-			if (userType  == 0){ //employer
-				$scope.toggleEmployer = 'ng-hide';
-				JobPost.getMyPost(userId).success(function(response) {
-					console.log("getMyJobPosts..");
-					console.log(response);
-					displayJobPost(response);
-				});
-			}
-			else if (userType  == 1){ //skilled-laborer
-				$scope.toggleSl = 'ng-hide';
 
-				JobPost.getAllJobPosts().success(function(response){
-					console.log("getAllJobPosts..");
-					console.log(response);
-					displayJobPost(response);
-				}).
-					error(function(err){
-						console.log(err);
-				});
-           	}
-
-			else{
-				$scope.toggleStalker = 'ng-hide';
-				JobPost.getAllJobPosts().success(function(response){
-					console.log(response);
-					displayJobPost(response);
-				}).
-				error(function(err){
-					console.log(err);
-				});
-			}
-		};
 
 		var displayJobPost = function(jobPost){
 			$scope.userType = userType;
-			console.log(jobPost);
 			$ionicLoading.hide();
 			var jobPosts;
-
 			if(userType == 0)
 				jobPosts=jobPost;
 			else
 				jobPosts =  pushJobPost(jobPost);
-
 			angular.forEach(jobPosts, function(post){
 				pending=0;
 				var notif;
 				post['header'] = post.status == 0 ? "bar-assertive" : "bar-positive";
 				if(post.status == 0)/*{*/
 					post['closed'] = 'ng-hide';
-				/*	post['evaluate'] = 'ng-show';
-				}
-				else
-					post['evaluate'] = 'ng-hide';*/
 				post.datetimePosted= $filter('date')(post.datetimePosted, "d MMM yyyy ") + $filter('date')(post.datetimePosted, " hh:mm a");
 				post['hasApplied']='Apply Job';
 
@@ -832,9 +919,6 @@ angular.module('jobPortl.controllers', [])
 				//for employer
 				post.applications['pending']=pending;
 				post['notif'] = post.status ? "("+ pending + ")" : "";
-
-				console.log("status")
-				console.log(post.status)
 			});
 			console.log(jobPosts);
 			$scope.jobPosts=jobPosts;
@@ -934,7 +1018,7 @@ angular.module('jobPortl.controllers', [])
 				$scope.newJobPost = {};
 				$scope.newJobPost.category = $scope.categories[0];
 				$scope.jobPosts.unshift(response);
-				navigateViewByUserType();
+				navigateViewByUserType(1);
 			});
 		};
 
@@ -965,7 +1049,8 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		//execute on load
-		onLoad();
+		navigateViewByUserType(0);
+		//onLoad();
 	})
 	.controller('ApplicantCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
 		console.log('In ApplicantCtrl..');
@@ -1025,23 +1110,6 @@ angular.module('jobPortl.controllers', [])
 				}
 			})
 			console.log(application)
-			/*for(var i = 0; i<application.applications.length;i++){
-				$scope.applications.applications[i].rating = 0;
-				$scope.applications.applications[i].buttonName="Evaluate";
-				$scope.applications.applications[i].readOnly=0;
-				$scope.applications.applications[i].display = "ng-show";
-				if(application.applications[i].isEvaluated){
-					Application.getEvaluation(application.applications[i].appId).success(function(response){
-						evaluation= response;
-						console.log(application.applications[i].appId)
-						*//*$scope.applications.applications[i]=response;
-						$scope.applications.applications[i].buttonName="Evaluated";
-						$scope.applications.applications[i].readOnly=1;
-						if(response.comment == null)
-							$scope.applications.applications[i].display = "ng-hide";*//*
-					})
-				}
-			}*/
 		};
 
 		//has error

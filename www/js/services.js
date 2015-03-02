@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://17.1.253.2/jobportl/web/api/')
+	.constant('baseUrl', 'http://192.168.1.7/jobportl/web/api/')
 
 	.factory('$localStorage', ['$window', function ($window) {
 		return {
@@ -20,9 +20,29 @@ angular.module('jobPortl.services', [])
 				var object = JSON.parse($window.localStorage[obj]);
 				object[key] = value;
 				$window.localStorage[obj] = JSON.stringify(object);
+			},
+			removeItem: function (key){
+				$window.localStorage.removeItem(key);
 			}
 		};
 	}])
+
+	.factory('CachedData', function($localStorage){
+		return {
+			setJobPost: function(jobPost){
+				$localStorage.setObject('jobPost', jobPost);
+			},
+			getJobPost: function(){
+				return $localStorage.getObject('jobPost');
+			},
+			removeKey: function(key){
+				$localStorage.removeItem(key);
+			},
+			clearStorage: function () {
+				localStorage.clear()
+			}
+		}
+	})
 
 	.factory('UserService', function ($localStorage) {
         var view; // if 0 = job post, if 1 = accepted app, if 2= sent job offer
@@ -68,9 +88,9 @@ angular.module('jobPortl.services', [])
 			clearStorage: function () {
 				localStorage.clear()
 			},
-			/*removeKey: function(key){
+			removeKey: function(key){
 				$localStorage.removeItem(key)
-			},*/
+			},
             setView: function(userView){
                 view = userView
             },
@@ -79,24 +99,6 @@ angular.module('jobPortl.services', [])
             }
 		}
 	})
-
-	/*.factory('Camera', ['$q', function ($q) {
-
-		return {
-			getPicture: function (options) {
-				var q = $q.defer();
-
-				navigator.camera.getPicture(function (result) {
-					// Do any magic you need
-					q.resolve(result);
-				}, function (err) {
-					q.reject(err);
-				}, options);
-
-				return q.promise;
-			}
-		}
-	}])*/
 
 	.factory('UserAccount', function (baseUrl, $http) {
 		var userAccount = {};
@@ -143,11 +145,15 @@ angular.module('jobPortl.services', [])
 			},
 			addCertification: function(certification){
 				return $http({method: "POST", url: baseUrl + 'certifications', data: certification})
+			},
+			savePhoto: function(photo){
+				console.log(photo);
 			}
 		}
 	})
 
 	.factory('JobPost', function ($http, baseUrl) {
+		var jobPost = {}
 		return {
 			getAllJobPosts: function () {
 				return $http({method: "GET", url: baseUrl + 'alljobpost'})
@@ -156,6 +162,7 @@ angular.module('jobPortl.services', [])
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
 			},
 			getMyPost: function(userId){
+				console.log("Services")
 				return $http({method: "GET", url: baseUrl + 'jobpostbyusers/'+ userId})
 			},
 			saveJobPost: function (jobPost){
