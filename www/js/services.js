@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://192.168.1.7/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	.factory('$localStorage', ['$window', function ($window) {
 		return {
@@ -40,6 +40,12 @@ angular.module('jobPortl.services', [])
 			},
 			clearStorage: function () {
 				localStorage.clear()
+			},
+			setSL: function(skilledLaborer){
+				$localStorage.setObject('sl', skilledLaborer);
+			},
+			getSL: function(){
+				return $localStorage.getObject('sl');
 			}
 		}
 	})
@@ -71,8 +77,6 @@ angular.module('jobPortl.services', [])
 						acquiredSkills: response.user.acquired_skills,
 						certifications: response.user.certifications,
 						evaluations: response.user.evaluations,
-						languages: response.user.languages,
-						schedules: response.user.schedules,
 						title: response.user.title
 					})
 			},

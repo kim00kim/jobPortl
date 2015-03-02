@@ -82,8 +82,8 @@ angular.module('jobPortl.controllers', [])
 						if(window.cordova)
 							window.plugins.toast.showShortCenter('Incorrect email and password!')
 						console.log("Incorrect email and password!");
+						userInput.password = '';
 					}
-
 					else{
 //						console.log("LOGIN: " +fb_info)
 						User.setFbInfo(fbInfo);
@@ -99,7 +99,7 @@ angular.module('jobPortl.controllers', [])
 					//get acquired skills
 					if(UserService.getUserType()==1){
 						SkilledLaborer.getAcquiredSkillsByUser(response.user.user_id).success(function(ac){
-							console.log("AC: ");
+//							console.log("AC: ");
 //							console.log(ac);
 							response.user['acquired_skills']=ac;
 							UserService.setUser(response);
@@ -660,11 +660,12 @@ angular.module('jobPortl.controllers', [])
 //		updateUserService();
 	})
 
-	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, $timeout, SkilledLaborer, JobPost, UserService) {
+	.controller('SkilledLaborerCtrl', function ($scope, $ionicModal, $filter, $ionicLoading, $timeout, SkilledLaborer, JobPost, UserService, CachedData) {
 		console.log('In SkilledLaborerCtrl..');
 		$scope.skilledLaborerInfo = {};
 
-		var onLoad = function(){
+		if(angular.equals({}, CachedData.getSL()) || CachedData.getSL().length==0){
+			console.log("LOAD")
 			$ionicLoading.show({
 				content: 'Loading...',
 				animation: 'fade-in',
@@ -672,16 +673,13 @@ angular.module('jobPortl.controllers', [])
 				maxWidth: 50,
 				showDelay: 0
 			});
-			display();
-//			$ionicLoading.hide();
-		};
-
+		}
 		//load page when pulled down
 		$scope.doRefresh = function() {
 			console.log('Refreshing!');
 			$timeout( function() {
 				//simulate async response
-				display();
+				display(1);
 
 				//Stop the ion-refresher from spinning
 				$scope.$broadcast('scroll.refreshComplete');
@@ -689,15 +687,27 @@ angular.module('jobPortl.controllers', [])
 
 		};
 
-		var display = function(){
-			SkilledLaborer.getSkilledLaborers().success(function (data) {
-				$ionicLoading.hide();
-				console.log(data);
-				$scope.skilledLaborerInfo = data;
-			}).
-			error(function () {
-				alert("An error occurred. Cannot get skilled laborer info");
-            });
+		var display = function(param){
+//			console.log((angular.equals({},CachedData.getSL)))
+
+			if(angular.equals({},CachedData.getSL()) || param==1){
+				SkilledLaborer.getSkilledLaborers().success(function (data) {
+					$ionicLoading.hide();
+					console.log(data);
+					$scope.skilledLaborerInfo = data;
+					CachedData.setSL(data);
+				}).
+					error(function () {
+						alert("An error occurred. Cannot get skilled laborer info");
+					});
+			}
+			else{
+				console.log("ELSE");
+				console.log(CachedData.getSL());
+				$scope.skilledLaborerInfo = CachedData.getSL();
+			}
+
+			$ionicLoading.hide();
 		};
 
 		//view profile function
@@ -781,66 +791,83 @@ angular.module('jobPortl.controllers', [])
 			$scope.skills = $scope.newJobPost.category.skills;
 			$scope.newJobPost.skill = $scope.skills[0];
 		};
-		onLoad();
+		display(0);
 	})
 
-	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading,$timeout, JobPost, UserService, Application, CachedData) {
+	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading,$timeout, $ionicPopup, JobPost, UserService, Application, CachedData) {
 		console.log('In JobCtrl..');
 		var userType = UserService.getUserType();
 		var userId = UserService.getUser().userId;
-		var pending, refreshed = 0;
+		var pending, cached = 0, refreshed =0;
 
 		$scope.newJobPost = {};
-
 
 		var navigateViewByUserType = function (param) {
 			console.log("Param: " + param)
 			console.log("navigate: refreshed= " + refreshed)
+
+			if(angular.equals({}, CachedData.getJobPost()) || CachedData.getJobPost().length==0){
+				console.log("LOAD")
+				$ionicLoading.show({
+					content: 'Loading...',
+					animation: 'fade-in',
+					showBackdrop: false,
+					maxWidth: 50,
+					showDelay: 0
+				});
+			}
+
 			if (userType  == 0){ //employer
-				console.log("employer")
+				console.log("employer");
 				$scope.toggleEmployer = 'ng-hide';
 
-
-				if((angular.equals({}, CachedData.getJobPost()) && param!= 1)){
+				if((angular.equals({}, CachedData.getJobPost()) || param==1)){
 					console.log("IN")
-					$ionicLoading.show({
-						content: 'Loading...',
-						animation: 'fade-in',
-						showBackdrop: false,
-						maxWidth: 50,
-						showDelay: 0
-					});
 					JobPost.getMyPost(userId).success(function(response) {
-						$ionicLoading.hide();
+//						$ionicLoading.hide();
 						console.log("getMyJobPosts..");
 						console.log(response);
 						CachedData.setJobPost(response);
+						displayJobPost(response);
 					});
 				}
+				else
+					displayJobPost(CachedData.getJobPost());
 			}
 			else if (userType  == 1){ //skilled-laborer
 				$scope.toggleSl = 'ng-hide';
 
 				console.log(angular.equals({}, CachedData.getJobPost()));
 
-				if(angular.equals({}, CachedData.getJobPost())){
-					$ionicLoading.show({
-						content: 'Loading...',
-						animation: 'fade-in',
-						showBackdrop: false,
-						maxWidth: 50,
-						showDelay: 0
-					});
+				if(angular.equals({}, CachedData.getJobPost()) || param==1){
+					if(angular.equals({}, CachedData.getJobPost())){
+						console.log("LOAD")
+						$ionicLoading.show({
+							content: 'Loading...',
+							animation: 'fade-in',
+							showBackdrop: false,
+							maxWidth: 50,
+							showDelay: 0
+						});
+					}
 					JobPost.getAllJobPosts().success(function(response){
+
 						console.log("getAllJobPosts..");
-						//console.log(response);
+						console.log(response);
 						CachedData.setJobPost(response);
-						//displayJobPost(response);
+						displayJobPost(response);
 					}).
 						error(function(err){
 							console.log(err);
 
 						});
+//					$ionicLoading.hide();
+				}
+				else{
+					displayJobPost(CachedData.getJobPost())
+//					$scope.$apply(function(){
+//						$scope.doRefresh();
+//					});
 				}
 			}
 			else{
@@ -856,35 +883,19 @@ angular.module('jobPortl.controllers', [])
 					JobPost.getAllJobPosts().success(function (response) {
 						console.log(response);
 						CachedData.setJobPost(response);
+						displayJobPost(response);
 					}).
 						error(function (err) {
 							console.log(err);
 						});
 				}
+				else
+					displayJobPost(CachedData.getJobPost());
 			}
 			console.log("CachedData.getJobPost()");
 			console.log(CachedData.getJobPost())
-
-			displayJobPost(CachedData.getJobPost());
+//			$ionicLoading.hide();
 		};
-
-		//load page when pulled down
-		$scope.doRefresh = function() {
-			console.log('Refreshing!');
-			$timeout( function() {
-				//simulate async response
-				CachedData.setJobPost({})
-				refreshed=1;
-
-				navigateViewByUserType(1);
-
-				//Stop the ion-refresher from spinning
-				$scope.$broadcast('scroll.refreshComplete');
-			}, 1000);
-			console.log("doRefresh: refreshed= " + refreshed)
-		};
-
-
 
 		var displayJobPost = function(jobPost){
 			$scope.userType = userType;
@@ -894,34 +905,51 @@ angular.module('jobPortl.controllers', [])
 				jobPosts=jobPost;
 			else
 				jobPosts =  pushJobPost(jobPost);
-			angular.forEach(jobPosts, function(post){
-				pending=0;
-				var notif;
-				post['header'] = post.status == 0 ? "bar-assertive" : "bar-positive";
-				if(post.status == 0)/*{*/
-					post['closed'] = 'ng-hide';
-				post.datetimePosted= $filter('date')(post.datetimePosted, "d MMM yyyy ") + $filter('date')(post.datetimePosted, " hh:mm a");
-				post['hasApplied']='Apply Job';
 
-				//for skilled laborer
-				angular.forEach(post.applications, function(application){
-					//toggle for button's label
-					if(application.user.userId==userId)
-						post.hasApplied = 'Applied';
-					else
-						$scope.status= "Apply Job";
+				angular.forEach(jobPosts, function(post){
+					pending=0;
+					var notif;
+					post['header'] = post.status == 0 ? "bar-assertive" : "bar-positive";
+					if(post.status == 0)/*{*/
+						post['closed'] = 'ng-hide';
+					post.datetimePosted= $filter('date')(post.datetimePosted, "d MMM yyyy ") + $filter('date')(post.datetimePosted, " hh:mm a");
+					post['hasApplied']='Apply Job';
 
-					//check for pending applications
-					if(application.status==2)
-						pending++;
+					//for skilled laborer
+					angular.forEach(post.applications, function(application){
+						//toggle for button's label
+						if(application.user.userId==userId)
+							post.hasApplied = 'Applied';
+						else
+							$scope.status= "Apply Job";
+
+						//check for pending applications
+						if(application.status==2)
+							pending++;
+					});
+
+					//for employer
+					post.applications['pending']=pending;
+					post['notif'] = post.status ? "("+ pending + ")" : "";
 				});
-
-				//for employer
-				post.applications['pending']=pending;
-				post['notif'] = post.status ? "("+ pending + ")" : "";
-			});
-			console.log(jobPosts);
+				console.log(jobPosts);
 			$scope.jobPosts=jobPosts;
+		};
+
+		//load page when pulled down
+		$scope.doRefresh = function() {
+			console.log('Refreshing!');
+			$timeout( function() {
+				//simulate async response
+//				CachedData.setJobPost({})
+//				refreshed=1;
+
+				navigateViewByUserType(1);
+
+				//Stop the ion-refresher from spinning
+				$scope.$broadcast('scroll.refreshComplete');
+			}, 1000);
+			console.log("doRefresh: refreshed= " + refreshed)
 		};
 
 		var pushJobPost = function(jobPost){
@@ -1025,13 +1053,21 @@ angular.module('jobPortl.controllers', [])
 		//skilled laborer application to a job post
 		$scope.applyUser = function(jobPost){
 			console.log(jobPost);
-			jobPost.hasApplied= 'Applied';
-			var appInfo= {postingId: jobPost.postingId, userId: userId};
-			JobPost.applyPosting(appInfo).success(function(response){
-				console.log(response);
-			})
-			.error(function(err){
-				console.log(err);
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Confirm Application?'
+//				template: 'Apply?'
+			});
+			confirmPopup.then(function (res) {
+				if (res) {
+					jobPost.hasApplied= 'Applied';
+					var appInfo= {postingId: jobPost.postingId, userId: userId};
+					JobPost.applyPosting(appInfo).success(function(response){
+						console.log(response);
+					})
+						.error(function(err){
+							console.log(err);
+						});
+				}
 			});
 		};
 
@@ -1212,7 +1248,7 @@ angular.module('jobPortl.controllers', [])
 		onLoad();
 
 	})
-	.controller('SLApplicationCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, UserService, Application) {
+	.controller('SLApplicationCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, $ionicPopup, UserService, Application) {
 		console.log('In SLApplicationCtrl..');
 		var view = UserService.getView();
 		var data;
@@ -1269,33 +1305,45 @@ angular.module('jobPortl.controllers', [])
 			console.log(cpNo)
 		};
 		$scope.acceptOffer = function(job){
-			console.log("Accepted");
-			job.clicked = true;
-
-			Application.acceptApplication(job.appId).success(function(response){
-				console.log(response);
-//				$scope.
-//				$scope.applications.applications.splice(index, 1);
-//				$scope.applications.applications.pending -=1;
-//				if(application.hired+1 == application.requiredApplicant)
-//					$window.history.back();
+			console.log(job)
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Accept Job Offer?'
+//				template: 'Ac?'
 			});
-//			$scope.accepted = "ng-hide"
+			confirmPopup.then(function (res) {
+				if (res) {
+					console.log("Accepted");
+					job.clicked = true;
+
+					Application.acceptApplication(job.appId).success(function(response){
+						console.log(response);
+					});
+				}
+			});
 		};
 		$scope.declineOffer = function(job,index){
-			console.log("Decline");
-			console.log(job.appId);
-			job.clicked = true;
-//			console.log(index);
-			//delete application
-//			Application.deleteApplication(job.appId).success(function(response){
-//				console.log(response);
-				$scope.jobs.splice(index, 1);
-//				$scope.applications.applications.pending -=1;
-//			}).
-//				error(function(err){
-//					console.log(err)
-//				});
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Decline Job Offer?'
+//				template: 'Ac?'
+			});
+			confirmPopup.then(function (res) {
+				if (res) {
+					console.log("Decline");
+					console.log(job);
+					job.clicked = true;
+					//delete application
+					Application.deleteApplication(job).success(function(response){
+						console.log(response);
+					}).
+						error(function(err){
+							console.log(err)
+						});
+					$scope.jobs.splice(index, 1);
+					$scope.applications.applications.pending -=1;
+				}
+			});
+
+
 		};
 
 		navigateView();
