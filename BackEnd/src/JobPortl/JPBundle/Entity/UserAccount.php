@@ -57,151 +57,151 @@ class UserAccount
 	 */
 	protected $user;
 
-	/**
-	 * Get userAccId
-	 *
-	 * @return integer
-	 */
-	public function getUserAccId()
-	{
-		return $this->userAccId;
-	}
+    /**
+     * Get userAccId
+     *
+     * @return integer 
+     */
+    public function getUserAccId()
+    {
+        return $this->userAccId;
+    }
 
-	/**
-	 * Set email
-	 *
-	 * @param string $email
-	 * @return UserAccount
-	 */
-	public function setEmail($email)
-	{
-		$this->email = $email;
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return UserAccount
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get email
-	 *
-	 * @return string
-	 */
-	public function getEmail()
-	{
-		return $this->email;
-	}
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-	/**
-	 * Set password
-	 *
-	 * @param string $password
-	 * @return UserAccount
-	 */
-	public function setPassword($password)
-	{
-		$this->password = $password;
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return UserAccount
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get password
-	 *
-	 * @return string
-	 */
-	public function getPassword()
-	{
-		return $this->password;
-	}
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
-	/**
-	 * Set userAccType
-	 *
-	 * @param integer $userAccType
-	 * @return UserAccount
-	 */
-	public function setUserAccType($userAccType)
-	{
-		$this->userAccType = $userAccType;
+    /**
+     * Set userAccType
+     *
+     * @param integer $userAccType
+     * @return UserAccount
+     */
+    public function setUserAccType($userAccType)
+    {
+        $this->userAccType = $userAccType;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get userAccType
-	 *
-	 * @return integer
-	 */
-	public function getUserAccType()
-	{
-		return $this->userAccType;
-	}
+    /**
+     * Get userAccType
+     *
+     * @return integer 
+     */
+    public function getUserAccType()
+    {
+        return $this->userAccType;
+    }
 
-	/**
-	 * Set userType
-	 *
-	 * @param integer $userType
-	 * @return UserAccount
-	 */
-	public function setUserType($userType)
-	{
-		$this->userType = $userType;
+    /**
+     * Set userType
+     *
+     * @param integer $userType
+     * @return UserAccount
+     */
+    public function setUserType($userType)
+    {
+        $this->userType = $userType;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get userType
-	 *
-	 * @return integer
-	 */
-	public function getUserType()
-	{
-		return $this->userType;
-	}
+    /**
+     * Get userType
+     *
+     * @return integer 
+     */
+    public function getUserType()
+    {
+        return $this->userType;
+    }
 
-	/**
-	 * Set user
-	 *
-	 * @param \JobPortl\JPBundle\Entity\UserJ $user
-	 * @return UserAccount
-	 */
-	public function setUser(\JobPortl\JPBundle\Entity\UserJ $user = null)
-	{
-		$this->user = $user;
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return UserAccount
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get user
-	 *
-	 * @return \JobPortl\JPBundle\Entity\UserJ
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
 
-	/**
-	 * Set salt
-	 *
-	 * @param string $salt
-	 * @return UserAccount
-	 */
-	public function setSalt($salt)
-	{
-		$this->salt = $salt;
+    /**
+     * Set user
+     *
+     * @param \JobPortl\JPBundle\Entity\UserJ $user
+     * @return UserAccount
+     */
+    public function setUser(\JobPortl\JPBundle\Entity\UserJ $user)
+    {
+        $this->user = $user;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get salt
-	 *
-	 * @return string
-	 */
-	public function getSalt()
-	{
-		return $this->salt;
-	}
+    /**
+     * Get user
+     *
+     * @return \JobPortl\JPBundle\Entity\UserJ 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
