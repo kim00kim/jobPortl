@@ -723,12 +723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "8ebb1e8d2c0cc5d89c78f201966fa01e2f3e7d2e"
+                "reference": "02fd6423543d673946246c7f74a738099951aaff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/8ebb1e8d2c0cc5d89c78f201966fa01e2f3e7d2e",
-                "reference": "8ebb1e8d2c0cc5d89c78f201966fa01e2f3e7d2e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/02fd6423543d673946246c7f74a738099951aaff",
+                "reference": "02fd6423543d673946246c7f74a738099951aaff",
                 "shasum": ""
             },
             "require": {
@@ -793,7 +793,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-03-01 10:45:10"
+            "time": "2015-03-02 08:29:42"
         },
         {
             "name": "incenteev/composer-parameter-handler",
