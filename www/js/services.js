@@ -1,6 +1,6 @@
 angular.module('jobPortl.services', [])
 
-	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
+	.constant('baseUrl', 'http://jobportl.esy.es/Backend/web/api/')
 
 	.factory('$localStorage', ['$window', function ($window) {
 		return {
@@ -188,6 +188,9 @@ angular.module('jobPortl.services', [])
 			},
 			sendJobOffer: function(jobOffer){
 				return $http({method: "POST", url: baseUrl + 'sendjoboffers', data: jobOffer})
+			},
+			getCertifications: function (userId) {
+				return $http({method: "GET", url: baseUrl + 'certifications/' + userId})
 			}
 		}
 	})

@@ -279,6 +279,11 @@ class RestController extends Controller
 		$dal = $this->get('jpdal.dal');
 		return $dal->getAcquiredSkillByUser($userId);
 	}
+	public function getCertificationAction($userId)
+	{
+		$dal = $this->get('jpdal.dal');
+		return $dal->getCertification($userId);
+	}
 	public function postAcquiredskillAction(Request $request)
 	{
 		$returnArray = array();

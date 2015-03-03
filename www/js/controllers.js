@@ -8,6 +8,8 @@ angular.module('jobPortl.controllers', [])
 		console.log('In AccountCtrl..');
 		var userType = UserService.getUserType();
 
+
+
 		if (userType == 2){
 			$state.go('login');
 			$scope.toggleStalker = 'ng-hide';
@@ -102,6 +104,14 @@ angular.module('jobPortl.controllers', [])
 //							console.log("AC: ");
 //							console.log(ac);
 							response.user['acquired_skills']=ac;
+							UserService.setUser(response);
+//							console.log(response)
+						});
+						//get certifications
+						SkilledLaborer.getCertifications(response.user.user_id).success(function(c){
+							console.log("C: ");
+							console.log(c);
+							response.user['certifications']=c;
 							UserService.setUser(response);
 //							console.log(response)
 						});
@@ -319,8 +329,11 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('EditProfileCtrl', function ($scope,JobPost,$window, $state,$ionicModal, $ionicLoading, UserService, User, $cordovaCamera, SkilledLaborer) {
+	.controller('EditProfileCtrl', function ($scope,JobPost,$window, $state,$ionicModal, $ionicLoading, $ionicActionSheet, $timeout, UserService, User, $cordovaCamera, SkilledLaborer) {
 		console.log('In EditProfileCtrl..');
+		$scope.forDeleteSkill = 0;
+		$scope.forDeleteCert=0;
+
 
 		$scope.capture = function(){
 			console.log("Clicked!!");
@@ -517,21 +530,53 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		//Skills
-		$scope.addSkill = function (){
-			$scope.acquiredSkills = {};
-			$ionicModal.fromTemplateUrl('templates/skill-set-modal.html', {
-				scope: $scope,
-				animation: 'slide-in-right', //or slide-left-right-ios7
-				focusFirstInput: true
-			}).then(function (modal) {
-				$scope.skillsModal = modal;
-				$scope.categories = allSkills;
-				$scope.acquiredSkills.category = $scope.categories[0];
+		$scope.configureSkill = function (){
+			//$scope.forDeleteSkill=0;
+			$scope.doneSkill= !$scope.doneSkill;
+			if($scope.doneSkill){
+				// Show the action sheet
+				var hideSheet = $ionicActionSheet.show({
+					buttons: [
+						{ text: 'Add Skill' },
+						{ text: 'Remove Skill' }
+					],
+					titleText: 'Configure Skills',
+					cancelText: 'Cancel',
+					cancel: function() {
+						// add cancel code..
+					},
+					buttonClicked: function(index) {
+						console.log(index)
+						if(index==0){
+							$scope.acquiredSkills = {};
+							$ionicModal.fromTemplateUrl('templates/skill-set-modal.html', {
+								scope: $scope,
+								animation: 'slide-in-right', //or slide-left-right-ios7
+								focusFirstInput: true
+							}).then(function (modal) {
+								$scope.skillsModal = modal;
+								$scope.categories = allSkills;
+								$scope.acquiredSkills.category = $scope.categories[0];
 
-				$scope.skillSet = compare($scope.acquiredSkills.category.skills);
-				$scope.predicate = 'categoryName';
-				$scope.skillsModal.show();
-			});
+								$scope.skillSet = compare($scope.acquiredSkills.category.skills);
+								$scope.predicate = 'categoryName';
+								$scope.skillsModal.show();
+							});
+						}
+						else{
+							$scope.forDeleteSkill = 1 ;
+						}
+
+						return true;
+					}
+				});
+				$scope.forDeleteSkill=0;
+			}
+			else{
+				$scope.forDeleteSkill=1;
+			}
+			console.log("Done: " +$scope.doneSkill)
+			console.log("forDelete: " +$scope.forDeleteSkill)
 		};//end of addSkill
 
 		var compare = function(allSkills){
@@ -627,17 +672,45 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		//Certifications
-		$scope.addCertification = function(){
-			$scope.certification = {};
-			$ionicModal.fromTemplateUrl('templates/certification-modal.html', {
-				scope: $scope,
-				animation: 'slide-in-right', //or slide-left-right-ios7
-				focusFirstInput: true
-			}).then(function (modal) {
-				$scope.certificationsModal = modal;
-				$scope.certification.type="Certificate of Competency";
-				$scope.certificationsModal.show();
-			});
+		$scope.configureCert = function(){
+			$scope.forDeleteCert = {};
+			$scope.doneCert=!$scope.doneCert;
+
+			if($scope.doneCert){
+				var hideSheet = $ionicActionSheet.show({
+					buttons: [
+						{ text: 'Add Certification' },
+						{ text: 'Remove Certification' }
+					],
+					titleText: 'Configure Certification',
+					cancelText: 'Cancel',
+					cancel: function() {
+						// add cancel code..
+					},
+					buttonClicked: function(index) {
+						if(index==0){
+							$scope.certification = {};
+							$ionicModal.fromTemplateUrl('templates/certification-modal.html', {
+								scope: $scope,
+								animation: 'slide-in-right', //or slide-left-right-ios7
+								focusFirstInput: true
+							}).then(function (modal) {
+								$scope.certificationsModal = modal;
+								$scope.certification.type="Certificate of Competency";
+								$scope.certificationsModal.show();
+							});
+						}
+						else{
+							$scope.forDeleteCert=1;
+						}
+						return true;
+					}
+				});
+				$scope.forDeleteCert=0;
+			}
+			else{
+				$scope.forDeleteCert=1;
+			}
 		};
 
 		$scope.closeModal = function(){
@@ -1295,10 +1368,6 @@ angular.module('jobPortl.controllers', [])
 					displayJob(response);
 				});
 			}
-			/*else{
-				var vh = $ionicHistory.viewHistory();
-				console.log("ELSE");
-			}*/
 		};
 		$scope.call = function(cpNo){
 			document.location.href = "tel:" + cpNo;

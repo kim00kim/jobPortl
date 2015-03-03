@@ -20,6 +20,7 @@ class DALService
 	private $acquiredSkillRepo;
 	private $applicationRepo;
 	private $evaluationRepo;
+	private $certificationRepo;
 
 	public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Monolog\Logger $logger)
 	{
@@ -34,6 +35,7 @@ class DALService
 		$this->acquiredSkillRepo = $entityManager->getRepository('JobPortlJPBundle:AcquiredSkill');
 		$this->applicationRepo = $entityManager->getRepository('JobPortlJPBundle:Application');
 		$this->evaluationRepo = $entityManager->getRepository('JobPortlJPBundle:Evaluation');
+		$this->certificationRepo = $entityManager->getRepository('JobPortlJPBundle:Certification');
 	}
 
 	public function getAdmin($adminId)
@@ -232,6 +234,16 @@ class DALService
 			->innerJoin('s.category','c')
 			->innerJoin('ac.user','u')
 			->addSelect('s','c')
+			->where('IDENTITY(ac.user) = ?1')
+			->setParameters(array(1 => $userId))
+			->getQuery()
+			->getArrayResult();
+	}
+	public function getCertification($userId)
+	{
+		return $this->certificationRepo->createQueryBuilder('c')
+			->innerJoin('c.user','u')
+			->addSelect('u')
 			->where('IDENTITY(ac.user) = ?1')
 			->setParameters(array(1 => $userId))
 			->getQuery()
