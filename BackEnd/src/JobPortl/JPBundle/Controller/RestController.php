@@ -317,6 +317,15 @@ class RestController extends Controller
 		$user->setTitle($post->get('title'));
 		return $dal->_flush($user);
 	}
+	public function postUpdatephotoAction(Request $request)
+	{
+		$post = $request->request;
+		$dal= $this->get('jpdal.dal');
+		$user = $dal->getUser($post->get('userId'));
+
+		$user->setPhoto($post->get('photo'));
+		return $dal->_flush($user);
+	}
 	public function deleteRemoveskillAction($asId)
 	{
 		$dal= $this->get('jpdal.dal');

@@ -82,7 +82,7 @@ angular.module('jobPortl.controllers', [])
 				if (!response) {
 					if(userInput.userAccType==1){
 						if(window.cordova)
-							window.plugins.toast.showShortCenter('Incorrect email and password!')
+							window.plugins.toast.showShortCenter('Incorrect email and password!');
 						console.log("Incorrect email and password!");
 						userInput.password = '';
 					}
@@ -94,7 +94,7 @@ angular.module('jobPortl.controllers', [])
 				}
 				else {
 					if(window.cordova)
-						window.plugins.toast.showShortBottom('Logged in successfully!')
+						window.plugins.toast.showShortBottom('Logged in successfully!');
 
 //					console.log(response)
 					UserService.setUserType(response.user_type);
@@ -311,7 +311,7 @@ angular.module('jobPortl.controllers', [])
 				});
 				$ionicLoading.hide();
 				if(window.cordova)
-				window.plugins.toast.showShortCenter('Registration successful! Please log in.')
+				window.plugins.toast.showShortCenter('Registration successful! Please log in.');
 				$state.go('login');
 			})
 		};
@@ -333,12 +333,87 @@ angular.module('jobPortl.controllers', [])
 		console.log('In EditProfileCtrl..');
 		$scope.forDeleteSkill = 0;
 		$scope.forDeleteCert=0;
+		var retries;
+		//declare & initialize
+		var user;
+		var allSkills = [];
+		var userSkills = [];
+		user = UserService.getUser();
+		$scope.myPhoto = user.photo;
 
+		var savePhoto = function(options){
+			$cordovaCamera.getPicture(options).then(function(imageData) {
+				var onImageSuccess = function (fileURI) {
+					createFileEntry(fileURI);
+				};
+				var createFileEntry = function (fileURI) {
+					window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+					console.log('createFileEntry');
+					console.log(fileURI);
+				};
+				var copyFile= function (fileEntry) {
+					var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+					var newName = makeid() + name;
 
-		$scope.capture = function(){
+					window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+							fileEntry.copyTo(
+								fileSystem2,
+								newName,
+								onCopySuccess,
+								fail
+							);
+						},
+						fail);
+				};
+
+				// 6
+				var onCopySuccess= function (entry) {
+					$scope.$apply(function () {
+						$scope.myPhoto=entry.nativeURL;
+					});
+					var path = getCorrectPath($scope.myPhoto);
+					User.updatePhoto({'userId' : user.userId, 'photo' : path}).success(function(response){
+						UserService.updateObjectItem('user','photo',response.photo);
+					});
+				};
+
+				var getCorrectPath = function(photo){
+					var name = photo.substr(photo.lastIndexOf('/') + 1);
+					var trueOrigin = cordova.file.dataDirectory + name;
+					$scope.myPhoto = trueOrigin;
+					console.log('trueOrigin')
+					console.log(trueOrigin)
+					return trueOrigin;
+				};
+
+				var fail = function (error) {
+					console.log("fail: " + error.code);
+				};
+
+				var makeid = function () {
+					var text = "";
+					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+					for (var i=0; i < 5; i++) {
+						text += possible.charAt(Math.floor(Math.random() * possible.length));
+					}
+					return text;
+				};
+
+				// 4
+				onImageSuccess(imageData);
+
+			}, function(err) {
+				console.log(err);
+			});
+		};
+		//}
+	//}
+
+		$scope.capture = function() {
 			console.log("Clicked!!");
 
-			if(window.cordova){
+			if (window.cordova) {
 				window.plugins.toast.showShortCenter('Getting Camera..')
 				var options = {
 					quality: 75,
@@ -351,42 +426,46 @@ angular.module('jobPortl.controllers', [])
 					saveToPhotoAlbum: false
 				};
 
+				savePhoto(options);
+
 				/*var onSuccess = function(imageURI) {
-					// if working, save to database
-					$scope.$apply(function(){
-						$scope.myPhoto = imageURI;
-						console.log(imageURI);
-					})
-				};
-				var onFail = function(message) {
-					window.plugins.toast.showShortCenter(message)
-				};*/
+				 // if working, save to database
+				 $scope.$apply(function(){
+				 $scope.myPhoto = imageURI;
+				 console.log(imageURI);
+				 })
+				 };
+				 var onFail = function(message) {
+				 window.plugins.toast.showShortCenter(message)
+				 };*/
 
-				navigator.camera.getPicture(onSuccess, onFail, options);
+				//navigator.camera.getPicture(onSuccess, onFail, options);
+
 			}
-
 		};
 
-		var clearCache = function(){
-			navigator.camera.cleanup();
-		};
+		//var clearCache = function(){
+		//	navigator.camera.cleanup();
+		//};
 
-		var onSuccess = function(imageURI) {
-			/*var win = function (r) {
+		/*var onSuccess = function(imageURI) {
+			var win = function (r) {
 				// if working, save to database
-				console.log(r);*/
+				console.log(r);
 			$scope.$apply(function(){
 				$scope.myPhoto = imageURI;
 				console.log(imageURI);
-			});
+			});*/
 
 			//for upload
-			/*var options = new FileUploadOptions();
-			options.fileKey="ffile";
+/*
+			var options = new FileUploadOptions();
+			options.fileKey="file";
 			options.fileName=$scope.myPhoto.substr($scope.myPhoto.lastIndexOf('/')+1);
 			options.mimeType="image/jpeg";
 			var params = {};
-			params.other = obj.text; // some other POST fields
+			params.userId= user.userId; // some other POST fields
+			params.photo = user.photo;
 			options.params = params;
 
 			//console.log("new imp: prepare upload now");
@@ -394,51 +473,48 @@ angular.module('jobPortl.controllers', [])
 			ft.upload($scope.myPhoto, encodeURI($scope.data.uploadurl), uploadSuccess, uploadError, options);
 			function uploadSuccess(r) {
 				// handle success like a message to the user
+				if(window.cordova)
+					window.plugins.toast.showShortCenter('Image successfully changed.')
+				console.log('Image successfully changed');
+				console.log(r)
+				User.savePhoto(options)
+
 			}
-			function uploadError(error) {
-				//console.log("upload error source " + error.source);
-				//console.log("upload error target " + error.target);
-			}*/
-				//clearCache();
-
-				/*retries = 0;
-				alert('Done!');*/
+ */
+			//function uploadError(error) {
+			//	console.log("upload error source " + error.source);
+			//	console.log("upload error target " + error.target);
+			//}
+			//	clearCache();
+			//
+			//	retries = 0;
+			//	alert('Done!');
+			//};
+			//
+			//var fail = function (error) {
+			//	if (retries == 0) {
+			//		retries ++;
+			//	} else {
+			//		retries = 0;
+			//		clearCache();
+			//		alert('Something went wrong!');
+			//	}
 			//};
 
-			/*var fail = function (error) {
-				if (retries == 0) {
-					retries ++;
-					$timeout( function() {
-						//simulate async response
-						display();
-
-						//Stop the ion-refresher from spinning
-						$scope.$broadcast('scroll.refreshComplete');
-					}, 1000);
-					*//*setTimeout(function() {
-						onSuccess(imageURI)
-					}, 1000)*//*
-				} else {
-					retries = 0;
-					clearCache();
-					alert('Something went wrong!');
-				}*/
-			//};
-
-/*			var option = new FileUploadOptions();
-			option.fileKey = "file";
-			option.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-			option.mimeType = "image/jpeg";
-			option.params = {}; // if we need to send parameters to the server request
-			var ft = new FileTransfer();
-
-			ft.upload(imageURI, encodeURI("./img"), win, fail, option);*/
-		};
-		var onFail = function(message) {
-			window.plugins.toast.showShortCenter(message)
-		};
-
-
+			//var option = new FileUploadOptions();
+			//option.fileKey = "file";
+			//option.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+			//option.mimeType = "image/jpeg";
+			//option.params = {}; // if we need to send parameters to the server request
+			//var ft = new FileTransfer();
+			//
+			//ft.upload(imageURI, encodeURI("../img"), win, fail, option);
+		//};
+		//var onFail = function(message) {
+		//	window.plugins.toast.showShortCenter(message)
+		//};
+		//
+		//
 		$scope.selectPhoto = function(){
 			console.log("Clicked!");
 
@@ -454,14 +530,10 @@ angular.module('jobPortl.controllers', [])
 					targetHeight: 1024,
 					saveToPhotoAlbum: false
 				};
-				navigator.camera.getPicture(onSuccess, onFail, options);
+				//navigator.camera.getPicture(onSuccess, onFail, options);
+				savePhoto(options);
 			}
 		};
-
-		//declare & initialize
-		var user;
-		var allSkills = [];
-		var userSkills = [];
 
 		var getCategories = function(){
 			JobPost.getAllCategories().success(function(response){
@@ -483,23 +555,8 @@ angular.module('jobPortl.controllers', [])
 				maxWidth: 50,
 				showDelay: 0
 			});
-			user = UserService.getUser();
+
 			console.log(user);
-			//console.log('test')
-			//console.log(user.acquired_skills)
-			/*var acq = []
-			var acq_id = []
-			acq.push(user.acquired_skills[0].skill.category)
-			acq_id.push(user.acquired_skills[0].skill.category.category_id)
-			console.log(acq_id)
-			angular.forEach(user.acquired_skills, function(acquired){
-				console.log(acquired.skill.category.category_id)
-				if(acq_id.indexOf(acquired.skill.category.category_id)<0){
-					acq_id.push(acquired.skill.category.category_id)
-					acq.push(acquired.skill.category)
-				}
-				console.log(acq)
-			})*/
 			$scope.divHide = UserService.getUserType() == 0 ?true : false;
 			$scope.editable = false;
 			$scope.myPhoto = user.photo;
@@ -546,7 +603,7 @@ angular.module('jobPortl.controllers', [])
 						// add cancel code..
 					},
 					buttonClicked: function(index) {
-						console.log(index)
+						console.log(index);
 						if(index==0){
 							$scope.acquiredSkills = {};
 							$ionicModal.fromTemplateUrl('templates/skill-set-modal.html', {

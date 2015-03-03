@@ -150,8 +150,8 @@ angular.module('jobPortl.services', [])
 			addCertification: function(certification){
 				return $http({method: "POST", url: baseUrl + 'certifications', data: certification})
 			},
-			savePhoto: function(photo){
-				console.log(photo);
+			updatePhoto: function(userInfo){
+				return $http({method: "POST", url: baseUrl + 'updatephotos', data: userInfo})
 			}
 		}
 	})
