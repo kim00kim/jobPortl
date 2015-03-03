@@ -1,12 +1,12 @@
 <ion-view title="{{applications.skill.skillName}}  {{applications.notif}}">
 	<ion-content>
 		<div class="list card" ng-repeat="app in applications.applications | orderBy : '-status' ">
-			<div class="item item-avatar applicant">
+			<div class="item item-avatar applicant calm-border">
 				<img src={{app.user.photo}} ng-click="viewProfile(app.user)">
 				<h2 class="highlight" ng-click="viewProfile(app.user)">{{app.user.firstName + " " + app.user.lastName}} </h2>
 				<h2 class="title">{{app.user.title}}</h2>
 			</div>
-			<div class="item evaluate" ng-hide="!eval" ng-cloak>
+			<div class="item evaluate calm-border" ng-hide="!eval" ng-cloak>
 				<textarea class="evaluate {{app.display}}" placeholder="Comments (optional) . . ." ng-model="app.comment" ng-disabled="app.readOnly==1" ></textarea>
 				<div class="row evaluate">
 					<div class="col evaluate">

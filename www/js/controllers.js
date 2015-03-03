@@ -197,7 +197,7 @@ angular.module('jobPortl.controllers', [])
 		$scope.fblogin = function () {
 //			console.log('Login');
 			if (!window.cordova) {
-				facebookConnectPlugin.browserInit('578995458902268');
+				facebookConnectPlugin.browserInit('569148046553676');
 			}
 			facebookConnectPlugin.login(['email'], fbLoginSuccess, fbLoginError);
 
@@ -241,6 +241,13 @@ angular.module('jobPortl.controllers', [])
 				)
 			}
 		}*/
+
+
+
+
+		var forPushNotification = function(){
+
+		}
 	})
 
 	.controller('RegisterCtrl', function ($scope, $state, $window, $ionicLoading,UserAccount, User, $ionicViewService) {
@@ -922,6 +929,7 @@ angular.module('jobPortl.controllers', [])
 			$scope.newJobPost.skill = $scope.skills[0];
 		};
 		display(0);
+		$ionicLoading.hide();
 	})
 
 	.controller('JobCtrl', function ($scope, $state, $ionicModal, $filter, $ionicLoading,$timeout, $ionicPopup, JobPost, UserService, Application, CachedData) {
@@ -1216,6 +1224,7 @@ angular.module('jobPortl.controllers', [])
 
 		//execute on load
 		navigateViewByUserType(0);
+		$ionicLoading.hide();
 		//onLoad();
 	})
 	.controller('ApplicantCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
@@ -1376,7 +1385,7 @@ angular.module('jobPortl.controllers', [])
 		};
 		//display on load
 		onLoad();
-
+		$ionicLoading.hide();
 	})
 	.controller('SLApplicationCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, $ionicPopup, UserService, Application) {
 		console.log('In SLApplicationCtrl..');
@@ -1473,6 +1482,7 @@ angular.module('jobPortl.controllers', [])
 		};
 
 		navigateView();
+		$ionicLoading.hide();
 	});/*
 	.controller('JobOfferCtrl', function ($scope, $ionicModal, $filter, $window, $ionicLoading, JobPost, UserService, Application, SkilledLaborer) {
 

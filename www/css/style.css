@@ -3,6 +3,75 @@
 	margin: 5%;
 }
 
+.input-label{
+    font-family: Arial;
+    font-size: 18px;
+}
+.button.button-small.button-outline.button-stable {
+    border-color: #010205;
+    background: transparent;
+    color: #050505;
+}
+
+#login{
+    background-image:url("../img/splash1.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.item.item-input.item-floating-label {
+    display: block;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow:none;
+    border-width: 3px;
+    border-color: darkslategrey;
+}
+
+.box{
+
+    opacity: 0.9;
+    padding: 20px 10px 5px 10px;
+    border-style: solid;
+   /* border-width: 5px; */
+    border-radius: 10px 30px 10px 30px;
+    /*margin-bottom: 10px;*/
+}
+.list .card.app{
+    background-color: lightblue;
+    font-size: 50 pt;
+}
+
+img.logo{
+    vertical-align: middle;
+    margin-top: 25px;
+    width: 215px;
+    height: 50px;
+}
+
+img.icon{
+    width: 280px;
+
+}
+
+.col.name{
+    text-align: right;
+}
+
+.item.item-avatar.applicant.calm-border{
+    border-width: 5px;
+}
+.item.evaluate.calm-border{
+    border-width: 5px;
+}
+
+h2.jobportl {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 30px;
+    text-shadow: rgba(0, 0, 0, 0.2) 2px 6px 5px, rgba(255, 255, 255, 0.4) 0px -4px 30px;
+}
+
+
 #social-button {
 	margin-bottom: 30px;
 }
