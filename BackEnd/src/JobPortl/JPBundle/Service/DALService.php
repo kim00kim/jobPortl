@@ -244,7 +244,7 @@ class DALService
 		return $this->certificationRepo->createQueryBuilder('c')
 			->innerJoin('c.user','u')
 			->addSelect('u')
-			->where('IDENTITY(ac.user) = ?1')
+			->where('IDENTITY(c.user) = ?1')
 			->setParameters(array(1 => $userId))
 			->getQuery()
 			->getArrayResult();

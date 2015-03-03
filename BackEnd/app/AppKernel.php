@@ -8,6 +8,7 @@ class AppKernel extends Kernel
 	public function registerBundles()
 	{
 		$bundles = array(
+			new Nelmio\CorsBundle\NelmioCorsBundle(),
 			new JMS\SerializerBundle\JMSSerializerBundle(),
 			new FOS\RestBundle\FOSRestBundle(),
 			new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
