@@ -1,6 +1,7 @@
 angular.module('jobPortl.services', [])
 
 	.constant('baseUrl', 'http://jobportl.esy.es/Backend/web/api/')
+	//.constant('baseUrl', 'http://192.168.1.3/web/api/')
 
 	.factory('$localStorage', ['$window', function ($window) {
 		return {
@@ -141,11 +142,11 @@ angular.module('jobPortl.services', [])
 			updateTitle: function(userInfo){
 				return $http({method: "POST", url: baseUrl + 'updatetitles', data: userInfo})
 			},
-			/*getUpdatedUser: function(userId){
-				return $http({method: "GET", url: baseUrl + 'updateduserinfos/'+ userId})
-			},*/
 			removeASkill: function(acquiredSkill){
 				return $http({method: "DELETE", url: baseUrl + 'removeskills/'+ acquiredSkill})
+			},
+			removeCertification: function(certification){
+				return $http({method: "DELETE", url: baseUrl + 'removecertifications/'+ certification})
 			},
 			addCertification: function(certification){
 				return $http({method: "POST", url: baseUrl + 'certifications', data: certification})

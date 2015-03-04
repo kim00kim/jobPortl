@@ -269,6 +269,7 @@ class RestController extends Controller
 		return $dal->deleteSkill($skillId);
 //		return $categoryId;
 	}
+
 	public function getSkilledlaborerAction()
 	{
 		$dal = $this->get('jpdal.dal');
@@ -330,6 +331,11 @@ class RestController extends Controller
 	{
 		$dal= $this->get('jpdal.dal');
 		return $dal->deleteAS($asId);
+	}
+	public function deleteRemovecertificationAction($id)
+	{
+		$dal= $this->get('jpdal.dal');
+		return $dal->deleteCert($id);
 	}
 	public function postApplypostingAction(Request $request)
 	{

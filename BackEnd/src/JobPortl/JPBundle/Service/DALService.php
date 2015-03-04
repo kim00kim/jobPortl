@@ -187,6 +187,11 @@ class DALService
 		$as = $this->acquiredSkillRepo->find($asId);
 		return $this->_removeFlush($as);
 	}
+	public function deleteCert($id)
+	{
+		$cert = $this->certificationRepo->find($id);
+		return $this->_removeFlush($cert);
+	}
 	public function deleteApplication($appId)
 	{
 		$app = $this->applicationRepo->find($appId);

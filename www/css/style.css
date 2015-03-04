@@ -25,7 +25,7 @@
     border-radius: 10px 10px 10px 10px;
     box-shadow:none;
     border-width: 3px;
-    border-color: darkslategrey;
+    /*border-color: darkslategrey;*/
 }
 
 .box{
@@ -59,10 +59,10 @@ img.icon{
 }
 
 .item.item-avatar.applicant.calm-border{
-    border-width: 5px;
+    border-width: 2px;
 }
 .item.evaluate.calm-border{
-    border-width: 5px;
+    border-width: 2px;
 }
 
 h2.jobportl {
@@ -359,4 +359,7 @@ h2.item-input.title{
 .button-bar>.button .icon:before, .button-bar>.button:before {
 	line-height:29px !important;
 	margin-top: 0;
+}
+p.skill-set.invalid{
+	color: red;
 }

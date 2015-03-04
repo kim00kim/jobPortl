@@ -8,8 +8,6 @@ angular.module('jobPortl.controllers', [])
 		console.log('In AccountCtrl..');
 		var userType = UserService.getUserType();
 
-
-
 		if (userType == 2){
 			$state.go('login');
 			$scope.toggleStalker = 'ng-hide';
@@ -61,8 +59,6 @@ angular.module('jobPortl.controllers', [])
 		$scope.skipLogin = function () {
 			UserService.setUserType(2);
 			$state.go('tab.job-post');
-//			console.log("User: " + JSON.stringify(UserService.getUser))
-//			console.log("User_Type: " + UserService.getUserType())
 		};
 		$scope.register = function () {
 			$state.go('registerLogin');
@@ -107,13 +103,10 @@ angular.module('jobPortl.controllers', [])
 							UserService.setUser(response);
 //							console.log(response)
 						});
-						//get certifications
-						SkilledLaborer.getCertifications(response.user.user_id).success(function(c){
-							console.log("C: ");
+						SkilledLaborer.getCertifications(UserService.getUser().userId).success(function(c){
+							console.log("Certification!: ");
 							console.log(c);
-							response.user['certifications']=c;
-							UserService.setUser(response);
-//							console.log(response)
+							UserService.updateObjectItem('user','certifications',c)
 						});
 					}
 
@@ -241,13 +234,6 @@ angular.module('jobPortl.controllers', [])
 				)
 			}
 		}*/
-
-
-
-
-		var forPushNotification = function(){
-
-		}
 	})
 
 	.controller('RegisterCtrl', function ($scope, $state, $window, $ionicLoading,UserAccount, User, $ionicViewService) {
@@ -345,8 +331,29 @@ angular.module('jobPortl.controllers', [])
 		var user;
 		var allSkills = [];
 		var userSkills = [];
+		//get certifications
+		//user = UserService.getUser();
+		$ionicLoading.show({
+			content: 'Loading...',
+			animation: 'fade-in',
+			showBackdrop: false,
+			maxWidth: 50,
+			showDelay: 0
+		});
+		SkilledLaborer.getCertifications(UserService.getUser().userId).success(function(c){
+			console.log("Certification!: ");
+			console.log(c);
+			UserService.updateObjectItem('user','certifications',c)
+		});
 		user = UserService.getUser();
 		$scope.myPhoto = user.photo;
+
+		console.log('asdsad')
+		console.log(user);
+		$scope.certifications = user.certifications;
+
+		console.log('SCOPE')
+		console.log($scope.certifications)
 
 		var savePhoto = function(options){
 			$cordovaCamera.getPicture(options).then(function(imageData) {
@@ -414,9 +421,6 @@ angular.module('jobPortl.controllers', [])
 				console.log(err);
 			});
 		};
-		//}
-	//}
-
 		$scope.capture = function() {
 			console.log("Clicked!!");
 
@@ -434,99 +438,11 @@ angular.module('jobPortl.controllers', [])
 				};
 
 				savePhoto(options);
-
-				/*var onSuccess = function(imageURI) {
-				 // if working, save to database
-				 $scope.$apply(function(){
-				 $scope.myPhoto = imageURI;
-				 console.log(imageURI);
-				 })
-				 };
-				 var onFail = function(message) {
-				 window.plugins.toast.showShortCenter(message)
-				 };*/
-
-				//navigator.camera.getPicture(onSuccess, onFail, options);
-
 			}
 		};
-
-		//var clearCache = function(){
-		//	navigator.camera.cleanup();
-		//};
-
-		/*var onSuccess = function(imageURI) {
-			var win = function (r) {
-				// if working, save to database
-				console.log(r);
-			$scope.$apply(function(){
-				$scope.myPhoto = imageURI;
-				console.log(imageURI);
-			});*/
-
-			//for upload
-/*
-			var options = new FileUploadOptions();
-			options.fileKey="file";
-			options.fileName=$scope.myPhoto.substr($scope.myPhoto.lastIndexOf('/')+1);
-			options.mimeType="image/jpeg";
-			var params = {};
-			params.userId= user.userId; // some other POST fields
-			params.photo = user.photo;
-			options.params = params;
-
-			//console.log("new imp: prepare upload now");
-			var ft = new FileTransfer();
-			ft.upload($scope.myPhoto, encodeURI($scope.data.uploadurl), uploadSuccess, uploadError, options);
-			function uploadSuccess(r) {
-				// handle success like a message to the user
-				if(window.cordova)
-					window.plugins.toast.showShortCenter('Image successfully changed.')
-				console.log('Image successfully changed');
-				console.log(r)
-				User.savePhoto(options)
-
-			}
- */
-			//function uploadError(error) {
-			//	console.log("upload error source " + error.source);
-			//	console.log("upload error target " + error.target);
-			//}
-			//	clearCache();
-			//
-			//	retries = 0;
-			//	alert('Done!');
-			//};
-			//
-			//var fail = function (error) {
-			//	if (retries == 0) {
-			//		retries ++;
-			//	} else {
-			//		retries = 0;
-			//		clearCache();
-			//		alert('Something went wrong!');
-			//	}
-			//};
-
-			//var option = new FileUploadOptions();
-			//option.fileKey = "file";
-			//option.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-			//option.mimeType = "image/jpeg";
-			//option.params = {}; // if we need to send parameters to the server request
-			//var ft = new FileTransfer();
-			//
-			//ft.upload(imageURI, encodeURI("../img"), win, fail, option);
-		//};
-		//var onFail = function(message) {
-		//	window.plugins.toast.showShortCenter(message)
-		//};
-		//
-		//
 		$scope.selectPhoto = function(){
 			console.log("Clicked!");
-
 			if(window.cordova){
-				//window.plugins.toast.showShortCenter('Loading Camera..')
 				var options = {
 					quality: 75,
 					destinationType: Camera.DestinationType.FILE_URI,
@@ -537,7 +453,6 @@ angular.module('jobPortl.controllers', [])
 					targetHeight: 1024,
 					saveToPhotoAlbum: false
 				};
-				//navigator.camera.getPicture(onSuccess, onFail, options);
 				savePhoto(options);
 			}
 		};
@@ -548,20 +463,12 @@ angular.module('jobPortl.controllers', [])
 				if(!response)
 					alert("Couldn't get categories.");
 				else
-//				console.log("AllSkills: ");
-//				console.log(response);
 					allSkills = response;
 			});
 		};
 
 		var onLoad = function(){
-			$ionicLoading.show({
-				content: 'Loading...',
-				animation: 'fade-in',
-				showBackdrop: false,
-				maxWidth: 50,
-				showDelay: 0
-			});
+
 
 			console.log(user);
 			$scope.divHide = UserService.getUserType() == 0 ?true : false;
@@ -784,13 +691,41 @@ angular.module('jobPortl.controllers', [])
 		$scope.saveCertification = function(certification){
 			certification.userId = user.userId;
 			console.log(certification);
+			$ionicLoading.show({
+				content: 'Loading...',
+				animation: 'fade-in',
+				showBackdrop: false,
+				maxWidth: 50,
+				showDelay: 20
+			});
 			User.addCertification(certification).success(function(response){
-				console.log(response);
-				$scope.certification.push(response);
+				SkilledLaborer.getCertifications(user.userId).success(function(c){
+					var oldLength = user.certifications.length;
+					UserService.updateObjectItem('user','certifications',c);
+					/*for(var i= oldLength; i<c.length; i++){
+						$scope.certifications.push(c[i]);
+					}*/
+					$scope.certifications = UserService.getUser().certifications
+					$ionicLoading.hide();
+				})
+				//$scope.certifications.push(response);
 			})
 			$scope.closeModal();
-
 		}
+
+		$scope.deleteCert = function(cert){
+			console.log(cert);
+			var idx = $scope.certifications.indexOf(cert);
+			// remove from DB
+			User.removeCertification(cert.id).success(function(response){
+				console.log(response);
+				SkilledLaborer.getCertifications(user.userId).success(function(c){
+					UserService.updateObjectItem('user','certifications',c);
+				});
+				// remove from local array
+				$scope.certifications.splice(idx,1);
+			})
+		};
 
 		//on load
 		onLoad();
@@ -999,7 +934,6 @@ angular.module('jobPortl.controllers', [])
 							console.log(err);
 
 						});
-//					$ionicLoading.hide();
 				}
 				else{
 					displayJobPost(CachedData.getJobPost())
@@ -1193,7 +1127,6 @@ angular.module('jobPortl.controllers', [])
 			console.log(jobPost);
 			var confirmPopup = $ionicPopup.confirm({
 				title: 'Confirm Application?'
-//				template: 'Apply?'
 			});
 			confirmPopup.then(function (res) {
 				if (res) {
@@ -1310,6 +1243,7 @@ angular.module('jobPortl.controllers', [])
 
 		//call function
 		$scope.call = function (number) {
+			console.log('call' + number)
 			document.location.href = "tel:" + number;
 		 };
 

@@ -37,8 +37,15 @@
 				</div>
 
 			<div class="item item-divider item-icon-right headers">Certification(s)<i class="icon" ng-class="{'ion-ios7-cog-outline balanced': !forDeleteCert || !doneCert, 'ion-ios7-checkmark-outline balanced': forDeleteCert && doneCert}" ng-click="configureCert()"></i></div>
-			<div class="certification sub-list" ng-repeat="certification in userInfo.certification">
-				{{certification.desc}}
+				<div class="certification sub-list" ng-repeat="certification in certifications">
+					<div class="row">
+						<div class="col col-90">
+							<p class="skill-set" ng-class="{'invalid' : !certification.valid}">{{certification.type + " - " + certification.qualification}}</p>
+						</div>
+						<div class="icons col col-10">
+							<i class="icon ion-minus-round" width="10px" ng-show="forDeleteCert && doneCert" ng-click="deleteCert(certification)"></i>
+						</div>
+					</div>
 			</div>
 		</div>
 	</div>
