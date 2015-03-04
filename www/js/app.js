@@ -13,7 +13,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 	 })*/
 
 
-	.run(function ($ionicPlatform, $rootScope, $state, $cordovaPush) {
+	.run(function ($ionicPlatform, $rootScope, $state) {
 		$ionicPlatform.ready(function () {
 			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 			// for form inputs)
@@ -33,7 +33,7 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 				event.preventDefault();
 			}
 		});
-			var androidConfig = {
+			/*var androidConfig = {
 				"senderID": "442960874560"
 			};
 
@@ -69,13 +69,13 @@ angular.module('jobPortl', ['ionic', 'jobPortl.controllers', 'jobPortl.services'
 
 
 				// WARNING: dangerous to unregister (results in loss of tokenID)
-				/*$cordovaPush.unregister(options).then(function(result) {
+				*//*$cordovaPush.unregister(options).then(function(result) {
 					// Success!
 				}, function(err) {
 					// Error
-				})*/
+				})*//*
 
-			}, false);
+			}, false);*/
 
 
 		//localStorage.clear()

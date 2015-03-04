@@ -322,7 +322,7 @@ angular.module('jobPortl.controllers', [])
 
 	})
 
-	.controller('EditProfileCtrl', function ($scope,JobPost,$window, $state,$ionicModal, $ionicLoading, $ionicActionSheet, $timeout, UserService, User, $cordovaCamera, SkilledLaborer) {
+	.controller('EditProfileCtrl', function ($scope,JobPost,$window, $state,$ionicModal, $ionicLoading, $ionicActionSheet,$cordovaFile, $timeout, UserService, User, $cordovaCamera, SkilledLaborer) {
 		console.log('In EditProfileCtrl..');
 		$scope.forDeleteSkill = 0;
 		$scope.forDeleteCert=0;
@@ -369,7 +369,7 @@ angular.module('jobPortl.controllers', [])
 					var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
 					var newName = makeid() + name;
 
-					window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+					/*window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
 							fileEntry.copyTo(
 								fileSystem2,
 								newName,
@@ -377,7 +377,14 @@ angular.module('jobPortl.controllers', [])
 								fail
 							);
 						},
-						fail);
+						fail);*/
+					$cordovaFile.uploadFile("http://jobportl.esy.es/img/", cordova.file.dataDirectory, newName).then(function(result) {
+						console.log("SUCCESS: " + JSON.stringify(result.response));
+					}, function(err) {
+						console.log("ERROR: " + JSON.stringify(err));
+					}, function (progress) {
+						// constant progress updates
+					});
 				};
 
 				// 6
