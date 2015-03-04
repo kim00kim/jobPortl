@@ -213,6 +213,7 @@ angular.module('jobPortl.services', [])
 				return $http({method: "DELETE", url: baseUrl + 'declineapplications/' + appId});
 			},
 			acceptApplication: function(appId){
+				console.log('service: ' + appId)
 				return $http({method: "POST", url: baseUrl + 'acceptapplications/' + appId});
 			},
 			getSLApplication: function(data){
